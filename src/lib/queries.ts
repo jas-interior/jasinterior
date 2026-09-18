@@ -49,7 +49,22 @@ export async function getProducts(options?: {
 
   const { data, error } = await query
   if (error) { console.error('getProducts:', error); return [] }
-  return (data || []).map((p: any) => ({ ...p, images: Array.isArray(p.images) ? p.images : [] }))
+  
+  let products = (data || []).map((p: any) => ({ ...p, images: Array.isArray(p.images) ? p.images : [] }))
+  
+  // Custom logic: If no specific category is selected, show sofas first
+  if (!options?.categorySlug) {
+    products.sort((a, b) => {
+      const isSofaA = a.category?.slug?.toLowerCase().includes('sofa') || a.category?.name?.toLowerCase().includes('sofa')
+      const isSofaB = b.category?.slug?.toLowerCase().includes('sofa') || b.category?.name?.toLowerCase().includes('sofa')
+      
+      if (isSofaA && !isSofaB) return -1
+      if (!isSofaA && isSofaB) return 1
+      return 0 // Maintain existing order for others
+    })
+  }
+  
+  return products
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
