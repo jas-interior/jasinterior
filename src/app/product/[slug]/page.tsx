@@ -241,7 +241,7 @@ function SuggestedProducts({ categorySlug, currentProductId }: { categorySlug?: 
   return (
     <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
       {products.map((product) => (
-        <Link key={product.id} href={`/product/${product.slug}`} className="group flex flex-col gap-3 min-w-[140px] sm:min-w-[180px] snap-start bg-white border border-[#eaeaea] p-2 rounded-2xl hover:border-[#c8941a]/50 transition-colors">
+        <Link key={product.id} href={`/product/${product.slug}`} className="group flex flex-col gap-3 w-[160px] sm:w-[240px] flex-none snap-start bg-white border border-[#eaeaea] p-2 rounded-2xl hover:border-[#c8941a]/50 transition-colors">
           <div className="w-full aspect-square rounded-xl bg-white overflow-hidden relative">
             {product.images && product.images[0] ? (
               <Image 
