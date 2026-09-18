@@ -9,16 +9,22 @@ import toast from 'react-hot-toast'
 
 export default function AdminProducts() {
   const [products, setProducts] = useState<any[]>([])
+  const [categories, setCategories] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('all')
 
   const [previewImage, setPreviewImage] = useState<string | null>(null)
 
   const loadData = async () => {
     setLoading(true)
     const supabase = createClient()
-    const { data } = await supabase.from('products').select('*, category:categories(name)').order('created_at', { ascending: false })
-    if (data) setProducts(data)
+    const [prodRes, catRes] = await Promise.all([
+      supabase.from('products').select('*, category:categories(name)').order('created_at', { ascending: false }),
+      supabase.from('categories').select('id, name').order('name', { ascending: true })
+    ])
+    if (prodRes.data) setProducts(prodRes.data)
+    if (catRes.data) setCategories(catRes.data)
     setLoading(false)
   }
 
@@ -45,7 +51,11 @@ export default function AdminProducts() {
     else { toast.success('Deleted successfully', { id: toastId }); loadData() }
   }
 
-  const filtered = products.filter(p => p.title.toLowerCase().includes(search.toLowerCase()))
+  const filtered = products.filter(p => {
+    const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase())
+    const matchesCategory = selectedCategory === 'all' || p.category_id === selectedCategory
+    return matchesSearch && matchesCategory
+  })
 
   return (
     <div>
@@ -59,14 +69,24 @@ export default function AdminProducts() {
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
         <h1 className="text-2xl font-bold text-[#111111]">Products</h1>
-        <div className="flex items-center gap-3">
-          <div className="relative">
+        <div className="flex flex-wrap items-center gap-3">
+          <select 
+            value={selectedCategory} 
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="input-gold h-10 text-sm px-3 w-full sm:w-auto min-w-[140px] bg-white"
+          >
+            <option value="all">All Categories</option>
+            {categories.map(c => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
+          </select>
+          <div className="relative flex-grow sm:flex-grow-0">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#555]" />
             <input type="text" placeholder="Search products..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold pl-9 h-10 w-full sm:w-64" />
           </div>
-          <Link href="/admin/products/new" className="flex items-center gap-2 px-4 py-2 rounded-xl btn-gold text-sm font-semibold whitespace-nowrap text-white">
+          <Link href="/admin/products/new" className="flex items-center gap-2 px-4 py-2 rounded-xl btn-gold text-sm font-semibold whitespace-nowrap text-white w-full sm:w-auto justify-center">
             <Plus size={16} /> Add Product
           </Link>
         </div>
