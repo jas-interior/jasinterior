@@ -12,7 +12,8 @@ export default function AdminProducts() {
   const [categories, setCategories] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [priceFilter, setPriceFilter] = useState<string>('all')
 
   const [previewImage, setPreviewImage] = useState<string | null>(null)
 
@@ -30,13 +31,21 @@ export default function AdminProducts() {
 
   useEffect(() => { 
     loadData() 
-    const saved = localStorage.getItem('jas_admin_category_filter')
-    if (saved) setSelectedCategory(saved)
+    const savedCat = localStorage.getItem('jas_admin_category_filter')
+    if (savedCat) setSelectedCategory(savedCat)
+    
+    const savedPrice = localStorage.getItem('jas_admin_price_filter')
+    if (savedPrice) setPriceFilter(savedPrice)
   }, [])
 
   const handleCategoryChange = (val: string) => {
     setSelectedCategory(val)
     localStorage.setItem('jas_admin_category_filter', val)
+  }
+
+  const handlePriceFilterChange = (val: string) => {
+    setPriceFilter(val)
+    localStorage.setItem('jas_admin_price_filter', val)
   }
 
   const toggleActive = async (id: string, current: boolean) => {
@@ -63,7 +72,10 @@ export default function AdminProducts() {
   const filtered = products.filter(p => {
     const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase())
     const matchesCategory = selectedCategory === 'all' || p.category_id === selectedCategory
-    return matchesSearch && matchesCategory
+    const hasPrice = p.price_enabled && p.price != null && p.price > 0
+    const matchesPrice = priceFilter === 'all' ? true : priceFilter === 'priced' ? hasPrice : !hasPrice
+    
+    return matchesSearch && matchesCategory && matchesPrice
   })
 
   return (
@@ -90,6 +102,15 @@ export default function AdminProducts() {
             {categories.map(c => (
               <option key={c.id} value={c.id}>{c.name}</option>
             ))}
+          </select>
+          <select
+            value={priceFilter}
+            onChange={(e) => handlePriceFilterChange(e.target.value)}
+            className="input-gold h-10 text-sm px-3 w-full sm:w-auto min-w-[140px] bg-white"
+          >
+            <option value="all">All Prices</option>
+            <option value="priced">With Price (Priced)</option>
+            <option value="unpriced">No Price (On Request)</option>
           </select>
           <div className="relative flex-grow sm:flex-grow-0">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#555]" />
