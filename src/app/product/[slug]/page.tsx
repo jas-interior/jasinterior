@@ -76,10 +76,9 @@ export default function ProductDetailPage() {
                   src={images[currentImage]} 
                   alt={product.title} 
                   fill 
-                  className="object-cover select-none" 
+                  className="object-cover select-none pointer-events-none" 
                   priority 
                   draggable={false}
-                  onContextMenu={(e) => e.preventDefault()}
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-[#333]"><span className="text-8xl">🪑</span></div>
@@ -100,9 +99,8 @@ export default function ProductDetailPage() {
                       alt="" 
                       width={64} 
                       height={64} 
-                      className="w-full h-full object-cover select-none" 
+                      className="w-full h-full object-cover select-none pointer-events-none" 
                       draggable={false}
-                      onContextMenu={(e) => e.preventDefault()}
                     />
                   </button>
                 ))}
@@ -226,9 +224,8 @@ function SuggestedProducts({ categorySlug, currentProductId }: { categorySlug?: 
                 src={product.images[0]} 
                 alt={product.title} 
                 fill 
-                className="object-cover group-hover:scale-110 transition-transform duration-500 select-none" 
+                className="object-cover group-hover:scale-110 transition-transform duration-500 select-none pointer-events-none" 
                 draggable={false}
-                onContextMenu={(e) => e.preventDefault()}
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-[#333] text-xs">No Img</div>

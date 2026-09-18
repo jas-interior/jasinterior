@@ -29,10 +29,9 @@ export default function ProductCard({ product }: { product: Product }) {
               src={primaryImage} 
               alt={product.title} 
               fill 
-              className="object-cover select-none" 
+              className="object-cover select-none pointer-events-none" 
               sizes="(max-width:640px) 100vw, 50vw" 
               draggable={false}
-              onContextMenu={(e) => e.preventDefault()}
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-[#333]">
