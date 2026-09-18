@@ -29,10 +29,19 @@ export default function AddProductPage() {
     supabase.from('categories').select('*').order('name').then(({ data }) => {
       if (data) setCategories(data)
     })
+    
+    // Load last used category
+    const lastCategory = localStorage.getItem('jas_admin_last_add_category')
+    if (lastCategory) {
+      setForm(prev => ({ ...prev, category_id: lastCategory }))
+    }
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value })
+    if (e.target.name === 'category_id') {
+      localStorage.setItem('jas_admin_last_add_category', e.target.value)
+    }
   }
 
   const generateSlug = (val: string) => {

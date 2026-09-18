@@ -1,0 +1,729 @@
+﻿â—‡ injected env (8) from .env.local // tip: âŒ˜ multiple files { path: ['.env.local', '.env'] }
+Fetching all products...
+Found 181 products to analyze.
+
+[1/181] Updating:
+  Old: Blush Cloud Sofa Living Room
+  New: Premium Midnight Black L-Shape Italian Leather Sectional
+
+[2/181] Updating:
+  Old: Chocolate Brown Sofa Set Living Room
+  New: Luxury Cream White Modern U-Shape Velvet Sofa
+
+[3/181] Updating:
+  Old: Cozy Taupe Sectional Living Room
+  New: Bespoke Taupe Chesterfield Deep Tufted Sofa
+
+[4/181] Updating:
+  Old: Dusty Rose Velvet Living Room
+  New: Designer Mustard Yellow Minimalist Cloud Couch
+
+[5/181] Updating:
+  Old: Elegant Blue Sectional Living Room
+  New: Handcrafted Cream White Mid-Century Modern Loveseat
+
+[6/181] Updating:
+  Old: Elegant Brown and Cream Living Room Set
+  New: Elegant Mustard Yellow Premium Reclining Sectional
+
+[7/181] Updating:
+  Old: Elegant Charcoal Sectional Living Room
+  New: Signature Ivory Curved Boucle Sofa
+
+[8/181] Updating:
+  Old: Elegant Mauve Sectional Living Room
+  New: Premium Ruby Red Elegant Tuxedo Sofa
+
+[9/181] Updating:
+  Old: Elegant Olive Green Living Room
+  New: Luxury Ivory Contemporary Modular Sectional
+
+[10/181] Updating:
+  Old: Elegant Teal Sectional Living Room
+  New: Bespoke Walnut Luxury Camelback Sofa
+
+[11/181] Updating:
+  Old: Emerald Green Luxury Living Room(1)
+  New: Designer Navy Blue Cozy Lawson Style Sofa
+
+[12/181] Updating:
+  Old: Emerald Green Luxury Living Room(2)
+  New: Handcrafted Espresso Oversized Slouchy Sofa
+
+[13/181] Updating:
+  Old: Emerald Green Luxury Living Room
+  New: Elegant Navy Blue Plush Velvet Chaise Sectional
+
+[14/181] Updating:
+  Old: Lime Green Luxury Living Room
+  New: Signature Ivory Sleek Track Arm Sofa
+
+[15/181] Updating:
+  Old: Luxe Plum Living Room by Night
+  New: Premium Espresso Royal Gold-Plated Trim Sofa
+
+[16/181] Updating:
+  Old: Luxe Taupe Living Room with Gold Accents
+  New: Luxury Ruby Red L-Shape Italian Leather Sectional
+
+[17/181] Updating:
+  Old: Luxurious Beige and Gold Living Room
+  New: Bespoke Espresso Modern U-Shape Velvet Sofa
+
+[18/181] Updating:
+  Old: Luxurious Beige Living Room Retreat
+  New: Designer Ruby Red Chesterfield Deep Tufted Sofa
+
+[19/181] Updating:
+  Old: Luxurious Beige Sectional Living Room
+  New: Handcrafted Midnight Black Minimalist Cloud Couch
+
+[20/181] Updating:
+  Old: Luxurious Blue Sectional Living Room
+  New: Elegant Teal Mid-Century Modern Loveseat
+
+[21/181] Updating:
+  Old: Luxurious Blue Velvet Living Room
+  New: Signature Mustard Yellow Premium Reclining Sectional
+
+[22/181] Updating:
+  Old: Luxurious Charcoal and Gold Living Room
+  New: Premium Taupe Curved Boucle Sofa
+
+[23/181] Updating:
+  Old: Luxurious Gray and Gold Living Room
+  New: Luxury Emerald Green Elegant Tuxedo Sofa
+
+[24/181] Updating:
+  Old: Luxurious Mint Green Sectional Living Room
+  New: Bespoke Espresso Contemporary Modular Sectional
+
+[25/181] Updating:
+  Old: Luxurious Modern Living Room with City Views
+  New: Designer Mustard Yellow Luxury Camelback Sofa
+
+[26/181] Updating:
+  Old: Luxurious Navy and Gray Living Room
+  New: Handcrafted Ivory Cozy Lawson Style Sofa
+
+[27/181] Updating:
+  Old: Luxurious Neutral Modular Living Room
+  New: Elegant Blush Pink Oversized Slouchy Sofa
+
+[28/181] Updating:
+  Old: Luxurious Pink and Gold Living Room
+  New: Signature Navy Blue Plush Velvet Chaise Sectional
+
+[29/181] Updating:
+  Old: Luxurious Skyline Living Room Ensemble
+  New: Premium Teal Sleek Track Arm Sofa
+
+[30/181] Updating:
+  Old: Luxurious Taupe Living Room with Gold Accents
+  New: Luxury Emerald Green Royal Gold-Plated Trim Sofa
+
+[31/181] Updating:
+  Old: Luxurious Teal and Gold Living Room
+  New: Bespoke Mustard Yellow L-Shape Italian Leather Sectional
+
+[32/181] Updating:
+  Old: Luxury Brown and Gold Living Room
+  New: Designer Midnight Black Modern U-Shape Velvet Sofa
+
+[33/181] Updating:
+  Old: Luxury Brown Leather Living Room at Sunset
+  New: Handcrafted Teal Chesterfield Deep Tufted Sofa
+
+[34/181] Updating:
+  Old: Luxury Charcoal Sofa with Gold Accents
+  New: Elegant Navy Blue Minimalist Cloud Couch
+
+[35/181] Updating:
+  Old: Luxury Cream and Blue Living Room
+  New: Signature Navy Blue Mid-Century Modern Loveseat
+
+[36/181] Updating:
+  Old: Luxury Cream Sectional Living Room
+  New: Premium Midnight Black Premium Reclining Sectional
+
+[37/181] Updating:
+  Old: Luxury Navy Sectional Sofa Bed
+  New: Luxury Blush Pink Curved Boucle Sofa
+
+[38/181] Updating:
+  Old: Luxury Sunset Penthouse Living Room
+  New: Bespoke Midnight Black Elegant Tuxedo Sofa
+
+[39/181] Updating:
+  Old: Modern Beige Sofa Bed in a Cozy Room
+  New: Designer Cream White Contemporary Modular Sectional
+
+[40/181] Updating:
+  Old: Modern Brown Leather Sofa in Warm Interior
+  New: Handcrafted Cream White Luxury Camelback Sofa
+
+[41/181] Updating:
+  Old: Luxurious Brown Sectional Living Room
+  New: Elegant Espresso Cozy Lawson Style Sofa
+
+[42/181] Updating:
+  Old: Luxurious Charcoal Sectional Living Room
+  New: Signature Mustard Yellow Oversized Slouchy Sofa
+
+[43/181] Updating:
+  Old: Luxurious Gray Sectional Living Room
+  New: Premium Navy Blue Plush Velvet Chaise Sectional
+
+[44/181] Updating:
+  Old: Luxurious Modern Gray Sectional Living Room
+  New: Luxury Walnut Sleek Track Arm Sofa
+
+[45/181] Updating:
+  Old: Luxurious Navy and Gold Living Room
+  New: Bespoke Blush Pink Royal Gold-Plated Trim Sofa
+
+[46/181] Updating:
+  Old: Luxurious Navy Sofa Living Room
+  New: Designer Midnight Black L-Shape Italian Leather Sectional
+
+[47/181] Updating:
+  Old: Luxurious Pink and Cream Living Room
+  New: Handcrafted Midnight Black Modern U-Shape Velvet Sofa
+
+[48/181] Updating:
+  Old: Luxurious Seafoam Living Room Retreat
+  New: Elegant Taupe Chesterfield Deep Tufted Sofa
+
+[49/181] Updating:
+  Old: Luxurious Taupe Living Room at Dusk
+  New: Signature Teal Minimalist Cloud Couch
+
+[50/181] Updating:
+  Old: Luxurious Taupe Sectional Living Room
+  New: Premium Navy Blue Mid-Century Modern Loveseat
+
+[51/181] Updating:
+  Old: Luxury Beige Convertible Sofa Bed
+  New: Luxury Espresso Premium Reclining Sectional
+
+[52/181] Updating:
+  Old: Luxury Brown Curved Sectional Living Room
+  New: Bespoke Emerald Green Curved Boucle Sofa
+
+[53/181] Updating:
+  Old: Luxury Charcoal and Gold Living Room
+  New: Designer Charcoal Grey Elegant Tuxedo Sofa
+
+[54/181] Updating:
+  Old: Luxury Cityscape Lounge Interior
+  New: Handcrafted Ruby Red Contemporary Modular Sectional
+
+[55/181] Updating:
+  Old: Luxury Cream and Gold Living Room
+  New: Elegant Espresso Luxury Camelback Sofa
+
+[56/181] Updating:
+  Old: Luxury Dove-Grey Sofa Living Room
+  New: Signature Emerald Green Cozy Lawson Style Sofa
+
+[57/181] Updating:
+  Old: Luxury Sage-Green Sectional Living Room
+  New: Premium Midnight Black Oversized Slouchy Sofa
+
+[58/181] Updating:
+  Old: Maroon Elegance at Sunset
+  New: Luxury Ivory Plush Velvet Chaise Sectional
+
+[59/181] Updating:
+  Old: Modern Beige Sofa Living Room Vignette
+  New: Bespoke Midnight Black Sleek Track Arm Sofa
+
+[60/181] Updating:
+  Old: Modern Gray Sofa Bed in a Cozy Living Room
+  New: Designer Midnight Black Royal Gold-Plated Trim Sofa
+
+[61/181] Updating:
+  Old: Modern Geometric Grey Sofa-Bed Interior
+  New: Handcrafted Navy Blue L-Shape Italian Leather Sectional
+
+[62/181] Updating:
+  Old: Modern Gold-Accented Luxury Living Room
+  New: Elegant Charcoal Grey Modern U-Shape Velvet Sofa
+
+[63/181] Updating:
+  Old: Modern Grey Sofa-Bed Living Room
+  New: Signature Ruby Red Chesterfield Deep Tufted Sofa
+
+[64/181] Updating:
+  Old: Modern Luxury Living Room Elegance
+  New: Premium Teal Minimalist Cloud Couch
+
+[65/181] Updating:
+  Old: Modern Sage Sectional Living Room
+  New: Luxury Blush Pink Mid-Century Modern Loveseat
+
+[66/181] Updating:
+  Old: Modern Teal Luxury Living Room
+  New: Bespoke Mustard Yellow Premium Reclining Sectional
+
+[67/181] Updating:
+  Old: Modern Teal Sofa Living Room
+  New: Designer Ivory Curved Boucle Sofa
+
+[68/181] Updating:
+  Old: Navy Sectional in a Warm Modern Living Room
+  New: Handcrafted Cream White Elegant Tuxedo Sofa
+
+[69/181] Updating:
+  Old: Polished Teal and Ivory Luxury Living Room
+  New: Elegant Espresso Contemporary Modular Sectional
+
+[70/181] Updating:
+  Old: Sunlit Green Sectional Sofa Living Room
+  New: Signature Charcoal Grey Luxury Camelback Sofa
+
+[71/181] Updating:
+  Old: Teal and Gray Sectional Living Room
+  New: Premium Walnut Cozy Lawson Style Sofa
+
+[72/181] Updating:
+  Old: Modern Living Room with Clover Table
+  New: Luxury Teal Oversized Slouchy Sofa
+
+[73/181] Updating:
+  Old: Modern Sage Green Sectional Living Room
+  New: Bespoke Midnight Black Plush Velvet Chaise Sectional
+
+[74/181] Updating:
+  Old: Modern Teal and Charcoal Sectional Living Room
+  New: Designer Ruby Red Sleek Track Arm Sofa
+
+[75/181] Updating:
+  Old: Modern Teal Sectional Living Room
+  New: Handcrafted Cream White Royal Gold-Plated Trim Sofa
+
+[76/181] Updating:
+  Old: Mustard Sleeper Sofa in Luxe Living Room
+  New: Elegant Espresso L-Shape Italian Leather Sectional
+
+[77/181] Updating:
+  Old: Olive Green Luxury Living Room
+  New: Signature Espresso Modern U-Shape Velvet Sofa
+
+[78/181] Updating:
+  Old: Slate Gray Sofa Bed in a Cozy Interior
+  New: Premium Taupe Chesterfield Deep Tufted Sofa
+
+[79/181] Updating:
+  Old: Teal Emerald Luxury Living Room
+  New: Luxury Navy Blue Minimalist Cloud Couch
+
+[80/181] Updating:
+  Old: Teal Sectional in a Luxe Living Room
+  New: Bespoke Midnight Black Mid-Century Modern Loveseat
+
+[81/181] Updating:
+  Old: Teal Sectional in a Warm Modern Living Room
+  New: Designer Blush Pink Premium Reclining Sectional
+
+[82/181] Updating:
+  Old: Teal Velvet Luxury Living Room
+  New: Handcrafted Blush Pink Curved Boucle Sofa
+
+[83/181] Updating:
+  Old: Teal Velvet Sofa in Modern Living Room
+  New: Elegant Teal Elegant Tuxedo Sofa
+
+[84/181] Updating:
+  Old: Warm Beige L-Shaped Living Room Showcase
+  New: Signature Charcoal Grey Contemporary Modular Sectional
+
+[85/181] Updating:
+  Old: Warm Beige Modern Living Room
+  New: Premium Navy Blue Luxury Camelback Sofa
+
+[86/181] Updating:
+  Old: Warm Modern Living Room Retreat
+  New: Luxury Navy Blue Cozy Lawson Style Sofa
+
+[87/181] Updating:
+  Old: Teal Sectional in a Warm Modern Lounge
+  New: Bespoke Taupe Oversized Slouchy Sofa
+
+[88/181] Updating:
+  Old: Warm Modern Living Room with Botanical Accents
+  New: Designer Navy Blue Plush Velvet Chaise Sectional
+
+[89/181] Updating:
+  Old: Warm Modern Sectional Living Room
+  New: Handcrafted Walnut Sleek Track Arm Sofa
+
+[90/181] Updating:
+  Old: Warm Neutral Modern Living Room(1)
+  New: Elegant Blush Pink Royal Gold-Plated Trim Sofa
+
+[91/181] Updating:
+  Old: Warm Taupe Sectional Living Room
+  New: Signature Navy Blue L-Shape Italian Leather Sectional
+
+[92/181] Updating:
+  Old: Warmly Lit Greige Luxury Living Room
+  New: Premium Ivory Modern U-Shape Velvet Sofa
+
+[93/181] Updating:
+  Old: Warm Modern Living Room with City Views
+  New: Luxury Charcoal Grey Chesterfield Deep Tufted Sofa
+
+[94/181] Updating:
+  Old: Warm Neutral Modern Living Room
+  New: Bespoke Mustard Yellow Minimalist Cloud Couch
+
+[95/181] Updating:
+  Old: Elegant Blue Bedroom Showcase
+  New: Designer Midnight Black Modern Scandi Wooden Bed
+
+[96/181] Updating:
+  Old: Emerald Elegance by JAS Interior
+  New: Handcrafted Navy Blue Premium Leather Panel Bed
+
+[97/181] Updating:
+  Old: Emerald Gold Luxury Bedroom
+  New: Elegant Midnight Black Classic Sleigh Bed Frame
+
+[98/181] Updating:
+  Old: Emerald Green Luxury Bedroom
+  New: Signature Charcoal Grey Luxury Floating Platform Bed
+
+[99/181] Updating:
+  Old: Emerald Luxury Bedroom with Gold Accents
+  New: Premium Walnut Cozy Boucle Fabric Bed
+
+[100/181] Updating:
+  Old: Luxurious Baroque Bedroom Suite
+  New: Luxury Navy Blue Industrial Metal & Wood Bed
+
+[101/181] Updating:
+  Old: Luxurious Baroque Bedroom with Gold Accents
+  New: Bespoke Charcoal Grey Opulent Gold-Trimmed Bed
+
+[102/181] Updating:
+  Old: Warm Terracotta Luxury Living Room
+  New: Designer Walnut Oversized Slouchy Sofa
+
+[103/181] Updating:
+  Old: Luxurious Blue Velvet Bedroom Showroom
+  New: Handcrafted Charcoal Grey Regal Button-Tufted Bed
+
+[104/181] Updating:
+  Old: Luxurious Burgundy Bedroom Interior
+  New: Elegant Midnight Black Rustic Oak Wood Bed
+
+[105/181] Updating:
+  Old: Luxurious Classic European Bedroom
+  New: Signature Ivory Contemporary Slat Headboard Bed
+
+[106/181] Updating:
+  Old: Luxurious Emerald Velvet Bedroom
+  New: Premium Ivory Royal Velvet Wingback Bed
+
+[107/181] Updating:
+  Old: Luxurious Green Velvet Bedroom Showroom
+  New: Luxury Charcoal Grey Minimalist Teak Platform Bed
+
+[108/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(10)
+  New: Bespoke Emerald Green Mid-Century Upholstered Bed
+
+[109/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(20260918-083337)
+  New: Designer Taupe Chesterfield Tufted King Bed
+
+[110/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(4)
+  New: Handcrafted Blush Pink Modern Scandi Wooden Bed
+
+[111/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(6)
+  New: Elegant Cream White Premium Leather Panel Bed
+
+[112/181] Updating:
+  Old: Luxurious Blush Bedroom Showcase
+  New: Signature Ruby Red Classic Sleigh Bed Frame
+
+[113/181] Updating:
+  Old: Luxurious Charcoal and Gold Bedroom
+  New: Premium Teal Luxury Floating Platform Bed
+
+[114/181] Updating:
+  Old: Luxurious Emerald Bedroom with Gold Accents
+  New: Luxury Ruby Red Cozy Boucle Fabric Bed
+
+[115/181] Updating:
+  Old: Luxurious Gold-Accented Bedroom
+  New: Bespoke Ruby Red Industrial Metal & Wood Bed
+
+[116/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(1)
+  New: Designer Walnut Opulent Gold-Trimmed Bed
+
+[117/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(2)
+  New: Handcrafted Blush Pink Low-Profile Zen Platform Bed
+
+[118/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(3)
+  New: Elegant Emerald Green Regal Button-Tufted Bed
+
+[119/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(5)
+  New: Signature Navy Blue Rustic Oak Wood Bed
+
+[120/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(7)
+  New: Premium Taupe Contemporary Slat Headboard Bed
+
+[121/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(8)
+  New: Luxury Walnut Royal Velvet Wingback Bed
+
+[122/181] Updating:
+  Old: Luxurious JAS Interior Bedroom
+  New: Bespoke Blush Pink Minimalist Teak Platform Bed
+
+[123/181] Updating:
+  Old: Luxurious Mustard Modern Bedroom
+  New: Designer Mustard Yellow Mid-Century Upholstered Bed
+
+[124/181] Updating:
+  Old: Luxurious Navy and Gold Bedroom(2)
+  New: Handcrafted Teal Chesterfield Tufted King Bed
+
+[125/181] Updating:
+  Old: Luxurious Navy Bedroom with Gold Accents
+  New: Elegant Espresso Modern Scandi Wooden Bed
+
+[126/181] Updating:
+  Old: Luxurious Pink Bedroom with Gold Accents
+  New: Signature Navy Blue Premium Leather Panel Bed
+
+[127/181] Updating:
+  Old: Luxurious Purple Upholstered Bedroom
+  New: Premium Blush Pink Classic Sleigh Bed Frame
+
+[128/181] Updating:
+  Old: Luxurious Rose-Gold Bedroom Retreat
+  New: Luxury Mustard Yellow Luxury Floating Platform Bed
+
+[129/181] Updating:
+  Old: Luxurious Symmetrical Mauve Master Bedroom
+  New: Bespoke Walnut Cozy Boucle Fabric Bed
+
+[130/181] Updating:
+  Old: Luxurious JAS Interior Bedroom(9)
+  New: Designer Charcoal Grey Industrial Metal & Wood Bed
+
+[131/181] Updating:
+  Old: Luxurious Modern Bedroom Retreat
+  New: Handcrafted Midnight Black Opulent Gold-Trimmed Bed
+
+[132/181] Updating:
+  Old: Luxurious Navy and Gold Bedroom(1)
+  New: Elegant Emerald Green Low-Profile Zen Platform Bed
+
+[133/181] Updating:
+  Old: Luxurious Navy and Gold Bedroom
+  New: Signature Ruby Red Regal Button-Tufted Bed
+
+[134/181] Updating:
+  Old: Luxurious Ornate Classic Bedroom
+  New: Premium Blush Pink Rustic Oak Wood Bed
+
+[135/181] Updating:
+  Old: Luxurious Plum Velvet Bedroom Retreat
+  New: Luxury Walnut Contemporary Slat Headboard Bed
+
+[136/181] Updating:
+  Old: Luxurious Rose and Gold Bedroom
+  New: Bespoke Emerald Green Royal Velvet Wingback Bed
+
+[137/181] Updating:
+  Old: Luxurious Royal Bedroom Interior
+  New: Designer Walnut Minimalist Teak Platform Bed
+
+[138/181] Updating:
+  Old: Luxurious Taupe Bedroom Showroom
+  New: Handcrafted Blush Pink Mid-Century Upholstered Bed
+
+[139/181] Updating:
+  Old: Luxurious Teal and Gold Bedroom Ensemble
+  New: Elegant Ruby Red Chesterfield Tufted King Bed
+
+[140/181] Updating:
+  Old: Luxurious Teal Arch Bed Interior
+  New: Signature Cream White Modern Scandi Wooden Bed
+
+[141/181] Updating:
+  Old: Luxury Bedroom with Warm Gold Accents
+  New: Premium Ivory Premium Leather Panel Bed
+
+[142/181] Updating:
+  Old: Luxury Charcoal Bedroom Retreat
+  New: Luxury Ivory Classic Sleigh Bed Frame
+
+[143/181] Updating:
+  Old: Luxury Navy and Gold Bedroom(1)
+  New: Bespoke Navy Blue Luxury Floating Platform Bed
+
+[144/181] Updating:
+  Old: Luxurious Teal and Gold Bedroom
+  New: Designer Emerald Green Cozy Boucle Fabric Bed
+
+[145/181] Updating:
+  Old: Luxurious Teal Bedroom Showcase
+  New: Handcrafted Ivory Industrial Metal & Wood Bed
+
+[146/181] Updating:
+  Old: Luxury Blue and Gold Bedroom
+  New: Elegant Ruby Red Opulent Gold-Trimmed Bed
+
+[147/181] Updating:
+  Old: Luxury Mustard Bedroom Retreat
+  New: Signature Navy Blue Low-Profile Zen Platform Bed
+
+[148/181] Updating:
+  Old: Luxury Navy and Gold Bedroom
+  New: Premium Cream White Regal Button-Tufted Bed
+
+[149/181] Updating:
+  Old: Luxury Plum and Beige Bedroom
+  New: Luxury Ruby Red Rustic Oak Wood Bed
+
+[150/181] Updating:
+  Old: Luxury Teal Bedroom Interior
+  New: Bespoke Ruby Red Contemporary Slat Headboard Bed
+
+[151/181] Updating:
+  Old: Luxury Teal Bedroom with Gold Accents(1)
+  New: Designer Walnut Royal Velvet Wingback Bed
+
+[152/181] Updating:
+  Old: Luxury Teal Bedroom with Gold Accents
+  New: Handcrafted Ruby Red Minimalist Teak Platform Bed
+
+[153/181] Updating:
+  Old: Modern Blue and Gold Bedroom Retreat
+  New: Elegant Blush Pink Mid-Century Upholstered Bed
+
+[154/181] Updating:
+  Old: Modern Luxury Bedroom Showroom
+  New: Signature Mustard Yellow Chesterfield Tufted King Bed
+
+[155/181] Updating:
+  Old: Modern Luxury Bedroom with JAS INTERIOR
+  New: Premium Cream White Modern Scandi Wooden Bed
+
+[156/181] Updating:
+  Old: Modern Navy and Gold Luxury Bedroom
+  New: Luxury Teal Premium Leather Panel Bed
+
+[157/181] Updating:
+  Old: Opulent Baroque Bedroom Retreat(1)
+  New: Bespoke Walnut Classic Sleigh Bed Frame
+
+[158/181] Updating:
+  Old: Opulent Carved Wood Bedroom Showroom
+  New: Designer Ruby Red Luxury Floating Platform Bed
+
+[159/181] Updating:
+  Old: Opulent Gold Baroque Bedroom
+  New: Handcrafted Cream White Cozy Boucle Fabric Bed
+
+[160/181] Updating:
+  Old: Opulent Golden Baroque Bedroom
+  New: Elegant Walnut Industrial Metal & Wood Bed
+
+[161/181] Updating:
+  Old: Opulent JAS Interior Bedroom
+  New: Signature Ruby Red Opulent Gold-Trimmed Bed
+
+[162/181] Updating:
+  Old: Modern Luxury Bedroom Retreat
+  New: Premium Espresso Low-Profile Zen Platform Bed
+
+[163/181] Updating:
+  Old: Modern Luxury Bedroom with JAS Interior Sign
+  New: Luxury Emerald Green Regal Button-Tufted Bed
+
+[164/181] Updating:
+  Old: Modern Luxury Bedroom with Marble Accents
+  New: Bespoke Ivory Rustic Oak Wood Bed
+
+[165/181] Updating:
+  Old: Modern Teal Bedroom with Warm Lighting
+  New: Designer Teal Contemporary Slat Headboard Bed
+
+[166/181] Updating:
+  Old: Opulent Baroque Bedroom Retreat
+  New: Handcrafted Taupe Royal Velvet Wingback Bed
+
+[167/181] Updating:
+  Old: Opulent French Classic Bedroom
+  New: Elegant Cream White Minimalist Teak Platform Bed
+
+[168/181] Updating:
+  Old: Opulent Gold Palace Bedroom
+  New: Signature Blush Pink Mid-Century Upholstered Bed
+
+[169/181] Updating:
+  Old: Opulent JAS Interior Bedroom(1)
+  New: Premium Emerald Green Chesterfield Tufted King Bed
+
+[170/181] Updating:
+  Old: Teal Luxury Bedroom Showcase
+  New: Luxury Navy Blue Modern Scandi Wooden Bed
+
+[171/181] Updating:
+  Old: Opulent Neoclassical Bedroom Retreat
+  New: Bespoke Walnut Premium Leather Panel Bed
+
+[172/181] Updating:
+  Old: Warm Luxury Bedroom with Geometric Lighting
+  New: Designer Emerald Green Classic Sleigh Bed Frame
+
+[173/181] Updating:
+  Old: Warm Mauve Luxury Bedroom
+  New: Handcrafted Charcoal Grey Luxury Floating Platform Bed
+
+[174/181] Updating:
+  Old: Warm Mauve Luxury Bedroom(1)
+  New: Elegant Navy Blue Cozy Boucle Fabric Bed
+
+[175/181] Updating:
+  Old: Warm Mustard Luxury Bedroom
+  New: Signature Taupe Industrial Metal & Wood Bed
+
+[176/181] Updating:
+  Old: Warm Terracotta Luxury Bedroom
+  New: Premium Taupe Opulent Gold-Trimmed Bed
+
+[177/181] Updating:
+  Old: U-Safe Sofa â€“ Premium Quality & Long-Lasting Comfort
+  New: Luxury Espresso Oversized Slouchy Sofa
+
+[178/181] Updating:
+  Old: Warm Contemporary Sectional Living Room
+  New: Bespoke Navy Blue Plush Velvet Chaise Sectional
+
+[179/181] Updating:
+  Old: Teal Velvet Sectional Living Room
+  New: Designer Ruby Red Sleek Track Arm Sofa
+
+[180/181] Updating:
+  Old: Teal Sectional in Modern Living Room
+  New: Handcrafted Walnut Royal Gold-Plated Trim Sofa
+
+[181/181] Updating:
+  Old: Teal Sectional in a Warm Modern Living Room(1)
+  New: Elegant Walnut L-Shape Italian Leather Sectional
+
+Finished updating all product titles!

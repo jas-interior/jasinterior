@@ -28,7 +28,16 @@ export default function AdminProducts() {
     setLoading(false)
   }
 
-  useEffect(() => { loadData() }, [])
+  useEffect(() => { 
+    loadData() 
+    const saved = localStorage.getItem('jas_admin_category_filter')
+    if (saved) setSelectedCategory(saved)
+  }, [])
+
+  const handleCategoryChange = (val: string) => {
+    setSelectedCategory(val)
+    localStorage.setItem('jas_admin_category_filter', val)
+  }
 
   const toggleActive = async (id: string, current: boolean) => {
     const supabase = createClient()
@@ -74,7 +83,7 @@ export default function AdminProducts() {
         <div className="flex flex-wrap items-center gap-3">
           <select 
             value={selectedCategory} 
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            onChange={(e) => handleCategoryChange(e.target.value)}
             className="input-gold h-10 text-sm px-3 w-full sm:w-auto min-w-[140px] bg-white"
           >
             <option value="all">All Categories</option>
