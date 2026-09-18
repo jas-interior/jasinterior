@@ -11,7 +11,7 @@ export default function FeaturedProducts() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getFeaturedProducts(10).then((data) => {
+    getFeaturedProducts(20).then((data) => {
       setProducts(data)
       setLoading(false)
     })
