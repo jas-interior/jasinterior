@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -200,6 +200,7 @@ export default function ProductDetailPage() {
 function SuggestedProducts({ categorySlug, currentProductId }: { categorySlug?: string, currentProductId: string }) {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Fetch products from same category, or all products if no category, limit 10
@@ -223,6 +224,14 @@ function SuggestedProducts({ categorySlug, currentProductId }: { categorySlug?: 
     })
   }, [categorySlug, currentProductId])
 
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) scrollContainerRef.current.scrollBy({ left: -320, behavior: 'smooth' })
+  }
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) scrollContainerRef.current.scrollBy({ left: 320, behavior: 'smooth' })
+  }
+
   if (loading) {
     return (
       <div className="flex gap-4 overflow-hidden">
@@ -239,30 +248,50 @@ function SuggestedProducts({ categorySlug, currentProductId }: { categorySlug?: 
   if (products.length === 0) return <p className="text-[#555] text-sm">No other products found.</p>
 
   return (
-    <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-      {products.map((product) => (
-        <Link key={product.id} href={`/product/${product.slug}`} className="group flex flex-col gap-3 w-[160px] sm:w-[240px] flex-none snap-start bg-white border border-[#eaeaea] p-2 rounded-2xl hover:border-[#c8941a]/50 transition-colors">
-          <div className="w-full aspect-square rounded-xl bg-white overflow-hidden relative">
-            {product.images && product.images[0] ? (
-              <Image 
-                src={product.images[0]} 
-                alt={product.title} 
-                fill 
-                className="object-cover group-hover:scale-110 transition-transform duration-500 select-none pointer-events-none" 
-                draggable={false}
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center text-[#333] text-xs">No Img</div>
-            )}
-          </div>
-          <div className="px-1 pb-1">
-            <p className="text-xs sm:text-sm font-semibold text-[#111111] group-hover:text-[#c8941a] line-clamp-2 leading-tight mb-1">{product.title}</p>
-            <p className="text-xs sm:text-sm font-bold text-[#c8941a]">
-              {product.price_enabled && product.price ? `₹${product.price.toLocaleString('en-IN')}` : 'Price on Request'}
-            </p>
-          </div>
-        </Link>
-      ))}
+    <div className="relative group">
+      <button 
+        onClick={scrollLeft} 
+        className="absolute left-0 top-[40%] -translate-y-1/2 -ml-5 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.1)] text-[#555] hover:text-[#c8941a] opacity-0 group-hover:opacity-100 transition-opacity border border-[#eaeaea]"
+      >
+        <ChevronLeft size={24} />
+      </button>
+
+      <button 
+        onClick={scrollRight} 
+        className="absolute right-0 top-[40%] -translate-y-1/2 -mr-5 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.1)] text-[#555] hover:text-[#c8941a] opacity-0 group-hover:opacity-100 transition-opacity border border-[#eaeaea]"
+      >
+        <ChevronRight size={24} />
+      </button>
+
+      <div 
+        ref={scrollContainerRef}
+        className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x" 
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {products.map((product) => (
+          <Link key={product.id} href={`/product/${product.slug}`} className="group/card flex flex-col gap-3 w-[160px] sm:w-[240px] flex-none snap-start bg-white border border-[#eaeaea] p-2 rounded-2xl hover:border-[#c8941a]/50 transition-colors">
+            <div className="w-full aspect-square rounded-xl bg-white overflow-hidden relative">
+              {product.images && product.images[0] ? (
+                <Image 
+                  src={product.images[0]} 
+                  alt={product.title} 
+                  fill 
+                  className="object-cover group-hover/card:scale-110 transition-transform duration-500 select-none pointer-events-none" 
+                  draggable={false}
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-[#333] text-xs">No Img</div>
+              )}
+            </div>
+            <div className="px-1 pb-1">
+              <p className="text-xs sm:text-sm font-semibold text-[#111111] group-hover/card:text-[#c8941a] line-clamp-2 leading-tight mb-1">{product.title}</p>
+              <p className="text-xs sm:text-sm font-bold text-[#c8941a]">
+                {product.price_enabled && product.price ? `₹${product.price.toLocaleString('en-IN')}` : 'Price on Request'}
+              </p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   )
 }

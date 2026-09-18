@@ -1,7 +1,7 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { getFeaturedProducts } from '@/lib/queries'
 import type { Product } from '@/types'
 import Image from 'next/image'
@@ -9,6 +9,7 @@ import Image from 'next/image'
 export default function FeaturedProducts() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     getFeaturedProducts(20).then((data) => {
@@ -16,6 +17,18 @@ export default function FeaturedProducts() {
       setLoading(false)
     })
   }, [])
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -320, behavior: 'smooth' })
+    }
+  }
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 320, behavior: 'smooth' })
+    }
+  }
 
   return (
     <section className="py-8 px-4 bg-[#faf9f6]">
@@ -40,30 +53,50 @@ export default function FeaturedProducts() {
         ) : products.length === 0 ? (
           <div className="text-center py-8"><p className="text-[#555] text-sm">No featured products yet.</p></div>
         ) : (
-          <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {products.map((product) => (
-              <Link key={product.id} href={`/product/${product.slug}`} className="group flex flex-col gap-3 w-[160px] sm:w-[240px] flex-none h-full snap-start bg-white border border-[#eaeaea] p-2 rounded-2xl hover:border-[#c8941a]/50 transition-colors">
-                <div className="w-full aspect-square rounded-xl bg-white overflow-hidden relative flex-shrink-0">
-                  {product.images && product.images[0] ? (
-                    <Image 
-                      src={product.images[0]} 
-                      alt={product.title} 
-                      fill 
-                      className="object-cover group-hover:scale-110 transition-transform duration-500 select-none pointer-events-none" 
-                      draggable={false}
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-[#333] text-xs">No Img</div>
-                  )}
-                </div>
-                <div className="px-1 pb-1 flex flex-col flex-grow">
-                  <p className="text-xs sm:text-sm font-semibold text-[#111111] group-hover:text-[#c8941a] line-clamp-2 leading-tight mb-2">{product.title}</p>
-                  <p className="text-xs sm:text-sm font-bold text-[#c8941a] mt-auto">
-                    {product.price_enabled && product.price ? `₹${product.price.toLocaleString('en-IN')}` : 'Price on Request'}
-                  </p>
-                </div>
-              </Link>
-            ))}
+          <div className="relative group">
+            <button 
+              onClick={scrollLeft} 
+              className="absolute left-0 top-[40%] -translate-y-1/2 -ml-5 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.1)] text-[#555] hover:text-[#c8941a] opacity-0 group-hover:opacity-100 transition-opacity border border-[#eaeaea]"
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            <button 
+              onClick={scrollRight} 
+              className="absolute right-0 top-[40%] -translate-y-1/2 -mr-5 z-10 hidden md:flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.1)] text-[#555] hover:text-[#c8941a] opacity-0 group-hover:opacity-100 transition-opacity border border-[#eaeaea]"
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            <div 
+              ref={scrollContainerRef}
+              className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x" 
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {products.map((product) => (
+                <Link key={product.id} href={`/product/${product.slug}`} className="group/card flex flex-col gap-3 w-[160px] sm:w-[240px] flex-none h-full snap-start bg-white border border-[#eaeaea] p-2 rounded-2xl hover:border-[#c8941a]/50 transition-colors">
+                  <div className="w-full aspect-square rounded-xl bg-white overflow-hidden relative flex-shrink-0">
+                    {product.images && product.images[0] ? (
+                      <Image 
+                        src={product.images[0]} 
+                        alt={product.title} 
+                        fill 
+                        className="object-cover group-hover/card:scale-110 transition-transform duration-500 select-none pointer-events-none" 
+                        draggable={false}
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-[#333] text-xs">No Img</div>
+                    )}
+                  </div>
+                  <div className="px-1 pb-1 flex flex-col flex-grow">
+                    <p className="text-xs sm:text-sm font-semibold text-[#111111] group-hover/card:text-[#c8941a] line-clamp-2 leading-tight mb-2">{product.title}</p>
+                    <p className="text-xs sm:text-sm font-bold text-[#c8941a] mt-auto">
+                      {product.price_enabled && product.price ? `₹${product.price.toLocaleString('en-IN')}` : 'Price on Request'}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>
