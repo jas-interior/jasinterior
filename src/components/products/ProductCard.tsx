@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingCart, MessageSquare, Eye, Zap } from 'lucide-react'
+import { ShoppingCart, MessageSquare, Eye, Zap, Share2 } from 'lucide-react'
 import { useCartStore } from '@/store/cart'
 import { formatPrice, getProductInquiryMessage, WHATSAPP_NUMBER, getWhatsAppLink } from '@/lib/utils'
 import type { Product } from '@/types'
@@ -18,10 +18,29 @@ export default function ProductCard({ product }: { product: Product }) {
     toast.success(`${product.title} added to cart`)
   }
 
+  const handleShare = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const url = `${window.location.origin}/product/${product.slug}`
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: product.title,
+          url: url
+        })
+      } catch (err) {
+        console.log('Share dismissed')
+      }
+    } else {
+      navigator.clipboard.writeText(url)
+      toast.success('Link copied!')
+    }
+  }
+
   const primaryImage = product.images?.[0] || null
 
   return (
-    <div className="product-card rounded-2xl overflow-hidden group flex flex-col h-full">
+    <div className="product-card rounded-2xl overflow-hidden group flex flex-col h-full relative">
       <Link href={`/product/${product.slug}`} className="flex-shrink-0">
         <div className="product-image-wrapper aspect-[4/3] bg-white relative">
           {primaryImage ? (
@@ -32,6 +51,7 @@ export default function ProductCard({ product }: { product: Product }) {
               className="object-cover select-none pointer-events-none" 
               sizes="(max-width:640px) 100vw, 50vw" 
               draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-[#333]">
@@ -40,10 +60,19 @@ export default function ProductCard({ product }: { product: Product }) {
             </div>
           )}
           <div className="absolute top-3 left-3 flex flex-col gap-1">
-            {product.featured && <span className="badge-gold text-[10px] px-2 py-0.5">Featured</span>}
+            {product.featured && <span className="badge-gold text-[10px] px-2 py-0.5 z-10">Featured</span>}
           </div>
         </div>
       </Link>
+      
+      <button 
+        onClick={handleShare} 
+        className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 shadow-sm flex items-center justify-center text-[#555] hover:text-[#c8941a] hover:bg-white z-20 transition-colors"
+        title="Share Product"
+      >
+        <Share2 size={14} />
+      </button>
+
       <div className="p-4 flex flex-col flex-grow">
         <div className="text-xs text-[#c8941a] uppercase tracking-widest mb-1">{product.category?.name || 'Furniture'}</div>
         <Link href={`/product/${product.slug}`}>

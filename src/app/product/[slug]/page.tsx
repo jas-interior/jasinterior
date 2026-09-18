@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingCart, Zap, MessageSquare, Phone, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ShoppingCart, Zap, MessageSquare, Phone, ChevronLeft, ChevronRight, Share2 } from 'lucide-react'
 import MainLayout from '@/components/layout/MainLayout'
 import { getProductBySlug } from '@/lib/queries'
 import { useCartStore } from '@/store/cart'
@@ -58,6 +58,23 @@ export default function ProductDetailPage() {
     toast.success(`${product.title} added to cart!`)
   }
 
+  const handleShare = async () => {
+    const url = window.location.href
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: product.title,
+          url: url
+        })
+      } catch (err) {
+        console.log('Share dismissed')
+      }
+    } else {
+      navigator.clipboard.writeText(url)
+      toast.success('Link copied!')
+    }
+  }
+
   return (
     <MainLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -109,8 +126,15 @@ export default function ProductDetailPage() {
           </div>
 
           <div>
-            {product.category && <div className="text-xs text-[#c8941a] uppercase tracking-widest mb-2">{product.category.name}</div>}
-            <h1 className="font-serif text-3xl font-bold text-[#111111] mb-3" style={{fontFamily:'Playfair Display,serif'}}>{product.title}</h1>
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <div>
+                {product.category && <div className="text-xs text-[#c8941a] uppercase tracking-widest mb-2">{product.category.name}</div>}
+                <h1 className="font-serif text-3xl font-bold text-[#111111]" style={{fontFamily:'Playfair Display,serif'}}>{product.title}</h1>
+              </div>
+              <button onClick={handleShare} className="w-10 h-10 flex-shrink-0 rounded-full border border-[#eaeaea] flex items-center justify-center text-[#555] hover:text-[#c8941a] hover:border-[#c8941a]/30 transition-colors bg-white">
+                <Share2 size={18} />
+              </button>
+            </div>
             {product.description && <p className="text-[#555555] leading-relaxed mb-6">{product.description}</p>}
 
             <div className="mb-6 p-4 rounded-xl bg-white border border-[#eaeaea]">
