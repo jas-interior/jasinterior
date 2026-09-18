@@ -53,7 +53,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 flex flex-col min-h-screen">
+      <main className="flex-1 lg:ml-64 flex flex-col min-h-screen min-w-0">
         <header className="h-16 bg-white border-b border-[#eaeaea] flex items-center px-4 sm:px-6 sticky top-0 z-30">
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 -ml-2 mr-4 text-[#555555]">
             <Menu size={24} />
@@ -61,7 +61,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="flex-1" />
           <Link href="/" target="_blank" className="text-xs font-medium text-[#555555] hover:text-[#c8941a] px-4 py-2 rounded-lg bg-white border border-[#eaeaea]">View Live Site ↗</Link>
         </header>
-        <div className="flex-1 p-4 sm:p-6 lg:p-8">
+        <div className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 overflow-x-hidden">
           {children}
         </div>
       </main>

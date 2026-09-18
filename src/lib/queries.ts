@@ -36,6 +36,7 @@ export async function getProducts(options?: {
     .select('*, category:categories(*)')
     .eq('active', true)
     .order('sort_order', { ascending: true })
+    .order('created_at', { ascending: false })
 
   if (options?.categorySlug) {
     const { data: cat } = await supabase

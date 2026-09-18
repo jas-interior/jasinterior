@@ -92,9 +92,9 @@ export default function AdminProducts() {
         </div>
       </div>
 
-      <div className="bg-white border border-[#eaeaea] rounded-2xl overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="admin-table min-w-[800px]">
+      <div className="bg-white border border-[#eaeaea] rounded-2xl overflow-hidden max-w-full">
+        <div className="overflow-x-auto w-full">
+          <table className="admin-table min-w-[800px] w-full">
             <thead>
               <tr>
                 <th>Product</th>
