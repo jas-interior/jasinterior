@@ -72,7 +72,15 @@ export default function ProductDetailPage() {
           <div>
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-white border border-[#eaeaea] mb-4">
               {images.length > 0 ? (
-                <Image src={images[currentImage]} alt={product.title} fill className="object-cover" priority />
+                <Image 
+                  src={images[currentImage]} 
+                  alt={product.title} 
+                  fill 
+                  className="object-cover select-none" 
+                  priority 
+                  draggable={false}
+                  onContextMenu={(e) => e.preventDefault()}
+                />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-[#333]"><span className="text-8xl">🪑</span></div>
               )}
@@ -87,7 +95,15 @@ export default function ProductDetailPage() {
               <div className="flex gap-2 overflow-x-auto">
                 {images.map((img, i) => (
                   <button key={i} onClick={() => setCurrentImage(i)} className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${i === currentImage ? 'border-[#c8941a]' : 'border-[#eaeaea] hover:border-[#c8941a]/40'}`}>
-                    <Image src={img} alt="" width={64} height={64} className="w-full h-full object-cover" />
+                    <Image 
+                      src={img} 
+                      alt="" 
+                      width={64} 
+                      height={64} 
+                      className="w-full h-full object-cover select-none" 
+                      draggable={false}
+                      onContextMenu={(e) => e.preventDefault()}
+                    />
                   </button>
                 ))}
               </div>
@@ -206,7 +222,14 @@ function SuggestedProducts({ categorySlug, currentProductId }: { categorySlug?: 
         <Link key={product.id} href={`/product/${product.slug}`} className="group flex flex-col gap-3 min-w-[140px] sm:min-w-[180px] snap-start bg-white border border-[#eaeaea] p-2 rounded-2xl hover:border-[#c8941a]/50 transition-colors">
           <div className="w-full aspect-square rounded-xl bg-white overflow-hidden relative">
             {product.images && product.images[0] ? (
-              <Image src={product.images[0]} alt={product.title} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
+              <Image 
+                src={product.images[0]} 
+                alt={product.title} 
+                fill 
+                className="object-cover group-hover:scale-110 transition-transform duration-500 select-none" 
+                draggable={false}
+                onContextMenu={(e) => e.preventDefault()}
+              />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-[#333] text-xs">No Img</div>
             )}

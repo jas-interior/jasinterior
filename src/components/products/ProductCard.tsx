@@ -25,7 +25,15 @@ export default function ProductCard({ product }: { product: Product }) {
       <Link href={`/product/${product.slug}`} className="flex-shrink-0">
         <div className="product-image-wrapper aspect-[4/3] bg-white relative">
           {primaryImage ? (
-            <Image src={primaryImage} alt={product.title} fill className="object-cover" sizes="(max-width:640px) 100vw, 50vw" />
+            <Image 
+              src={primaryImage} 
+              alt={product.title} 
+              fill 
+              className="object-cover select-none" 
+              sizes="(max-width:640px) 100vw, 50vw" 
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+            />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-[#333]">
               <div className="w-16 h-16 rounded-full bg-[#f0f0f0] flex items-center justify-center"><Eye size={24} /></div>
@@ -34,7 +42,6 @@ export default function ProductCard({ product }: { product: Product }) {
           )}
           <div className="absolute top-3 left-3 flex flex-col gap-1">
             {product.featured && <span className="badge-gold text-[10px] px-2 py-0.5">Featured</span>}
-            {!hasPricing && <span className="bg-white/90 border border-[#eaeaea] text-[#555555] text-[10px] px-2 py-0.5 rounded-full">Price on Request</span>}
           </div>
         </div>
       </Link>

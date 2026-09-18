@@ -45,7 +45,14 @@ export default function FeaturedProducts() {
               <Link key={product.id} href={`/product/${product.slug}`} className="group flex flex-col gap-3 min-w-[140px] sm:min-w-[180px] h-full snap-start bg-white border border-[#eaeaea] p-2 rounded-2xl hover:border-[#c8941a]/50 transition-colors">
                 <div className="w-full aspect-square rounded-xl bg-white overflow-hidden relative flex-shrink-0">
                   {product.images && product.images[0] ? (
-                    <Image src={product.images[0]} alt={product.title} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <Image 
+                      src={product.images[0]} 
+                      alt={product.title} 
+                      fill 
+                      className="object-cover group-hover:scale-110 transition-transform duration-500 select-none" 
+                      draggable={false}
+                      onContextMenu={(e) => e.preventDefault()}
+                    />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center text-[#333] text-xs">No Img</div>
                   )}
