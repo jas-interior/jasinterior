@@ -16,8 +16,8 @@ export default function AboutPage() {
           <div>
             <h1 className="section-title mb-6">Crafting Premium Furniture for Your Space</h1>
             <div className="prose-gold space-y-4 text-[#555555] leading-relaxed">
-              <p>Welcome to <strong>JAS INTERIOR</strong>, the premier destination for custom-made luxury furniture in Gujarat. Based in Vadodara, we specialize in manufacturing high-quality, bespoke furniture that perfectly aligns with your vision and space requirements.</p>
-              <p>We understand that every home is unique. That's why we don't just sell furniture; we manufacture it exactly to your specifications. Whether you need a perfectly sized sofa, a custom-designed wardrobe, or an elegant dining table, our skilled craftsmen bring your ideas to life.</p>
+              <p>Welcome to <strong>JAS INTERIOR</strong>, proudly powered by the manufacturing legacy of <strong>FM Furniture</strong>. Based in Vadodara, we are Gujarat's premier destination for custom-made luxury furniture.</p>
+              <p>Backed by the extensive manufacturing capabilities and experience of <strong>FM Furniture</strong>, we don't just sell furniture; we build it exactly to your specifications. Whether you need a perfectly sized sofa, a custom-designed wardrobe, or an elegant dining table, our skilled craftsmen bring your ideas to life under the trusted FM Furniture standard of quality.</p>
               <p>By dealing directly with us—the manufacturers—you avoid middlemen markups and ensure that every piece is crafted using premium materials, modern machinery, and a keen eye for detail.</p>
             </div>
             
