@@ -4,6 +4,8 @@ import { ArrowRight, Armchair, BedDouble, Columns, Utensils, Monitor, Bed, Coffe
 const categories = [
   { name: 'Sofa', slug: 'sofa', icon: Armchair, desc: 'Custom comfort sofas' },
   { name: 'Bed', slug: 'bed', icon: BedDouble, desc: 'Premium bedroom beds' },
+  { name: 'L Shape Sofa Cumbed', slug: 'l-safe-sofa-cumbed', icon: Armchair, desc: 'Space-saving L-shape designs' },
+  { name: '3 Seater Sofa Cumbed', slug: '3-seater-sofa-cumbed', icon: Armchair, desc: 'Compact 3-seater convertible' },
   { name: 'Wardrobe', slug: 'wardrobe', icon: Columns, desc: 'Space-saving wardrobes' },
   { name: 'Dining Table', slug: 'dining-table', icon: Utensils, desc: 'Elegant dining sets' },
   { name: 'TV Unit', slug: 'tv-unit', icon: Monitor, desc: 'Modern entertainment units' },
@@ -23,7 +25,7 @@ export default function CategoriesSection() {
           <p className="text-[#666666] max-w-xl mx-auto font-light">Discover our extensive range of premium custom furniture, meticulously crafted to elevate your living spaces.</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 mb-12">
           {categories.map((cat, i) => (
             <Link key={cat.slug} href={`/shop/${cat.slug}`} className="group relative bg-[#faf9f6] border border-[#eaeaea] p-8 flex flex-col items-center text-center transition-all duration-500 hover:bg-white hover:border-[#c8941a]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]" style={{ animationDelay: `${i * 0.05}s` }}>
               <div className="w-14 h-14 rounded-full bg-white border border-[#eaeaea] group-hover:border-[#c8941a]/30 flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-all duration-500 shadow-sm group-hover:shadow-md">
