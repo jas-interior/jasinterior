@@ -48,7 +48,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <div>
             {hasPricing ? <span className="text-lg font-bold text-[#c8941a]">{formatPrice(product.price!)}</span> : <span className="text-sm font-semibold text-[#666666] italic">Price on Request</span>}
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             {hasPricing ? (
               <>
                 <button onClick={handleAddToCart} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg btn-outline-gold text-xs font-semibold"><ShoppingCart size={13} /> Add to Cart</button>

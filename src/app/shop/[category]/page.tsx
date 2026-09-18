@@ -40,7 +40,7 @@ export default function CategoryPage() {
           {category?.description && <p className="text-[#666666]">{category.description}</p>}
         </div>
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="rounded-2xl overflow-hidden"><div className="skeleton aspect-[4/3]" /><div className="p-4 space-y-2"><div className="skeleton h-4 rounded w-3/4" /><div className="skeleton h-8 rounded" /></div></div>
             ))}
@@ -51,7 +51,7 @@ export default function CategoryPage() {
             <Link href="/inquiry" className="px-6 py-3 rounded-xl btn-gold text-sm font-semibold">Send Custom Inquiry</Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
             {products.map((product) => <ProductCard key={product.id} product={product} />)}
           </div>
         )}
