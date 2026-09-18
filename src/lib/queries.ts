@@ -92,7 +92,17 @@ export async function getProductById(id: string): Promise<Product | null> {
 }
 
 export async function getFeaturedProducts(limit = 8): Promise<Product[]> {
-  return getProducts({ featured: true, limit })
+  const supabase = createClient()
+  const { data, error } = await supabase
+    .from('products')
+    .select('*, category:categories(*)')
+    .eq('active', true)
+    .eq('featured', true)
+    .order('updated_at', { ascending: false })
+    .limit(limit)
+    
+  if (error) { console.error('getFeaturedProducts:', error); return [] }
+  return (data || []).map((p: any) => ({ ...p, images: Array.isArray(p.images) ? p.images : [] }))
 }
 
 export async function getBlogPosts(limit?: number): Promise<BlogPost[]> {
