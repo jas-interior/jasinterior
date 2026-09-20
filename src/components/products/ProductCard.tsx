@@ -42,7 +42,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="product-card rounded-2xl overflow-hidden group flex flex-col h-full relative">
       <Link href={`/product/${product.slug}`} className="flex-shrink-0">
-        <div className="product-image-wrapper aspect-[4/3] bg-white relative">
+        <div className="product-image-wrapper aspect-square bg-white relative">
           {primaryImage ? (
             <Image 
               src={primaryImage} 

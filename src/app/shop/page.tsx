@@ -63,7 +63,7 @@ export default function ShopPage() {
         {loading ? (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="rounded-2xl overflow-hidden"><div className="skeleton aspect-[4/3]" /><div className="p-4 space-y-2"><div className="skeleton h-4 rounded w-3/4" /><div className="skeleton h-3 rounded w-1/2" /><div className="skeleton h-8 rounded" /></div></div>
+              <div key={i} className="rounded-2xl overflow-hidden"><div className="skeleton aspect-square" /><div className="p-4 space-y-2"><div className="skeleton h-4 rounded w-3/4" /><div className="skeleton h-3 rounded w-1/2" /><div className="skeleton h-8 rounded" /></div></div>
             ))}
           </div>
         ) : products.length === 0 ? (
