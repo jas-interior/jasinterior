@@ -4,11 +4,12 @@ import BlogClient from './BlogClient'
 import { notFound } from 'next/navigation'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getBlogPostBySlug(params.slug)
+  const resolvedParams = await params
+  const post = await getBlogPostBySlug(resolvedParams.slug)
   
   if (!post) {
     return {
@@ -48,7 +49,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const post = await getBlogPostBySlug(params.slug)
+  const resolvedParams = await params
+  const post = await getBlogPostBySlug(resolvedParams.slug)
   
   if (!post) {
     notFound()

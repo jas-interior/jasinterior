@@ -5,11 +5,12 @@ import { notFound } from 'next/navigation'
 import type { Product } from '@/types'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const product = await getProductBySlug(params.slug)
+  const resolvedParams = await params
+  const product = await getProductBySlug(resolvedParams.slug)
   
   if (!product) {
     return {
@@ -47,7 +48,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = await getProductBySlug(params.slug)
+  const resolvedParams = await params
+  const product = await getProductBySlug(resolvedParams.slug)
   
   if (!product) {
     notFound()
