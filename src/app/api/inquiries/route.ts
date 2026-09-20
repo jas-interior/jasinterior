@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@supabase/supabase-js'
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +15,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Name and mobile are required' }, { status: 400 })
     }
 
-    const supabase = createAdminClient()
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
     const { data, error } = await supabase
       .from('inquiries')
       .insert({
@@ -52,7 +55,10 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const supabase = createAdminClient()
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
     const { searchParams } = new URL(req.url)
     const status = searchParams.get('status')
     const limit = parseInt(searchParams.get('limit') || '50')
