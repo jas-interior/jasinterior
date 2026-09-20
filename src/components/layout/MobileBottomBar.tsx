@@ -1,8 +1,12 @@
 'use client'
 import { Phone, MessageCircle, FileText } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function MobileBottomBar() {
+  const pathname = usePathname()
+  const isInquiryActive = pathname === '/inquiry'
+
   return (
     <div className="mobile-bottom-bar lg:hidden">
       <div className="flex items-center justify-around gap-2">
@@ -26,7 +30,9 @@ export default function MobileBottomBar() {
 
         <Link
           href="/inquiry"
-          className="flex-1 flex flex-col items-center gap-1 py-1 rounded-lg text-[#111111] hover:bg-white/5 transition-colors"
+          className={`flex-1 flex flex-col items-center gap-1 py-1 rounded-lg transition-colors ${
+            isInquiryActive ? 'bg-[#111111] text-[#c8941a]' : 'text-[#111111] hover:bg-white/5'
+          }`}
         >
           <FileText size={20} />
           <span className="text-[10px] font-medium">Inquiry</span>

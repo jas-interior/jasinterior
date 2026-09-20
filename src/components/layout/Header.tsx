@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { Menu, X, ShoppingCart, Phone } from 'lucide-react'
 import { useCartStore } from '@/store/cart'
 import CartDrawer from '@/components/cart/CartDrawer'
@@ -18,6 +19,7 @@ const navLinks = [
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
   const { getItemCount, openCart } = useCartStore()
   const itemCount = getItemCount()
 
@@ -46,12 +48,23 @@ export default function Header() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="text-sm font-semibold text-[#333333] hover:text-[#c8941a] transition-colors tracking-wider uppercase">
-                  {link.label}
-                </Link>
-              ))}
+            <nav className="hidden lg:flex items-center gap-2">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href))
+                return (
+                  <Link 
+                    key={link.href} 
+                    href={link.href} 
+                    className={`text-sm font-semibold tracking-wider uppercase px-4 py-2 rounded-xl transition-all ${
+                      isActive 
+                        ? 'bg-[#111111] text-[#c8941a] shadow-md' 
+                        : 'text-[#333333] hover:text-[#c8941a] hover:bg-[#faf9f6]'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
             </nav>
 
             {/* Right actions */}
@@ -60,14 +73,12 @@ export default function Header() {
                 Get Quote
               </Link>
               <button onClick={openCart} className="relative p-2 text-[#555555] hover:text-[#c8941a] transition-colors" aria-label="Cart">
-                <ShoppingCart size={20} />
+                <ShoppingCart size={22} />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#c8941a] text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                    {itemCount}
-                  </span>
+                  <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-[10px] font-bold text-white bg-[#c8941a] rounded-full shadow-sm">{itemCount}</span>
                 )}
               </button>
-              <a href="tel:8866531993" className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg border border-[#c8941a]/30 text-[#c8941a] text-xs font-semibold hover:bg-[#c8941a]/10 transition-colors">
+              <a href="tel:8866531993" className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#faf9f6] border border-[#eaeaea] text-[#555555] hover:text-[#c8941a] hover:border-[#c8941a]/30 transition-colors text-xs font-semibold">
                 <Phone size={14} /><span>Call</span>
               </a>
               <button className="lg:hidden p-2 text-[#555555] hover:text-[#c8941a] transition-colors" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
@@ -81,12 +92,23 @@ export default function Header() {
         {mobileOpen && (
           <div className="lg:hidden bg-white border-b border-[#eaeaea] shadow-xl absolute top-full left-0 right-0 max-h-[80vh] overflow-y-auto">
             <div className="px-4 py-4 space-y-2">
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
-                  className="block py-3 px-4 text-sm font-semibold tracking-wider uppercase text-[#111111] hover:text-[#c8941a] hover:bg-[#faf9f6] rounded-xl transition-colors">
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href))
+                return (
+                  <Link 
+                    key={link.href} 
+                    href={link.href} 
+                    onClick={() => setMobileOpen(false)}
+                    className={`block py-3 px-4 text-sm font-semibold tracking-wider uppercase rounded-xl transition-colors ${
+                      isActive 
+                        ? 'bg-[#111111] text-[#c8941a] shadow-md' 
+                        : 'text-[#111111] hover:text-[#c8941a] hover:bg-[#faf9f6]'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
               <div className="pt-4 mt-2 border-t border-[#eaeaea] flex flex-col gap-3">
                 <a href="tel:8866531993" className="flex items-center justify-center gap-2 py-3.5 rounded-xl border-2 border-[#c8941a]/30 text-[#c8941a] text-sm font-bold hover:bg-[#faf9f6]">
                   <Phone size={16} /> Call Support
