@@ -55,12 +55,20 @@ export async function getProducts(options?: {
   // Custom logic: If no specific category is selected, show sofas first
   if (!options?.categorySlug) {
     products.sort((a, b) => {
-      const isSofaA = a.category?.slug?.toLowerCase().includes('sofa') || a.category?.name?.toLowerCase().includes('sofa')
-      const isSofaB = b.category?.slug?.toLowerCase().includes('sofa') || b.category?.name?.toLowerCase().includes('sofa')
-      
-      if (isSofaA && !isSofaB) return -1
-      if (!isSofaA && isSofaB) return 1
-      return 0 // Maintain existing order for others
+      // 1. Pure "sofa" category comes absolute first
+      const isPureSofaA = a.category?.slug?.toLowerCase() === 'sofa'
+      const isPureSofaB = b.category?.slug?.toLowerCase() === 'sofa'
+      if (isPureSofaA && !isPureSofaB) return -1
+      if (!isPureSofaA && isPureSofaB) return 1
+
+      // 2. Other categories containing "sofa" come next
+      const isOtherSofaA = a.category?.slug?.toLowerCase().includes('sofa') || a.category?.name?.toLowerCase().includes('sofa')
+      const isOtherSofaB = b.category?.slug?.toLowerCase().includes('sofa') || b.category?.name?.toLowerCase().includes('sofa')
+      if (isOtherSofaA && !isOtherSofaB) return -1
+      if (!isOtherSofaA && isOtherSofaB) return 1
+
+      // 3. Maintain existing DB order for everything else
+      return 0
     })
   }
   
