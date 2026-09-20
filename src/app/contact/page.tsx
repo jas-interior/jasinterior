@@ -1,5 +1,6 @@
 import MainLayout from '@/components/layout/MainLayout'
 import { Phone, Mail, MapPin, MessageCircle, Clock } from 'lucide-react'
+import ContactForm from './ContactForm'
 
 export const metadata = {
   title: 'Contact JAS INTERIOR | Custom Furniture in Gujarat',
@@ -53,16 +54,7 @@ export default function ContactPage() {
           <div className="lg:col-span-2">
             <div className="bg-white border border-[#eaeaea] rounded-3xl p-6 sm:p-10 h-full">
               <h2 className="font-serif text-2xl font-bold text-[#111111] mb-6" style={{fontFamily:'Playfair Display,serif'}}>Send us a Message</h2>
-              <form className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div><label className="block text-xs text-[#555555] font-medium mb-1.5">Full Name</label><input type="text" className="input-gold" placeholder="John Doe" /></div>
-                  <div><label className="block text-xs text-[#555555] font-medium mb-1.5">Mobile Number</label><input type="tel" className="input-gold" placeholder="10-digit number" /></div>
-                </div>
-                <div><label className="block text-xs text-[#555555] font-medium mb-1.5">Email Address</label><input type="email" className="input-gold" placeholder="john@example.com" /></div>
-                <div><label className="block text-xs text-[#555555] font-medium mb-1.5">Subject</label><input type="text" className="input-gold" placeholder="How can we help?" /></div>
-                <div><label className="block text-xs text-[#555555] font-medium mb-1.5">Message</label><textarea rows={5} className="input-gold resize-none" placeholder="Your message here..." /></div>
-                <button type="button" className="w-full py-4 rounded-xl btn-gold font-semibold">Send Message</button>
-              </form>
+              <ContactForm />
             </div>
           </div>
         </div>
