@@ -77,7 +77,8 @@ export async function getProducts(options?: {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const supabase = createClient()
-  const cleanSlug = slug ? slug.replace(/%20/g, '-').replace(/\s+/g, '-') : slug
+  let cleanSlug = slug ? slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : slug
+  
   const { data, error } = await supabase
     .from('products')
     .select('*, category:categories(*)')
