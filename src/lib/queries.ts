@@ -77,10 +77,11 @@ export async function getProducts(options?: {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const supabase = createClient()
+  const cleanSlug = slug ? slug.replace(/%20/g, '-').replace(/\s+/g, '-') : slug
   const { data, error } = await supabase
     .from('products')
     .select('*, category:categories(*)')
-    .eq('slug', slug)
+    .eq('slug', cleanSlug)
     .eq('active', true)
     .single()
   if (error) return null
