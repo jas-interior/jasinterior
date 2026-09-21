@@ -2,76 +2,57 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
-import ZoomableImage from '@/components/ui/ZoomableImage';
-import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { Loader2, Image as ImageIcon } from 'lucide-react';
 
 export default function PremiumIdeasGallery() {
   const supabase = createClient();
   const [categories, setCategories] = useState<any[]>([]);
-  const [images, setImages] = useState<any[]>([]);
-  const [activeCategory, setActiveCategory] = useState<string>('all');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      // Fetch categories
       const { data: catData } = await supabase.from('interior_idea_categories').select('*').order('sort_order', { ascending: true });
       if (catData) setCategories(catData);
-      
-      // Fetch images
-      const { data: imgData } = await supabase.from('interior_idea_images').select('*, interior_idea_categories(slug)').order('created_at', { ascending: false });
-      if (imgData) setImages(imgData);
-      
       setLoading(false);
     }
     fetchData();
   }, []);
 
-  const filteredImages = activeCategory === 'all' 
-    ? images 
-    : images.filter(img => img.interior_idea_categories?.slug === activeCategory);
-
   return (
     <section className="py-20 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 className="text-sm font-bold tracking-[0.2em] text-center uppercase mb-8 text-[#6d6355]">Premium Interior Design Ideas</h2>
+      <h2 className="text-sm font-bold tracking-[0.2em] text-center uppercase mb-12 text-[#6d6355]">Premium Interior Design Ideas</h2>
       
       {loading ? (
-        <div className="flex justify-center py-20"><Loader2 className="animate-spin text-[#c8941a]" size={32} /></div>
+        <div className="flex justify-center py-10"><Loader2 className="animate-spin text-[#c8941a]" size={32} /></div>
       ) : (
-        <>
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-12">
-            <button
-              onClick={() => setActiveCategory('all')}
-              className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-colors ${activeCategory === 'all' ? 'bg-[#c8941a] text-white' : 'bg-[#f4f1eb] text-[#555555] hover:bg-[#e2ddd5]'}`}
+        <div className="flex flex-wrap justify-center gap-6 md:gap-10">
+          {categories.map(cat => (
+            <Link 
+              key={cat.id} 
+              href={`/interior-ideas/${cat.slug}`}
+              className="flex flex-col items-center group w-24 md:w-32"
             >
-              All
-            </button>
-            {categories.map(cat => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.slug)}
-                className={`px-4 py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-colors ${activeCategory === cat.slug ? 'bg-[#c8941a] text-white' : 'bg-[#f4f1eb] text-[#555555] hover:bg-[#e2ddd5]'}`}
-              >
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white shadow-md border-2 border-transparent group-hover:border-[#c8941a] transition-all overflow-hidden mb-3 md:mb-4 relative flex items-center justify-center">
+                {cat.cover_image ? (
+                  <Image 
+                    src={cat.cover_image} 
+                    alt={cat.name} 
+                    fill 
+                    className="object-cover group-hover:scale-110 transition-transform duration-500" 
+                    unoptimized
+                  />
+                ) : (
+                  <ImageIcon className="text-gray-300" size={32} />
+                )}
+              </div>
+              <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-center text-[#555555] group-hover:text-[#1a1a1a] transition-colors leading-tight">
                 {cat.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Image Grid (1:1 Ratio) */}
-          {filteredImages.length === 0 ? (
-            <div className="text-center py-20 text-gray-500">No ideas found in this category yet.</div>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {filteredImages.map((img) => (
-                <div key={img.id} className="relative aspect-square rounded-xl overflow-hidden shadow-sm group">
-                  <ZoomableImage src={img.image_url} alt="Interior Idea" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
-                </div>
-              ))}
-            </div>
-          )}
-        </>
+              </span>
+            </Link>
+          ))}
+        </div>
       )}
     </section>
   );

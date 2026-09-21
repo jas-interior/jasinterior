@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Plus, Trash2, Edit, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
 import Image from 'next/image';
@@ -11,6 +11,7 @@ export default function InteriorIdeasAdmin() {
   const [images, setImages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [coverUploading, setCoverUploading] = useState<string | null>(null);
   
   // Category Form State
   const [newCatName, setNewCatName] = useState('');
@@ -18,6 +19,9 @@ export default function InteriorIdeasAdmin() {
   // Upload State
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [filesToUpload, setFilesToUpload] = useState<FileList | null>(null);
+  
+  const coverFileInputRef = useRef<HTMLInputElement>(null);
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -25,14 +29,11 @@ export default function InteriorIdeasAdmin() {
 
   const fetchData = async () => {
     setLoading(true);
-    // Fetch categories
     const { data: catData } = await supabase.from('interior_idea_categories').select('*').order('sort_order', { ascending: true });
     if (catData) setCategories(catData);
     
-    // Fetch images
     const { data: imgData } = await supabase.from('interior_idea_images').select('*, interior_idea_categories(name)').order('created_at', { ascending: false });
     if (imgData) setImages(imgData);
-    
     setLoading(false);
   };
 
@@ -54,10 +55,42 @@ export default function InteriorIdeasAdmin() {
   };
 
   const handleDeleteCategory = async (id: string) => {
-    if (confirm('Are you sure? This will delete all images in this category too.')) {
+    if (confirm('Are you sure? This will delete the category and all its images.')) {
       await supabase.from('interior_idea_categories').delete().eq('id', id);
       fetchData();
     }
+  };
+
+  const triggerCoverUpload = (categoryId: string) => {
+    setEditingCategoryId(categoryId);
+    coverFileInputRef.current?.click();
+  };
+
+  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !editingCategoryId) return;
+
+    setCoverUploading(editingCategoryId);
+    const ext = file.name.split('.').pop();
+    const fileName = `cover-${editingCategoryId}-${Date.now()}.${ext}`;
+
+    const { data, error } = await supabase.storage.from('interior-ideas').upload(fileName, file);
+
+    if (data) {
+      const { data: publicUrlData } = supabase.storage.from('interior-ideas').getPublicUrl(fileName);
+      if (publicUrlData) {
+        await supabase.from('interior_idea_categories')
+          .update({ cover_image: publicUrlData.publicUrl })
+          .eq('id', editingCategoryId);
+        fetchData();
+      }
+    } else if (error) {
+      alert('Error uploading cover: ' + error.message);
+    }
+
+    setCoverUploading(null);
+    setEditingCategoryId(null);
+    if (coverFileInputRef.current) coverFileInputRef.current.value = '';
   };
 
   const handleBulkUpload = async (e: React.FormEvent) => {
@@ -83,8 +116,6 @@ export default function InteriorIdeasAdmin() {
           });
           successCount++;
         }
-      } else if (error) {
-        console.error('Upload error:', error);
       }
     }
     
@@ -97,14 +128,12 @@ export default function InteriorIdeasAdmin() {
 
   const handleDeleteImage = async (id: string, url: string) => {
     if (confirm('Delete this image?')) {
-      // Try to delete from storage if it's in our bucket
       if (url.includes('interior-ideas')) {
         const fileName = url.split('/').pop();
         if (fileName) {
           await supabase.storage.from('interior-ideas').remove([fileName]);
         }
       }
-      // Delete from DB
       await supabase.from('interior_idea_images').delete().eq('id', id);
       fetchData();
     }
@@ -116,7 +145,7 @@ export default function InteriorIdeasAdmin() {
     <div className="space-y-8 max-w-6xl mx-auto">
       <div>
         <h1 className="text-2xl font-bold mb-2">Interior Design Ideas</h1>
-        <p className="text-gray-500">Manage categories and bulk upload images for the Turnkey Interior page.</p>
+        <p className="text-gray-500">Manage categories, covers, and bulk upload images for the gallery.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -137,16 +166,43 @@ export default function InteriorIdeasAdmin() {
             <button type="submit" className="bg-black text-white px-4 py-2 text-sm rounded hover:bg-gray-800">Add</button>
           </form>
 
-          <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2">
+          {/* Hidden File Input for Category Cover */}
+          <input 
+            type="file" 
+            ref={coverFileInputRef} 
+            className="hidden" 
+            accept="image/*" 
+            onChange={handleCoverUpload} 
+          />
+
+          <div className="space-y-2 max-h-[500px] overflow-y-auto pr-2">
             {categories.map(cat => (
-              <div key={cat.id} className="flex items-center justify-between p-3 bg-gray-50 rounded border border-gray-100 group">
-                <div>
-                  <div className="font-semibold text-sm">{cat.name}</div>
-                  <div className="text-[10px] text-gray-400">{cat.slug}</div>
+              <div key={cat.id} className="flex flex-col p-3 bg-gray-50 rounded border border-gray-100 group">
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <div className="font-semibold text-sm">{cat.name}</div>
+                  </div>
+                  <button onClick={() => handleDeleteCategory(cat.id)} className="text-gray-400 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Trash2 size={14} />
+                  </button>
                 </div>
-                <button onClick={() => handleDeleteCategory(cat.id)} className="text-gray-400 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Trash2 size={14} />
-                </button>
+                
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded bg-gray-200 relative overflow-hidden shrink-0 border border-gray-300">
+                    {cat.cover_image ? (
+                      <Image src={cat.cover_image} alt="" fill className="object-cover" unoptimized />
+                    ) : (
+                      <ImageIcon className="absolute inset-0 m-auto text-gray-400" size={20} />
+                    )}
+                  </div>
+                  <button 
+                    onClick={() => triggerCoverUpload(cat.id)}
+                    disabled={coverUploading === cat.id}
+                    className="text-xs bg-white border border-gray-300 px-3 py-1.5 rounded hover:bg-gray-50 disabled:opacity-50"
+                  >
+                    {coverUploading === cat.id ? 'Uploading...' : cat.cover_image ? 'Change Cover' : 'Add Cover Image'}
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -155,7 +211,6 @@ export default function InteriorIdeasAdmin() {
         {/* Upload & Images Section */}
         <div className="lg:col-span-2 space-y-6">
           
-          {/* Bulk Upload Form */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
             <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><Upload size={18} /> Bulk Upload Images</h2>
             <form onSubmit={handleBulkUpload} className="space-y-4">
@@ -197,9 +252,8 @@ export default function InteriorIdeasAdmin() {
             </form>
           </div>
 
-          {/* Uploaded Images Gallery */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-            <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><ImageIcon size={18} /> Uploaded Images ({images.length})</h2>
+            <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><ImageIcon size={18} /> Uploaded Gallery Images ({images.length})</h2>
             
             {images.length === 0 ? (
               <div className="text-center py-10 text-gray-400 text-sm">No images uploaded yet.</div>
