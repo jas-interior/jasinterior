@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
@@ -7,21 +7,44 @@ import { createPortal } from 'react-dom';
 export default function ZoomableImage({ src, alt, width, height, className, priority }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const closingRef = useRef(false);
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    closingRef.current = false;
+    document.body.style.overflow = 'hidden';
     
-    // Prevent scrolling when modal is open
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    
+    // Push a dummy state to history to trap the mobile hardware back button
+    window.history.pushState({ isZoomModal: true }, '');
+
+    const handlePopState = () => {
+      setIsOpen(false);
+    };
+
+    // Listen for the back button (popstate)
+    window.addEventListener('popstate', handlePopState);
+
     return () => {
       document.body.style.overflow = 'unset';
+      window.removeEventListener('popstate', handlePopState);
     };
   }, [isOpen]);
+
+  const handleManualClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (closingRef.current) return;
+    closingRef.current = true;
+    
+    // Instead of setting isOpen(false) directly, we mimic a back button press.
+    // This pops the dummy state we added and triggers handlePopState, 
+    // which cleanly closes the modal without leaving junk in the history stack.
+    window.history.back();
+  };
 
   return (
     <>
@@ -33,10 +56,10 @@ export default function ZoomableImage({ src, alt, width, height, className, prio
       </div>
       
       {mounted && isOpen && createPortal(
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 p-4 md:p-10" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 p-4 md:p-10" onClick={handleManualClose}>
           <button 
             className="absolute top-4 right-4 md:top-8 md:right-8 z-50 text-white/70 hover:text-white transition-colors p-2 bg-black/20 rounded-full" 
-            onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
+            onClick={handleManualClose}
           >
             <X size={32} />
           </button>
