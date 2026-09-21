@@ -337,6 +337,56 @@ export default function TurnkeyInteriorPage() {
 
           </div>
         </section>
+        {/* PAYMENT TERMS SECTION */}
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 mb-8 md:mb-16">
+          <div className="bg-white rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#eaeaea] p-6 md:p-12 relative overflow-hidden">
+            {/* Decorative background element */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#c8941a] opacity-[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+            
+            <div className="relative z-10">
+              <h2 className="text-2xl md:text-3xl font-serif text-center mb-2 text-[#1a1a1a]" style={{fontFamily:'Playfair Display, serif'}}>Payment Terms</h2>
+              <p className="text-center text-[#6d6355] text-xs md:text-sm mb-8 md:mb-10 max-w-md mx-auto">Transparent and milestone-based payment structure for your peace of mind throughout the project execution.</p>
+              
+              <div className="overflow-hidden rounded-2xl border border-[#eaeaea]">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-[#f9f6f0] text-[#1a1a1a]">
+                      <th className="py-4 px-5 md:px-8 font-bold text-[10px] md:text-xs uppercase tracking-widest border-b border-[#eaeaea]">Stage</th>
+                      <th className="py-4 px-5 md:px-8 font-bold text-[10px] md:text-xs uppercase tracking-widest border-b border-[#eaeaea] text-right w-24 md:w-32">Payment</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-xs md:text-sm text-[#555555]">
+                    <tr className="border-b border-[#eaeaea] hover:bg-gray-50 transition-colors">
+                      <td className="py-4 px-5 md:px-8 leading-relaxed">Before starting 3D Design</td>
+                      <td className="py-4 px-5 md:px-8 font-semibold text-[#1a1a1a] text-right">10%</td>
+                    </tr>
+                    <tr className="border-b border-[#eaeaea] hover:bg-gray-50 transition-colors">
+                      <td className="py-4 px-5 md:px-8 leading-relaxed">At the time of material delivery to site</td>
+                      <td className="py-4 px-5 md:px-8 font-semibold text-[#1a1a1a] text-right">30%</td>
+                    </tr>
+                    <tr className="border-b border-[#eaeaea] hover:bg-gray-50 transition-colors">
+                      <td className="py-4 px-5 md:px-8 leading-relaxed">After furniture boxes are completed & before laminate pasting</td>
+                      <td className="py-4 px-5 md:px-8 font-semibold text-[#1a1a1a] text-right">30%</td>
+                    </tr>
+                    <tr className="border-b border-[#eaeaea] hover:bg-gray-50 transition-colors">
+                      <td className="py-4 px-5 md:px-8 leading-relaxed">After laminate work & before wall colour</td>
+                      <td className="py-4 px-5 md:px-8 font-semibold text-[#1a1a1a] text-right">15%</td>
+                    </tr>
+                    <tr className="border-b border-[#eaeaea] hover:bg-gray-50 transition-colors">
+                      <td className="py-4 px-5 md:px-8 leading-relaxed">After complete work, at the time of key handover</td>
+                      <td className="py-4 px-5 md:px-8 font-semibold text-[#1a1a1a] text-right">15%</td>
+                    </tr>
+                    <tr className="bg-[#1a1a1a] text-white">
+                      <td className="py-5 px-5 md:px-8 font-bold text-right uppercase tracking-widest text-[10px] md:text-xs">Total</td>
+                      <td className="py-5 px-5 md:px-8 font-bold text-right text-sm md:text-base text-[#c8941a]">100%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <PremiumIdeasGallery />
 
         {/* BRANDS SECTION */}
