@@ -9,6 +9,7 @@ const navItems = [
   { href: '/admin/orders', label: 'Orders', icon: ShoppingCart },
   { href: '/admin/products', label: 'Products', icon: ShoppingBag },
   { href: '/admin/categories', label: 'Categories', icon: Grid },
+  { href: '/admin/interior-ideas', label: 'Interior Ideas', icon: ShoppingBag }, // Will fix import
   { href: '/admin/inquiries', label: 'Inquiries', icon: MessageSquare },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/settings', label: 'Settings', icon: Settings },

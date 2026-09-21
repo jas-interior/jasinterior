@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import ZoomableImage from '@/components/ui/ZoomableImage'
+import PremiumIdeasGallery from '@/components/PremiumIdeasGallery'
 import Link from 'next/link'
 import MainLayout from '@/components/layout/MainLayout'
 import { ArrowRight, Sofa, PenTool, Gem, ShieldCheck, ArrowUpRight } from 'lucide-react'
@@ -336,30 +337,7 @@ export default function TurnkeyInteriorPage() {
 
           </div>
         </section>
-        {/* FEATURED PROJECTS */}
-        <section className="py-20 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-sm font-bold tracking-[0.2em] text-center uppercase mb-12">Featured Projects</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {[
-              { title: 'Sunkissed Minimalism', loc: 'Ahmedabad, India', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09be1546?auto=format&fit=crop&q=80' },
-              { title: 'Modern Serenity', loc: 'Vadodara, India', img: 'https://images.unsplash.com/photo-1600566753086-00f18efc2291?auto=format&fit=crop&q=80' },
-              { title: 'Warmth in Wood', loc: 'Surat, India', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80' },
-            ].map((proj, i) => (
-              <div key={i} className="group cursor-pointer">
-                <div className="relative w-full aspect-[16/10] mb-5 overflow-hidden rounded-lg">
-                  <Image src={proj.img} alt={proj.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                </div>
-                <h3 className="text-xs font-bold tracking-widest uppercase mb-1">{proj.title}</h3>
-                <p className="text-[#6d6355] text-xs">{proj.loc}</p>
-              </div>
-            ))}
-          </div>
-          <div className="text-center">
-            <Link href="/contact" className="inline-block border border-[#d3cec4] text-[#2d2a26] px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-[#2d2a26] hover:text-white transition-colors">
-              View All Projects
-            </Link>
-          </div>
-        </section>
+        <PremiumIdeasGallery />
 
         {/* DESIGN TIPS & IDEAS */}
         <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#f2ede6] rounded-[40px] my-10">

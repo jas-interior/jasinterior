@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
-export default function ZoomableImage({ src, alt, width, height, className, priority }: any) {
+export default function ZoomableImage({ src, alt, width, height, fill, className, priority }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const closingRef = useRef(false);
@@ -48,8 +48,8 @@ export default function ZoomableImage({ src, alt, width, height, className, prio
 
   return (
     <>
-      <div className="cursor-pointer relative group" onClick={() => setIsOpen(true)}>
-        <Image src={src} alt={alt} width={width} height={height} className={className} priority={priority} />
+      <div className="cursor-pointer relative group w-full h-full" onClick={() => setIsOpen(true)}>
+        <Image src={src} alt={alt} width={width} height={height} fill={fill} className={className} priority={priority} />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-xl flex items-center justify-center">
           <span className="opacity-0 group-hover:opacity-100 bg-black/70 text-white text-[10px] md:text-xs px-2 py-1 rounded backdrop-blur-sm transition-opacity shadow-lg">Click to Expand</span>
         </div>
