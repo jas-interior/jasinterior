@@ -61,6 +61,40 @@ export default function InteriorIdeasAdmin() {
     }
   };
 
+  const compressImageToWebp = (file: File): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new window.Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          
+          // Max width 1600px for web optimization
+          if (width > 1600) {
+            height = Math.round((height * 1600) / width);
+            width = 1600;
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return reject('No context');
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob((blob) => {
+            if (blob) resolve(blob);
+            else reject('Blob conversion failed');
+          }, 'image/webp', 0.8);
+        };
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = error => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
+
+
   const triggerCoverUpload = (categoryId: string) => {
     setEditingCategoryId(categoryId);
     coverFileInputRef.current?.click();
@@ -73,21 +107,27 @@ export default function InteriorIdeasAdmin() {
     setCoverUploading(editingCategoryId);
     const cat = categories.find(c => c.id === editingCategoryId);
     const seoBaseName = cat ? cat.slug : 'category';
-    const ext = file.name.split('.').pop();
-    const fileName = `jas-interior-${seoBaseName}-cover-${Date.now()}.${ext}`;
+    
+    try {
+      const webpBlob = await compressImageToWebp(file);
+      const fileName = `jas-interior-${seoBaseName}-cover-ahmedabad-vadodara-gujarat-${Date.now()}.webp`;
 
-    const { data, error } = await supabase.storage.from('interior-ideas').upload(fileName, file);
+      const { data, error } = await supabase.storage.from('interior-ideas').upload(fileName, webpBlob, { contentType: 'image/webp' });
 
-    if (data) {
-      const { data: publicUrlData } = supabase.storage.from('interior-ideas').getPublicUrl(fileName);
-      if (publicUrlData) {
-        await supabase.from('interior_idea_categories')
-          .update({ cover_image: publicUrlData.publicUrl })
-          .eq('id', editingCategoryId);
-        fetchData();
+      if (data) {
+        const { data: publicUrlData } = supabase.storage.from('interior-ideas').getPublicUrl(fileName);
+        if (publicUrlData) {
+          await supabase.from('interior_idea_categories')
+            .update({ cover_image: publicUrlData.publicUrl })
+            .eq('id', editingCategoryId);
+          fetchData();
+        }
+      } else if (error) {
+        alert('Error uploading cover: ' + error.message);
       }
-    } else if (error) {
-      alert('Error uploading cover: ' + error.message);
+    } catch (err) {
+      console.error('Failed to compress cover image', err);
+      alert('Error compressing image to WebP');
     }
 
     setCoverUploading(null);
@@ -107,21 +147,26 @@ export default function InteriorIdeasAdmin() {
     
     for (let i = 0; i < filesToUpload.length; i++) {
       const file = filesToUpload[i];
-      const ext = file.name.split('.').pop();
-      // Auto-rename for SEO: jas-interior-category-slug-index-timestamp.jpg
-      const fileName = `jas-interior-${seoBaseName}-${i + 1}-${Date.now()}.${ext}`;
-      
-      const { data, error } = await supabase.storage.from('interior-ideas').upload(fileName, file);
-      
-      if (data) {
-        const { data: publicUrlData } = supabase.storage.from('interior-ideas').getPublicUrl(fileName);
-        if (publicUrlData) {
-          await supabase.from('interior_idea_images').insert({
-            category_id: selectedCategory,
-            image_url: publicUrlData.publicUrl
-          });
-          successCount++;
+      try {
+        const webpBlob = await compressImageToWebp(file);
+        
+        // Auto-rename for SEO and WebP extension
+        const fileName = `jas-interior-${seoBaseName}-${i + 1}-ahmedabad-vadodara-gujarat-${Date.now()}.webp`;
+        
+        const { data, error } = await supabase.storage.from('interior-ideas').upload(fileName, webpBlob, { contentType: 'image/webp' });
+        
+        if (data) {
+          const { data: publicUrlData } = supabase.storage.from('interior-ideas').getPublicUrl(fileName);
+          if (publicUrlData) {
+            await supabase.from('interior_idea_images').insert({
+              category_id: selectedCategory,
+              image_url: publicUrlData.publicUrl
+            });
+            successCount++;
+          }
         }
+      } catch (err) {
+        console.error('Failed to compress or upload image', err);
       }
     }
     

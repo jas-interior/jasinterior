@@ -46,7 +46,7 @@ export default function TurnkeyInteriorPage() {
               {/* Distinctive curved/arch mask shape from the design */}
               <div className="relative w-full aspect-[4/3] lg:aspect-[5/4] overflow-hidden rounded-tl-[120px] rounded-br-[120px] lg:rounded-tl-[160px] lg:rounded-br-[160px] shadow-2xl">
                 <Image 
-                  src="/assets/turnkey_hero.jpg" 
+                  src="/assets/turnkey_hero.webp" 
                   alt="Luxury Turnkey Interior Design by JAS INTERIOR" 
                   fill 
                   className="object-cover"
