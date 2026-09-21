@@ -48,15 +48,25 @@ export default function ZoomableImage({ src, alt, width, height, fill, className
 
   return (
     <>
-      <div className="cursor-pointer relative group w-full h-full" onClick={() => setIsOpen(true)}>
-        <Image src={src} alt={alt} width={width} height={height} fill={fill} className={className} priority={priority} />
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-xl flex items-center justify-center">
+      <div 
+        className="cursor-pointer relative group w-full h-full select-none" 
+        onClick={() => setIsOpen(true)}
+        onContextMenu={(e) => e.preventDefault()}
+        onDragStart={(e) => e.preventDefault()}
+      >
+        <Image src={src} alt={alt} width={width} height={height} fill={fill} className={`${className} pointer-events-none`} priority={priority} unoptimized={src?.includes('supabase')} />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-xl flex items-center justify-center pointer-events-none">
           <span className="opacity-0 group-hover:opacity-100 bg-black/70 text-white text-[10px] md:text-xs px-2 py-1 rounded backdrop-blur-sm transition-opacity shadow-lg">Click to Expand</span>
         </div>
       </div>
       
       {mounted && isOpen && createPortal(
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 p-4 md:p-10" onClick={handleManualClose}>
+        <div 
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 p-4 md:p-10 select-none" 
+          onClick={handleManualClose}
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
+        >
           <button 
             className="absolute top-4 right-4 md:top-8 md:right-8 z-50 text-white/70 hover:text-white transition-colors p-2 bg-black/20 rounded-full" 
             onClick={handleManualClose}
@@ -64,7 +74,7 @@ export default function ZoomableImage({ src, alt, width, height, fill, className
             <X size={32} />
           </button>
           <div className="relative w-full h-full max-w-5xl max-h-[90vh]">
-            <Image src={src} alt={alt} fill className="object-contain" unoptimized />
+            <Image src={src} alt={alt} fill className="object-contain pointer-events-none" unoptimized />
           </div>
         </div>,
         document.body
