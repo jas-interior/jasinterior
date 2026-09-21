@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import ZoomableImage from '@/components/ui/ZoomableImage'
 import Link from 'next/link'
 import MainLayout from '@/components/layout/MainLayout'
 import { ArrowRight, Sofa, PenTool, Gem, ShieldCheck, ArrowUpRight } from 'lucide-react'
@@ -90,8 +91,8 @@ export default function TurnkeyInteriorPage() {
             
             {/* 2 BHK Package */}
             <div className="flex flex-row items-start gap-4 lg:gap-10">
-              <div className="w-[30%] shrink-0">
-                <Image 
+              <div className="w-[30%] shrink-0 sticky top-20 md:top-24 self-start">
+                <ZoomableImage 
                   src="/assets/packages/2-bhk-12-lac.png" 
                   alt="2 BHK Interior Package" 
                   width={800} height={1200} 
@@ -171,8 +172,8 @@ export default function TurnkeyInteriorPage() {
 
             {/* 3 BHK Package */}
             <div className="flex flex-row items-start gap-4 lg:gap-10 pt-6 md:pt-8 border-t border-[#e2ddd5]">
-              <div className="w-[30%] shrink-0">
-                <Image 
+              <div className="w-[30%] shrink-0 sticky top-20 md:top-24 self-start">
+                <ZoomableImage 
                   src="/assets/packages/3-bhk-15-lac.png" 
                   alt="3 BHK Interior Package" 
                   width={800} height={1200} 
@@ -253,8 +254,8 @@ export default function TurnkeyInteriorPage() {
 
             {/* 4 BHK Package */}
             <div className="flex flex-row items-start gap-4 lg:gap-10 pt-6 md:pt-8 border-t border-[#e2ddd5]">
-              <div className="w-[30%] shrink-0">
-                <Image 
+              <div className="w-[30%] shrink-0 sticky top-20 md:top-24 self-start">
+                <ZoomableImage 
                   src="/assets/packages/4-bhk-18-lac.png" 
                   alt="4 BHK Interior Package" 
                   width={800} height={1200} 
