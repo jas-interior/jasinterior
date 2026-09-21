@@ -23,6 +23,8 @@ export default function InteriorIdeasAdmin() {
   const coverFileInputRef = useRef<HTMLInputElement>(null);
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
 
+  const [filterCategory, setFilterCategory] = useState<string>('all');
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -48,7 +50,9 @@ export default function InteriorIdeasAdmin() {
     
     if (!error) {
       setNewCatName('');
-      fetchData();
+      // Silent fetch to avoid jump
+      const { data: catData } = await supabase.from('interior_idea_categories').select('*').order('sort_order', { ascending: true });
+      if (catData) setCategories(catData);
     } else {
       alert('Error adding category: ' + error.message);
     }
@@ -56,8 +60,8 @@ export default function InteriorIdeasAdmin() {
 
   const handleDeleteCategory = async (id: string) => {
     if (confirm('Are you sure? This will delete the category and all its images.')) {
+      setCategories(prev => prev.filter(c => c.id !== id));
       await supabase.from('interior_idea_categories').delete().eq('id', id);
-      fetchData();
     }
   };
 
@@ -174,11 +178,16 @@ export default function InteriorIdeasAdmin() {
     setFilesToUpload(null);
     (document.getElementById('file-upload') as HTMLInputElement).value = '';
     alert(`Successfully uploaded ${successCount} out of ${filesToUpload.length} images.`);
-    fetchData();
+    // Silent fetch
+    const { data: imgData } = await supabase.from('interior_idea_images').select('*, interior_idea_categories(name)').order('created_at', { ascending: false });
+    if (imgData) setImages(imgData);
   };
 
   const handleDeleteImage = async (id: string, url: string) => {
     if (confirm('Delete this image?')) {
+      // Optimistic delete to prevent jump
+      setImages(prev => prev.filter(img => img.id !== id));
+      
       if (url.includes('interior-ideas')) {
         const fileName = url.split('/').pop();
         if (fileName) {
@@ -186,11 +195,14 @@ export default function InteriorIdeasAdmin() {
         }
       }
       await supabase.from('interior_idea_images').delete().eq('id', id);
-      fetchData();
     }
   };
 
   if (loading) return <div className="p-8 text-center"><Loader2 className="animate-spin mx-auto mb-4" /> Loading...</div>;
+
+  const filteredImages = filterCategory === 'all' 
+    ? images 
+    : images.filter(img => img.category_id === filterCategory);
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
@@ -247,11 +259,12 @@ export default function InteriorIdeasAdmin() {
                     )}
                   </div>
                   <button 
+                    type="button"
                     onClick={() => triggerCoverUpload(cat.id)}
                     disabled={coverUploading === cat.id}
                     className="text-xs bg-white border border-gray-300 px-3 py-1.5 rounded hover:bg-gray-50 disabled:opacity-50"
                   >
-                    {coverUploading === cat.id ? 'Uploading...' : cat.cover_image ? 'Change Cover' : 'Add Cover Image'}
+                    {coverUploading === cat.id ? 'Uploading...' : cat.cover_image ? 'Change Cover' : 'Add Cover'}
                   </button>
                 </div>
               </div>
@@ -281,7 +294,7 @@ export default function InteriorIdeasAdmin() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold mb-1 text-gray-500 uppercase">Select Images (1:1 Ratio)</label>
+                  <label className="block text-xs font-semibold mb-1 text-gray-500 uppercase">Select Images</label>
                   <input 
                     id="file-upload"
                     type="file" 
@@ -304,13 +317,26 @@ export default function InteriorIdeasAdmin() {
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-            <h2 className="text-lg font-bold mb-4 flex items-center gap-2"><ImageIcon size={18} /> Uploaded Gallery Images ({images.length})</h2>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+              <h2 className="text-lg font-bold flex items-center gap-2"><ImageIcon size={18} /> Uploaded Gallery Images ({filteredImages.length})</h2>
+              
+              <select 
+                className="border p-2 rounded text-sm focus:outline-none focus:border-black bg-gray-50 min-w-[200px]"
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
+              >
+                <option value="all">Show All Categories</option>
+                {categories.map(cat => (
+                  <option key={cat.id} value={cat.id}>{cat.name}</option>
+                ))}
+              </select>
+            </div>
             
-            {images.length === 0 ? (
-              <div className="text-center py-10 text-gray-400 text-sm">No images uploaded yet.</div>
+            {filteredImages.length === 0 ? (
+              <div className="text-center py-10 text-gray-400 text-sm">No images found in this category.</div>
             ) : (
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-h-[600px] overflow-y-auto p-1">
-                {images.map(img => (
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-h-[800px] overflow-y-auto p-1">
+                {filteredImages.map(img => (
                   <div key={img.id} className="relative aspect-square rounded-md overflow-hidden group border border-gray-200">
                     <Image src={img.image_url} alt="" fill className="object-cover" unoptimized />
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-center items-center p-2 text-center">
