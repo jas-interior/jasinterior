@@ -1,11 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
 import ZoomableImage from '@/components/ui/ZoomableImage';
 import { Loader2 } from 'lucide-react';
 
 export default function PremiumIdeasGallery() {
+  const supabase = createClient();
   const [categories, setCategories] = useState<any[]>([]);
   const [images, setImages] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('all');

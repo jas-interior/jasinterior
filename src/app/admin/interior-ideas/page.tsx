@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import { Plus, Trash2, Edit, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
 export default function InteriorIdeasAdmin() {
+  const supabase = createClient();
   const [categories, setCategories] = useState<any[]>([]);
   const [images, setImages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
