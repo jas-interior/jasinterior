@@ -10,7 +10,7 @@ import CartDrawer from '@/components/cart/CartDrawer'
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/shop', label: 'Shop' },
-  { href: '/custom-furniture', label: 'Custom Furniture' },
+  { href: '/turnkey-interior', label: 'Turnkey Interior' },
   { href: '/about', label: 'About' },
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
