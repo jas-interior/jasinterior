@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import MainLayout from '@/components/layout/MainLayout';
 import ZoomableImage from '@/components/ui/ZoomableImage';
-import { Loader2, ArrowLeft } from 'lucide-react';
+import { Loader2, ArrowLeft, ArrowUp } from 'lucide-react';
 import Link from 'next/link';
 
 import { useParams } from 'next/navigation';
@@ -15,6 +15,19 @@ export default function CategoryGalleryPage() {
   const [category, setCategory] = useState<any>(null);
   const [images, setImages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showTopBtn, setShowTopBtn] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowTopBtn(true);
+      } else {
+        setShowTopBtn(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -44,6 +57,10 @@ export default function CategoryGalleryPage() {
     }
     if (slug) fetchData();
   }, [slug]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   if (loading) {
     return (
@@ -101,6 +118,16 @@ export default function CategoryGalleryPage() {
         )}
 
       </div>
+
+      {showTopBtn && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[90] bg-[#1a1a1a] text-white p-3 md:p-4 rounded-full shadow-xl hover:bg-[#c8941a] transition-all hover:-translate-y-1"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp size={20} />
+        </button>
+      )}
     </MainLayout>
   );
 }
