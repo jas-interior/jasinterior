@@ -13,7 +13,7 @@ export default function AdminCategories() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
   
-  const [form, setForm] = useState({ name: '', slug: '', description: '', sort_order: 0, active: true })
+  const [form, setForm] = useState({ name: '', slug: '', description: '', image_url: '', sort_order: 0, active: true })
 
   
   const compressImageToWebp = (file: File): Promise<Blob> => {
