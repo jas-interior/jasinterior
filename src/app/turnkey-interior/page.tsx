@@ -84,91 +84,251 @@ export default function TurnkeyInteriorPage() {
         </section>
 
         {/* OUR PACKAGE PRICE */}
-        <section className="py-12 md:py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-12 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-sm font-bold tracking-[0.2em] text-center uppercase mb-10 md:mb-16 text-[#6d6355]">Our Package Price</h2>
-          <div className="space-y-12 md:space-y-24">
+          <div className="space-y-16 md:space-y-24">
             
             {/* 2 BHK Package */}
-            <div className="flex flex-row items-center gap-4 md:gap-10 lg:gap-16">
-              <div className="w-[45%] md:w-1/2 relative">
-                <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg md:rounded-2xl shadow-xl border border-[#e2ddd5]">
-                  <Image src="/assets/packages/2-bhk-12-lac.png" alt="2 BHK Interior Package" fill className="object-cover" />
-                </div>
+            <div className="flex flex-row items-start gap-4 lg:gap-12">
+              <div className="w-[40%] lg:w-1/2">
+                <Image 
+                  src="/assets/packages/2-bhk-12-lac.png" 
+                  alt="2 BHK Interior Package" 
+                  width={800} height={1200} 
+                  className="w-full h-auto rounded-xl shadow-2xl border border-[#e2ddd5]" 
+                  priority
+                />
               </div>
-              <div className="w-[55%] md:w-1/2 flex flex-col justify-center">
-                <h3 className="text-lg md:text-3xl font-light mb-2 md:mb-4" style={{fontFamily:'Playfair Display, serif'}}>2 BHK Premium Package</h3>
-                <div className="text-[#8c7b68] text-sm md:text-2xl font-serif italic mb-3 md:mb-6">₹12,00,000</div>
-                <div className="space-y-2 md:space-y-4 text-[#6d6355] text-[10px] md:text-sm leading-relaxed mb-4 md:mb-8">
-                  <p className="hidden md:block">Transform your 2 BHK into a luxurious haven with our complete turnkey interior solution. Designed for modern comfort and timeless elegance.</p>
-                  <ul className="space-y-1 md:space-y-2 mt-2 md:mt-4">
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Modular Kitchen Setup</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Master Bedroom Complete</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Guest Bedroom Furnished</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Living Area (TV Unit, Sofa)</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> False Ceiling & Lighting</li>
-                  </ul>
+              <div className="w-[60%] lg:w-1/2 flex flex-col pt-0 lg:pt-4">
+                <h3 className="text-[14px] md:text-3xl font-bold md:font-light mb-1 md:mb-2" style={{fontFamily:'Playfair Display, serif'}}>2 BHK Full Luxury Interior</h3>
+                <div className="text-[#8c7b68] text-[12px] md:text-2xl font-serif italic mb-2">₹12,00,000</div>
+                <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-3 md:mb-6 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 md:gap-y-6 text-[8px] md:text-xs text-[#555555] leading-snug md:leading-relaxed">
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">1. Living Room / Hall</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>Safety Door, Shoe Rack</li>
+                      <li>TV Unit, 6 Seater Sofa Set, Tipoi</li>
+                      <li>Curtains, Pelmet, Behind Sofa Wall Design</li>
+                      <li>Kitchen Partition</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">2. Kitchen</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>Premium Acrylic Kitchen</li>
+                      <li>Kitchen Loft / Maliya, Service Table</li>
+                      <li>Kitchen Partition</li>
+                      <li>Complete Storage & Cabinet Work</li>
+                    </ul>
+                  </div>
+                  <div className="md:col-span-2">
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">3. All Bedrooms</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+                      <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                        <li><span className="font-semibold">Master Bedroom:</span> Bed, Mattress, Side Tables</li>
+                        <li>Behind Bed Wall Decoration</li>
+                        <li>Wardrobe with Maliya / Loft</li>
+                        <li>Dressing Table, Curtains with Pelmet</li>
+                        <li>Small TV Unit</li>
+                      </ul>
+                      <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                        <li><span className="font-semibold">Bedroom 2:</span> Bed, Mattress, Side Tables</li>
+                        <li>Behind Bed Wall Decoration</li>
+                        <li>Wardrobe with Maliya / Loft</li>
+                        <li>Dressing Table, Curtains with Pelmet</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">4. Common Work</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>False Gypsum Ceiling, Asian Royale Paint</li>
+                      <li>Electrical Wiring & Lights for False Ceiling</li>
+                      <li>Wash Basin Box / Vanity & Mirror (All Bathrooms)</li>
+                      <li>Wash Area Mini Cabinet</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">5. Material & Lighting</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>BWR Semi-Waterproof Plywood</li>
+                      <li>1mm Outer / 0.8mm Inner Premium Laminate</li>
+                      <li>SS Hardware, Locks, Premium Accessories</li>
+                      <li>Fevicol Marine, Philips Lights</li>
+                    </ul>
+                  </div>
                 </div>
-                <Link href="/inquiry?product=2-BHK-Package" className="inline-block bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3 text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors">
-                  Get Quote
+
+                <Link href="/inquiry?product=2-BHK-Package" className="mt-4 md:mt-8 inline-flex justify-center bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3.5 text-[9px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors shadow-lg">
+                  Get Quote for 2 BHK
                 </Link>
               </div>
             </div>
 
             {/* 3 BHK Package */}
-            <div className="flex flex-row items-center gap-4 md:gap-10 lg:gap-16">
-              <div className="w-[45%] md:w-1/2 relative">
-                <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg md:rounded-2xl shadow-xl border border-[#e2ddd5]">
-                  <Image src="/assets/packages/3-bhk-15-lac.png" alt="3 BHK Interior Package" fill className="object-cover" />
-                </div>
+            <div className="flex flex-row items-start gap-4 lg:gap-12 pt-6 md:pt-8 border-t border-[#e2ddd5]">
+              <div className="w-[40%] lg:w-1/2">
+                <Image 
+                  src="/assets/packages/3-bhk-15-lac.png" 
+                  alt="3 BHK Interior Package" 
+                  width={800} height={1200} 
+                  className="w-full h-auto rounded-xl shadow-2xl border border-[#e2ddd5]" 
+                />
               </div>
-              <div className="w-[55%] md:w-1/2 flex flex-col justify-center">
-                <h3 className="text-lg md:text-3xl font-light mb-2 md:mb-4" style={{fontFamily:'Playfair Display, serif'}}>3 BHK Luxury Package</h3>
-                <div className="text-[#8c7b68] text-sm md:text-2xl font-serif italic mb-3 md:mb-6">₹15,00,000</div>
-                <div className="space-y-2 md:space-y-4 text-[#6d6355] text-[10px] md:text-sm leading-relaxed mb-4 md:mb-8">
-                  <p className="hidden md:block">A comprehensive design solution for spacious 3 BHK homes. Experience the perfect blend of aesthetics and functionality in every room.</p>
-                  <ul className="space-y-1 md:space-y-2 mt-2 md:mt-4">
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Premium Modular Kitchen</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Master Suite with Wardrobe</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> 2 Additional Bedrooms</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Grand Living & Dining</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Custom Decor & Lighting</li>
-                  </ul>
+              <div className="w-[60%] lg:w-1/2 flex flex-col pt-0 lg:pt-4">
+                <h3 className="text-[14px] md:text-3xl font-bold md:font-light mb-1 md:mb-2" style={{fontFamily:'Playfair Display, serif'}}>3 BHK Full Luxury Interior</h3>
+                <div className="text-[#8c7b68] text-[12px] md:text-2xl font-serif italic mb-2">₹15,00,000</div>
+                <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-3 md:mb-6 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 md:gap-y-6 text-[8px] md:text-xs text-[#555555] leading-snug md:leading-relaxed">
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">1. Living Room / Hall</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>Safety Door, Shoe Rack</li>
+                      <li>TV Unit, 6 Seater Sofa Set, Tipoi</li>
+                      <li>Curtains, Pelmet, Behind Sofa Wall Design</li>
+                      <li>Kitchen Partition</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">2. Kitchen</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>Premium Acrylic Kitchen</li>
+                      <li>Kitchen Loft / Maliya, Service Table</li>
+                      <li>Kitchen Partition</li>
+                      <li>Complete Storage & Cabinet Work</li>
+                    </ul>
+                  </div>
+                  <div className="md:col-span-2">
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">3. All Bedrooms</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+                      <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                        <li><span className="font-semibold">Master Bedroom:</span> Bed, Mattress, Side Tables</li>
+                        <li>Behind Bed Wall Decoration</li>
+                        <li>Wardrobe with Maliya, Dressing Table</li>
+                        <li>Curtains with Pelmet, Small TV Unit</li>
+                      </ul>
+                      <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                        <li><span className="font-semibold">Bedroom 2:</span> Bed, Mattress, Side Tables</li>
+                        <li>Behind Bed Wall Decoration</li>
+                        <li>Wardrobe with Maliya, Dressing Table</li>
+                        <li>Curtains with Pelmet</li>
+                      </ul>
+                      <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a] md:col-span-2">
+                        <li><span className="font-semibold">Bedroom 3:</span> Bed, Mattress, Side Tables, Behind Bed Wall Decoration, Wardrobe with Maliya, Dressing Table, Curtains with Pelmet, Study Table</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">4. Common Work</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>False Gypsum Ceiling, Asian Royale Paint</li>
+                      <li>Electrical Wiring & Lights for False Ceiling</li>
+                      <li>Wash Basin Box / Vanity & Mirror (All Bathrooms)</li>
+                      <li>Wash Area Mini Cabinet</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">5. Material & Lighting</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>BWR Semi-Waterproof Plywood</li>
+                      <li>1mm Outer / 0.8mm Inner Premium Laminate</li>
+                      <li>SS Hardware, Locks, Premium Accessories</li>
+                      <li>Fevicol Marine, Philips Lights</li>
+                    </ul>
+                  </div>
                 </div>
-                <Link href="/inquiry?product=3-BHK-Package" className="inline-block bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3 text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors">
-                  Get Quote
+
+                <Link href="/inquiry?product=3-BHK-Package" className="mt-4 md:mt-8 inline-flex justify-center bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3.5 text-[9px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors shadow-lg">
+                  Get Quote for 3 BHK
                 </Link>
               </div>
             </div>
 
             {/* 4 BHK Package */}
-            <div className="flex flex-row items-center gap-4 md:gap-10 lg:gap-16">
-              <div className="w-[45%] md:w-1/2 relative">
-                <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg md:rounded-2xl shadow-xl border border-[#e2ddd5]">
-                  <Image src="/assets/packages/4-bhk-18-lac.png" alt="4 BHK Interior Package" fill className="object-cover" />
-                </div>
+            <div className="flex flex-row items-start gap-4 lg:gap-12 pt-6 md:pt-8 border-t border-[#e2ddd5]">
+              <div className="w-[40%] lg:w-1/2">
+                <Image 
+                  src="/assets/packages/4-bhk-18-lac.png" 
+                  alt="4 BHK Interior Package" 
+                  width={800} height={1200} 
+                  className="w-full h-auto rounded-xl shadow-2xl border border-[#e2ddd5]" 
+                />
               </div>
-              <div className="w-[55%] md:w-1/2 flex flex-col justify-center">
-                <h3 className="text-lg md:text-3xl font-light mb-2 md:mb-4" style={{fontFamily:'Playfair Display, serif'}}>4 BHK Signature Package</h3>
-                <div className="text-[#8c7b68] text-sm md:text-2xl font-serif italic mb-3 md:mb-6">₹18,00,000</div>
-                <div className="space-y-2 md:space-y-4 text-[#6d6355] text-[10px] md:text-sm leading-relaxed mb-4 md:mb-8">
-                  <p className="hidden md:block">The ultimate interior experience for your 4 BHK home. Opulent materials, exclusive finishes, and unparalleled craftsmanship.</p>
-                  <ul className="space-y-1 md:space-y-2 mt-2 md:mt-4">
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> High-End Kitchen & Island</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Luxury Master Bedroom</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> 3 Premium Bedrooms</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Expansive Living Room</li>
-                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Premium Finishes & Lighting</li>
-                  </ul>
+              <div className="w-[60%] lg:w-1/2 flex flex-col pt-0 lg:pt-4">
+                <h3 className="text-[14px] md:text-3xl font-bold md:font-light mb-1 md:mb-2" style={{fontFamily:'Playfair Display, serif'}}>4 BHK Full Luxury Interior</h3>
+                <div className="text-[#8c7b68] text-[12px] md:text-2xl font-serif italic mb-2">₹18,00,000</div>
+                <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-3 md:mb-6 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 md:gap-y-6 text-[8px] md:text-xs text-[#555555] leading-snug md:leading-relaxed">
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">1. Living Room / Hall</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>Safety Door, Shoe Rack</li>
+                      <li>TV Unit, 6 Seater Sofa Set, Tipoi</li>
+                      <li>Curtains, Pelmet, Behind Sofa Wall Design</li>
+                      <li>Kitchen Partition</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">2. Kitchen</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>Premium Acrylic Kitchen</li>
+                      <li>Kitchen Loft / Maliya, Service Table</li>
+                      <li>Kitchen Partition</li>
+                      <li>Complete Storage & Cabinet Work</li>
+                    </ul>
+                  </div>
+                  <div className="md:col-span-2">
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">3. All Bedrooms</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+                      <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                        <li><span className="font-semibold">Master Bedroom:</span> Bed, Mattress, Side Tables</li>
+                        <li>Behind Bed Wall Decoration</li>
+                        <li>Wardrobe with Maliya, Dressing Table</li>
+                        <li>Curtains with Pelmet, Small TV Unit</li>
+                      </ul>
+                      <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                        <li><span className="font-semibold">Kids Bedroom:</span> Bed, Mattress, Side Tables</li>
+                        <li>Behind Bed Wall Decoration</li>
+                        <li>Wardrobe with Maliya, Dressing Table</li>
+                        <li>Curtains with Pelmet, Study Table</li>
+                      </ul>
+                      <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a] md:col-span-2">
+                        <li><span className="font-semibold">Other Bedrooms:</span> Bed, Mattress, Side Tables, Behind Bed Wall Decoration, Wardrobe with Maliya, Dressing Table, Curtains with Pelmet</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">4. Common Work</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>False Gypsum Ceiling, Asian Royale Paint</li>
+                      <li>Electrical Wiring & Lights for False Ceiling</li>
+                      <li>Wash Basin Box / Vanity & Mirror (All Bathrooms)</li>
+                      <li>Wash Area Mini Cabinet</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1a1a1a] mb-1 uppercase">5. Material & Lighting</h4>
+                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#c8941a]">
+                      <li>BWR Semi-Waterproof Plywood</li>
+                      <li>1mm Outer / 0.8mm Inner Premium Laminate</li>
+                      <li>SS Hardware, Locks, Premium Accessories</li>
+                      <li>Fevicol Marine, Philips Lights</li>
+                    </ul>
+                  </div>
                 </div>
-                <Link href="/inquiry?product=4-BHK-Package" className="inline-block bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3 text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors">
-                  Get Quote
+
+                <Link href="/inquiry?product=4-BHK-Package" className="mt-4 md:mt-8 inline-flex justify-center bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3.5 text-[9px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors shadow-lg">
+                  Get Quote for 4 BHK
                 </Link>
               </div>
             </div>
 
           </div>
         </section>
-
         {/* FEATURED PROJECTS */}
         <section className="py-20 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-sm font-bold tracking-[0.2em] text-center uppercase mb-12">Featured Projects</h2>
