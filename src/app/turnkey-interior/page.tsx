@@ -102,7 +102,13 @@ export default function TurnkeyInteriorPage() {
               <div className="w-[70%] flex flex-col pt-0 lg:pt-4">
                 <h3 className="text-[14px] md:text-3xl font-bold md:font-light mb-1 md:mb-2" style={{fontFamily:'Playfair Display, serif'}}>2 BHK Full Luxury Interior</h3>
                 <div className="text-[#8c7b68] text-[12px] md:text-2xl font-serif italic mb-2">₹12,00,000</div>
-                <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-3 md:mb-6 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
+                <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-2 md:mb-4 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
+                
+                <div className="mb-4 md:mb-8">
+                  <Link href="/inquiry?product=2-BHK-Package" className="inline-flex justify-center bg-[#1a1a1a] text-white px-5 py-2 md:px-10 md:py-3.5 text-[9px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors shadow-md">
+                    Get Quote
+                  </Link>
+                </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 md:gap-y-6 text-[8px] md:text-xs text-[#555555] leading-snug md:leading-relaxed">
                   <div>
@@ -160,10 +166,6 @@ export default function TurnkeyInteriorPage() {
                     </ul>
                   </div>
                 </div>
-
-                <Link href="/inquiry?product=2-BHK-Package" className="mt-4 md:mt-8 inline-flex justify-center bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3.5 text-[9px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors shadow-lg">
-                  Get Quote for 2 BHK
-                </Link>
               </div>
             </div>
 
@@ -180,7 +182,13 @@ export default function TurnkeyInteriorPage() {
               <div className="w-[70%] flex flex-col pt-0 lg:pt-4">
                 <h3 className="text-[14px] md:text-3xl font-bold md:font-light mb-1 md:mb-2" style={{fontFamily:'Playfair Display, serif'}}>3 BHK Full Luxury Interior</h3>
                 <div className="text-[#8c7b68] text-[12px] md:text-2xl font-serif italic mb-2">₹15,00,000</div>
-                <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-3 md:mb-6 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
+                <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-2 md:mb-4 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
+                
+                <div className="mb-4 md:mb-8">
+                  <Link href="/inquiry?product=3-BHK-Package" className="inline-flex justify-center bg-[#1a1a1a] text-white px-5 py-2 md:px-10 md:py-3.5 text-[9px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors shadow-md">
+                    Get Quote
+                  </Link>
+                </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 md:gap-y-6 text-[8px] md:text-xs text-[#555555] leading-snug md:leading-relaxed">
                   <div>
@@ -240,10 +248,6 @@ export default function TurnkeyInteriorPage() {
                     </ul>
                   </div>
                 </div>
-
-                <Link href="/inquiry?product=3-BHK-Package" className="mt-4 md:mt-8 inline-flex justify-center bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3.5 text-[9px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors shadow-lg">
-                  Get Quote for 3 BHK
-                </Link>
               </div>
             </div>
 
@@ -260,7 +264,13 @@ export default function TurnkeyInteriorPage() {
               <div className="w-[70%] flex flex-col pt-0 lg:pt-4">
                 <h3 className="text-[14px] md:text-3xl font-bold md:font-light mb-1 md:mb-2" style={{fontFamily:'Playfair Display, serif'}}>4 BHK Full Luxury Interior</h3>
                 <div className="text-[#8c7b68] text-[12px] md:text-2xl font-serif italic mb-2">₹18,00,000</div>
-                <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-3 md:mb-6 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
+                <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-2 md:mb-4 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
+                
+                <div className="mb-4 md:mb-8">
+                  <Link href="/inquiry?product=4-BHK-Package" className="inline-flex justify-center bg-[#1a1a1a] text-white px-5 py-2 md:px-10 md:py-3.5 text-[9px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors shadow-md">
+                    Get Quote
+                  </Link>
+                </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 md:gap-y-6 text-[8px] md:text-xs text-[#555555] leading-snug md:leading-relaxed">
                   <div>
@@ -320,10 +330,6 @@ export default function TurnkeyInteriorPage() {
                     </ul>
                   </div>
                 </div>
-
-                <Link href="/inquiry?product=4-BHK-Package" className="mt-4 md:mt-8 inline-flex justify-center bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3.5 text-[9px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors shadow-lg">
-                  Get Quote for 4 BHK
-                </Link>
               </div>
             </div>
 
