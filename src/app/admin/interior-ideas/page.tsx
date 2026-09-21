@@ -71,8 +71,10 @@ export default function InteriorIdeasAdmin() {
     if (!file || !editingCategoryId) return;
 
     setCoverUploading(editingCategoryId);
+    const cat = categories.find(c => c.id === editingCategoryId);
+    const seoBaseName = cat ? cat.slug : 'category';
     const ext = file.name.split('.').pop();
-    const fileName = `cover-${editingCategoryId}-${Date.now()}.${ext}`;
+    const fileName = `jas-interior-${seoBaseName}-cover-${Date.now()}.${ext}`;
 
     const { data, error } = await supabase.storage.from('interior-ideas').upload(fileName, file);
 
@@ -100,10 +102,14 @@ export default function InteriorIdeasAdmin() {
     setUploading(true);
     let successCount = 0;
     
+    const selectedCat = categories.find(c => c.id === selectedCategory);
+    const seoBaseName = selectedCat ? selectedCat.slug : 'design-idea';
+    
     for (let i = 0; i < filesToUpload.length; i++) {
       const file = filesToUpload[i];
       const ext = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${ext}`;
+      // Auto-rename for SEO: jas-interior-category-slug-index-timestamp.jpg
+      const fileName = `jas-interior-${seoBaseName}-${i + 1}-${Date.now()}.${ext}`;
       
       const { data, error } = await supabase.storage.from('interior-ideas').upload(fileName, file);
       
