@@ -680,35 +680,7 @@ export default function TurnkeyInteriorPage() {
         </section>
         <PremiumIdeasGallery />
 
-        {/* DESIGN TIPS & IDEAS */}
-        <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#f2ede6] rounded-[40px] my-10">
-          <div className="flex flex-col lg:flex-row gap-12">
-            <div className="lg:w-1/3 flex flex-col justify-center">
-              <h2 className="text-2xl font-serif mb-4" style={{fontFamily:'Playfair Display, serif'}}>Design Tips & Ideas</h2>
-              <p className="text-[#6d6355] text-sm mb-8">
-                Inspiration, guides & expert tips to help you create a home you'll love.
-              </p>
-              <Link href="/blog" className="inline-block bg-[#1a1a1a] text-white px-8 py-3 text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors">
-                Read The Blog
-              </Link>
-            </div>
-            <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {[
-                { title: '5 Tips to Make Your Small Space Feel Bigger', date: 'June 10, 2024', img: 'https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&q=80' },
-                { title: 'Choosing the Right Color Palette', date: 'May 28, 2024', img: 'https://images.unsplash.com/photo-1586105251261-72a756497a11?auto=format&fit=crop&q=80' },
-                { title: 'Trends We Love This Season', date: 'May 15, 2024', img: 'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?auto=format&fit=crop&q=80' },
-              ].map((blog, i) => (
-                <Link href="/blog" key={i} className="group block bg-white p-3 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="relative w-full aspect-[4/3] mb-4 overflow-hidden">
-                    <Image src={blog.img} alt={blog.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                  </div>
-                  <h3 className="text-sm font-semibold mb-2 leading-tight group-hover:text-[#c8941a] transition-colors">{blog.title}</h3>
-                  <p className="text-[#8c7b68] text-xs">{blog.date}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+
 
         {/* BRANDS SECTION */}
         <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center border-t border-[#e2ddd5]">
