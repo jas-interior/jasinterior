@@ -27,7 +27,7 @@ export default function CategoriesSection() {
         <div className="inline-flex items-center gap-2 mb-4">
           <div className="w-8 h-[1px] bg-[#c8941a]" /><span className="text-xs text-[#c8941a] font-medium uppercase tracking-[0.2em]">Our Collections</span><div className="w-8 h-[1px] bg-[#c8941a]" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-[#111111] mb-4" style={{fontFamily:'Playfair Display,serif'}}>Explore By Category</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-[#111111] mb-4" style={{fontFamily:'Playfair Display,serif'}}>Shop By Category</h2>
         <p className="text-[#666666] max-w-xl mx-auto font-light">Discover our extensive range of premium custom furniture, meticulously crafted to elevate your living spaces.</p>
       </div>
       
