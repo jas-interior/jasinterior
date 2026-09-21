@@ -1,59 +1,66 @@
-import Link from 'next/link'
-import { ArrowRight, Armchair, BedDouble, Columns, Utensils, Monitor, Bed, Coffee, Plus } from 'lucide-react'
-
-const categories = [
-  { name: 'Sofa', slug: 'sofa', icon: Armchair, desc: 'Custom comfort sofas' },
-  { name: 'Bed', slug: 'bed', icon: BedDouble, desc: 'Premium bedroom beds' },
-  { name: 'L Shape Sofa Cumbed', slug: 'l-safe-sofa-cumbed', icon: Armchair, desc: 'Space-saving L-shape designs' },
-  { name: '3 Seater Sofa Cumbed', slug: '3-seater-sofa-cumbed', icon: Armchair, desc: 'Compact 3-seater convertible' },
-  { name: 'Wardrobe', slug: 'wardrobe', icon: Columns, desc: 'Space-saving wardrobes' },
-  { name: 'Dining Table', slug: 'dining-table', icon: Utensils, desc: 'Elegant dining sets' },
-  { name: 'TV Unit', slug: 'tv-unit', icon: Monitor, desc: 'Modern entertainment units' },
-  { name: 'Mattress', slug: 'mattress', icon: Bed, desc: 'Premium sleep mattresses' },
-  { name: 'T Table', slug: 't-table', icon: Coffee, desc: 'Stylish center tables' },
-]
+'use client';
+import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Loader2, Image as ImageIcon } from 'lucide-react';
+import type { Category } from '@/types';
 
 export default function CategoriesSection() {
-  return (
-    <section className="py-24 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <div className="w-8 h-[1px] bg-[#c8941a]" /><span className="text-xs text-[#c8941a] font-medium uppercase tracking-[0.2em]">Our Collections</span><div className="w-8 h-[1px] bg-[#c8941a]" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#111111] mb-4" style={{fontFamily:'Playfair Display,serif'}}>Explore By Category</h2>
-          <p className="text-[#666666] max-w-xl mx-auto font-light">Discover our extensive range of premium custom furniture, meticulously crafted to elevate your living spaces.</p>
-        </div>
+  const supabase = createClient();
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
 
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 mb-12">
-          {categories.map((cat, i) => (
-            <Link key={cat.slug} href={`/shop/${cat.slug}`} className="group relative bg-[#faf9f6] border border-[#eaeaea] p-8 flex flex-col items-center text-center transition-all duration-500 hover:bg-white hover:border-[#c8941a]/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]" style={{ animationDelay: `${i * 0.05}s` }}>
-              <div className="w-14 h-14 rounded-full bg-white border border-[#eaeaea] group-hover:border-[#c8941a]/30 flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-all duration-500 shadow-sm group-hover:shadow-md">
-                <cat.icon size={24} strokeWidth={1.5} className="text-[#111111] group-hover:text-[#c8941a] transition-colors" />
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      const { data } = await supabase.from('categories').select('*').eq('active', true).order('sort_order', { ascending: true });
+      if (data) setCategories(data);
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  return (
+    <section className="py-24 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+      <div className="text-center mb-16">
+        <div className="inline-flex items-center gap-2 mb-4">
+          <div className="w-8 h-[1px] bg-[#c8941a]" /><span className="text-xs text-[#c8941a] font-medium uppercase tracking-[0.2em]">Our Collections</span><div className="w-8 h-[1px] bg-[#c8941a]" />
+        </div>
+        <h2 className="text-3xl md:text-4xl font-bold text-[#111111] mb-4" style={{fontFamily:'Playfair Display,serif'}}>Explore By Category</h2>
+        <p className="text-[#666666] max-w-xl mx-auto font-light">Discover our extensive range of premium custom furniture, meticulously crafted to elevate your living spaces.</p>
+      </div>
+      
+      {loading ? (
+        <div className="flex justify-center py-10"><Loader2 className="animate-spin text-[#c8941a]" size={32} /></div>
+      ) : (
+        <div className="flex flex-wrap justify-center gap-6 md:gap-10">
+          {categories.map(cat => (
+            <Link 
+              key={cat.id} 
+              href={`/shop/${cat.slug}`}
+              className="flex flex-col items-center group w-24 md:w-32"
+            >
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white shadow-sm border border-[#eaeaea] group-hover:border-[#c8941a] group-hover:shadow-md transition-all overflow-hidden mb-3 md:mb-4 relative flex items-center justify-center">
+                {cat.image_url ? (
+                  <Image 
+                    src={cat.image_url} 
+                    alt={cat.name} 
+                    fill 
+                    className="object-cover group-hover:scale-110 transition-transform duration-500" 
+                    unoptimized
+                  />
+                ) : (
+                  <ImageIcon className="text-gray-300" size={32} />
+                )}
               </div>
-              <h3 className="font-serif text-lg font-semibold text-[#111111] mb-2 tracking-wide" style={{fontFamily:'Playfair Display,serif'}}>{cat.name}</h3>
-              <p className="text-xs text-[#666666] mb-6 font-light">{cat.desc}</p>
-              
-              <div className="mt-auto overflow-hidden">
-                <span className="text-[10px] text-[#c8941a] uppercase tracking-widest flex items-center gap-2 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                  Explore <ArrowRight size={12} />
-                </span>
-              </div>
-              
-              {/* Premium Corner Accent */}
-              <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-transparent group-hover:border-[#c8941a]/20 transition-colors duration-500" />
+              <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-center text-[#555555] group-hover:text-[#1a1a1a] transition-colors leading-tight">
+                {cat.name}
+              </span>
             </Link>
           ))}
-          
-          <Link href="/shop" className="group bg-[#111111] p-8 flex flex-col items-center justify-center text-center transition-all duration-500 hover:bg-[#1a1a1a]">
-            <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-[#c8941a]/50 transition-all duration-500">
-              <Plus size={24} strokeWidth={1} className="text-white group-hover:text-[#c8941a]" />
-            </div>
-            <h3 className="font-serif text-lg font-semibold text-white mb-2 tracking-wide" style={{fontFamily:'Playfair Display,serif'}}>View All</h3>
-            <p className="text-xs text-[#a0a0a0] font-light">Explore complete catalog</p>
-          </Link>
         </div>
-      </div>
+      )}
     </section>
-  )
+  );
 }

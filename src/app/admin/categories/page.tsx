@@ -1,7 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Plus, Edit, Trash2, X, CheckCircle } from 'lucide-react'
+import { Plus, Edit, Trash2, X, CheckCircle, Upload, Loader2, Image as ImageIcon } from 'lucide-react'
+import Image from 'next/image'
 import toast from 'react-hot-toast'
 import type { Category } from '@/types'
 
@@ -10,8 +11,60 @@ export default function AdminCategories() {
   const [loading, setLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
   
   const [form, setForm] = useState({ name: '', slug: '', description: '', sort_order: 0, active: true })
+
+  
+  const compressImageToWebp = (file: File): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new window.Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          if (width > 800) { height = Math.round((height * 800) / width); width = 800; }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return reject('No context');
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob((blob) => {
+            if (blob) resolve(blob);
+            else reject('Blob conversion failed');
+          }, 'image/webp', 0.8);
+        };
+        img.src = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setUploading(true);
+    const toastId = toast.loading('Compressing and uploading image...');
+    try {
+      const webpBlob = await compressImageToWebp(file);
+      const supabase = createClient();
+      const fileName = `category-${form.slug}-${Date.now()}.webp`;
+      
+      const { data, error } = await supabase.storage.from('products').upload(fileName, webpBlob, { contentType: 'image/webp' });
+      if (error) throw error;
+      
+      const { data: { publicUrl } } = supabase.storage.from('products').getPublicUrl(fileName);
+      setForm({ ...form, image_url: publicUrl });
+      toast.success('Image uploaded!', { id: toastId });
+    } catch (err: any) {
+      toast.error('Failed to upload image', { id: toastId });
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const loadData = async () => {
     setLoading(true)
@@ -26,10 +79,10 @@ export default function AdminCategories() {
   const handleOpenModal = (cat?: Category) => {
     if (cat) {
       setEditingId(cat.id)
-      setForm({ name: cat.name, slug: cat.slug, description: cat.description || '', sort_order: cat.sort_order || 0, active: cat.active })
+      setForm({ name: cat.name, slug: cat.slug, description: cat.description || '', image_url: cat.image_url || '', sort_order: cat.sort_order || 0, active: cat.active })
     } else {
       setEditingId(null)
-      setForm({ name: '', slug: '', description: '', sort_order: 0, active: true })
+      setForm({ name: '', slug: '', description: '', image_url: '', sort_order: 0, active: true })
     }
     setIsModalOpen(true)
   }
@@ -134,6 +187,22 @@ export default function AdminCategories() {
               <div><label className="block text-xs text-[#555555] mb-1.5">Category Name</label><input value={form.name} onChange={(e) => generateSlug(e.target.value)} className="input-gold" required /></div>
               <div><label className="block text-xs text-[#555555] mb-1.5">Slug (URL)</label><input value={form.slug} onChange={(e) => setForm({...form, slug: e.target.value})} className="input-gold" required /></div>
               <div><label className="block text-xs text-[#555555] mb-1.5">Description (Optional)</label><textarea value={form.description} onChange={(e) => setForm({...form, description: e.target.value})} className="input-gold resize-none" rows={3} /></div>
+
+              <div>
+                <label className="block text-xs text-[#555555] mb-1.5">Category Cover Image</label>
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full border border-[#eaeaea] overflow-hidden bg-gray-50 flex items-center justify-center relative shrink-0">
+                    {(form as any).image_url ? <Image src={(form as any).image_url} alt="" fill className="object-cover" unoptimized /> : <ImageIcon className="text-gray-300" />}
+                  </div>
+                  <label className="cursor-pointer px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded text-sm font-medium transition-colors flex items-center gap-2">
+                    {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
+                    {uploading ? 'Uploading...' : 'Upload Image'}
+                    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading || !form.slug} />
+                  </label>
+                  {!form.slug && <span className="text-xs text-red-500">Enter slug first</span>}
+                </div>
+              </div>
+
               <div className="flex gap-4">
                 <div className="flex-1"><label className="block text-xs text-[#555555] mb-1.5">Sort Order</label><input type="number" value={form.sort_order} onChange={(e) => setForm({...form, sort_order: parseInt(e.target.value) || 0})} className="input-gold" /></div>
                 <div className="flex-1 flex flex-col justify-end pb-2">
