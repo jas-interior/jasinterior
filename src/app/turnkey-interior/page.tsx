@@ -83,26 +83,89 @@ export default function TurnkeyInteriorPage() {
           </div>
         </section>
 
-        {/* SHOP BY ROOM */}
-        <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-sm font-bold tracking-[0.2em] text-center uppercase mb-12">Shop By Room</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: 'Living Room', img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80' },
-              { title: 'Bedroom', img: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80' },
-              { title: 'Dining Room', img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80' },
-              { title: 'Kitchen', img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80' },
-            ].map((room, i) => (
-              <Link href="/shop" key={i} className="group flex flex-col items-center text-center">
-                <div className="relative w-full aspect-[4/5] mb-5 overflow-hidden bg-[#e8e4dc]">
-                  <Image src={room.img} alt={room.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+        {/* OUR PACKAGE PRICE */}
+        <section className="py-12 md:py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-sm font-bold tracking-[0.2em] text-center uppercase mb-10 md:mb-16 text-[#6d6355]">Our Package Price</h2>
+          <div className="space-y-12 md:space-y-24">
+            
+            {/* 2 BHK Package */}
+            <div className="flex flex-row items-center gap-4 md:gap-10 lg:gap-16">
+              <div className="w-[45%] md:w-1/2 relative">
+                <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg md:rounded-2xl shadow-xl border border-[#e2ddd5]">
+                  <Image src="/assets/packages/2-bhk-12-lac.png" alt="2 BHK Interior Package" fill className="object-cover" />
                 </div>
-                <h3 className="text-xs font-bold tracking-widest uppercase mb-2">{room.title}</h3>
-                <span className="text-[#6d6355] text-xs flex items-center gap-1 group-hover:text-[#c8941a] transition-colors">
-                  Shop Now <ArrowRight size={12} />
-                </span>
-              </Link>
-            ))}
+              </div>
+              <div className="w-[55%] md:w-1/2 flex flex-col justify-center">
+                <h3 className="text-lg md:text-3xl font-light mb-2 md:mb-4" style={{fontFamily:'Playfair Display, serif'}}>2 BHK Premium Package</h3>
+                <div className="text-[#8c7b68] text-sm md:text-2xl font-serif italic mb-3 md:mb-6">₹12,00,000</div>
+                <div className="space-y-2 md:space-y-4 text-[#6d6355] text-[10px] md:text-sm leading-relaxed mb-4 md:mb-8">
+                  <p className="hidden md:block">Transform your 2 BHK into a luxurious haven with our complete turnkey interior solution. Designed for modern comfort and timeless elegance.</p>
+                  <ul className="space-y-1 md:space-y-2 mt-2 md:mt-4">
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Modular Kitchen Setup</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Master Bedroom Complete</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Guest Bedroom Furnished</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Living Area (TV Unit, Sofa)</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> False Ceiling & Lighting</li>
+                  </ul>
+                </div>
+                <Link href="/inquiry?product=2-BHK-Package" className="inline-block bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3 text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors">
+                  Get Quote
+                </Link>
+              </div>
+            </div>
+
+            {/* 3 BHK Package */}
+            <div className="flex flex-row items-center gap-4 md:gap-10 lg:gap-16">
+              <div className="w-[45%] md:w-1/2 relative">
+                <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg md:rounded-2xl shadow-xl border border-[#e2ddd5]">
+                  <Image src="/assets/packages/3-bhk-15-lac.png" alt="3 BHK Interior Package" fill className="object-cover" />
+                </div>
+              </div>
+              <div className="w-[55%] md:w-1/2 flex flex-col justify-center">
+                <h3 className="text-lg md:text-3xl font-light mb-2 md:mb-4" style={{fontFamily:'Playfair Display, serif'}}>3 BHK Luxury Package</h3>
+                <div className="text-[#8c7b68] text-sm md:text-2xl font-serif italic mb-3 md:mb-6">₹15,00,000</div>
+                <div className="space-y-2 md:space-y-4 text-[#6d6355] text-[10px] md:text-sm leading-relaxed mb-4 md:mb-8">
+                  <p className="hidden md:block">A comprehensive design solution for spacious 3 BHK homes. Experience the perfect blend of aesthetics and functionality in every room.</p>
+                  <ul className="space-y-1 md:space-y-2 mt-2 md:mt-4">
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Premium Modular Kitchen</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Master Suite with Wardrobe</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> 2 Additional Bedrooms</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Grand Living & Dining</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Custom Decor & Lighting</li>
+                  </ul>
+                </div>
+                <Link href="/inquiry?product=3-BHK-Package" className="inline-block bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3 text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors">
+                  Get Quote
+                </Link>
+              </div>
+            </div>
+
+            {/* 4 BHK Package */}
+            <div className="flex flex-row items-center gap-4 md:gap-10 lg:gap-16">
+              <div className="w-[45%] md:w-1/2 relative">
+                <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg md:rounded-2xl shadow-xl border border-[#e2ddd5]">
+                  <Image src="/assets/packages/4-bhk-18-lac.png" alt="4 BHK Interior Package" fill className="object-cover" />
+                </div>
+              </div>
+              <div className="w-[55%] md:w-1/2 flex flex-col justify-center">
+                <h3 className="text-lg md:text-3xl font-light mb-2 md:mb-4" style={{fontFamily:'Playfair Display, serif'}}>4 BHK Signature Package</h3>
+                <div className="text-[#8c7b68] text-sm md:text-2xl font-serif italic mb-3 md:mb-6">₹18,00,000</div>
+                <div className="space-y-2 md:space-y-4 text-[#6d6355] text-[10px] md:text-sm leading-relaxed mb-4 md:mb-8">
+                  <p className="hidden md:block">The ultimate interior experience for your 4 BHK home. Opulent materials, exclusive finishes, and unparalleled craftsmanship.</p>
+                  <ul className="space-y-1 md:space-y-2 mt-2 md:mt-4">
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> High-End Kitchen & Island</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Luxury Master Bedroom</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> 3 Premium Bedrooms</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Expansive Living Room</li>
+                    <li className="flex items-center gap-1.5 md:gap-2"><ArrowRight size={12} className="text-[#c8941a] flex-shrink-0" /> Premium Finishes & Lighting</li>
+                  </ul>
+                </div>
+                <Link href="/inquiry?product=4-BHK-Package" className="inline-block bg-[#1a1a1a] text-white px-4 py-2 md:px-8 md:py-3 text-[10px] md:text-xs font-bold uppercase tracking-widest w-fit hover:bg-[#c8941a] transition-colors">
+                  Get Quote
+                </Link>
+              </div>
+            </div>
+
           </div>
         </section>
 
