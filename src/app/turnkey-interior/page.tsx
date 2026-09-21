@@ -89,8 +89,8 @@ export default function TurnkeyInteriorPage() {
           <div className="space-y-16 md:space-y-24">
             
             {/* 2 BHK Package */}
-            <div className="flex flex-row items-start gap-4 lg:gap-12">
-              <div className="w-[40%] lg:w-1/2">
+            <div className="flex flex-row items-start gap-4 lg:gap-10">
+              <div className="w-[30%] shrink-0">
                 <Image 
                   src="/assets/packages/2-bhk-12-lac.png" 
                   alt="2 BHK Interior Package" 
@@ -99,7 +99,7 @@ export default function TurnkeyInteriorPage() {
                   priority
                 />
               </div>
-              <div className="w-[60%] lg:w-1/2 flex flex-col pt-0 lg:pt-4">
+              <div className="w-[70%] flex flex-col pt-0 lg:pt-4">
                 <h3 className="text-[14px] md:text-3xl font-bold md:font-light mb-1 md:mb-2" style={{fontFamily:'Playfair Display, serif'}}>2 BHK Full Luxury Interior</h3>
                 <div className="text-[#8c7b68] text-[12px] md:text-2xl font-serif italic mb-2">₹12,00,000</div>
                 <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-3 md:mb-6 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
@@ -168,8 +168,8 @@ export default function TurnkeyInteriorPage() {
             </div>
 
             {/* 3 BHK Package */}
-            <div className="flex flex-row items-start gap-4 lg:gap-12 pt-6 md:pt-8 border-t border-[#e2ddd5]">
-              <div className="w-[40%] lg:w-1/2">
+            <div className="flex flex-row items-start gap-4 lg:gap-10 pt-6 md:pt-8 border-t border-[#e2ddd5]">
+              <div className="w-[30%] shrink-0">
                 <Image 
                   src="/assets/packages/3-bhk-15-lac.png" 
                   alt="3 BHK Interior Package" 
@@ -177,7 +177,7 @@ export default function TurnkeyInteriorPage() {
                   className="w-full h-auto rounded-xl shadow-2xl border border-[#e2ddd5]" 
                 />
               </div>
-              <div className="w-[60%] lg:w-1/2 flex flex-col pt-0 lg:pt-4">
+              <div className="w-[70%] flex flex-col pt-0 lg:pt-4">
                 <h3 className="text-[14px] md:text-3xl font-bold md:font-light mb-1 md:mb-2" style={{fontFamily:'Playfair Display, serif'}}>3 BHK Full Luxury Interior</h3>
                 <div className="text-[#8c7b68] text-[12px] md:text-2xl font-serif italic mb-2">₹15,00,000</div>
                 <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-3 md:mb-6 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
@@ -248,8 +248,8 @@ export default function TurnkeyInteriorPage() {
             </div>
 
             {/* 4 BHK Package */}
-            <div className="flex flex-row items-start gap-4 lg:gap-12 pt-6 md:pt-8 border-t border-[#e2ddd5]">
-              <div className="w-[40%] lg:w-1/2">
+            <div className="flex flex-row items-start gap-4 lg:gap-10 pt-6 md:pt-8 border-t border-[#e2ddd5]">
+              <div className="w-[30%] shrink-0">
                 <Image 
                   src="/assets/packages/4-bhk-18-lac.png" 
                   alt="4 BHK Interior Package" 
@@ -257,7 +257,7 @@ export default function TurnkeyInteriorPage() {
                   className="w-full h-auto rounded-xl shadow-2xl border border-[#e2ddd5]" 
                 />
               </div>
-              <div className="w-[60%] lg:w-1/2 flex flex-col pt-0 lg:pt-4">
+              <div className="w-[70%] flex flex-col pt-0 lg:pt-4">
                 <h3 className="text-[14px] md:text-3xl font-bold md:font-light mb-1 md:mb-2" style={{fontFamily:'Playfair Display, serif'}}>4 BHK Full Luxury Interior</h3>
                 <div className="text-[#8c7b68] text-[12px] md:text-2xl font-serif italic mb-2">₹18,00,000</div>
                 <div className="text-[8px] md:text-xs font-bold uppercase tracking-wider text-[#1a1a1a] mb-3 md:mb-6 leading-tight">Complete Specification &bull; 15 Years Warranty</div>
