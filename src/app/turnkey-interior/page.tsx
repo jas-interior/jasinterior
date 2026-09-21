@@ -15,27 +15,37 @@ export default function TurnkeyInteriorPage() {
       <div className="bg-[#f9f6f0] min-h-screen text-[#2d2a26] pb-20 pt-8">
         
         {/* HERO SECTION */}
-        <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 lg:pt-20 lg:pb-24">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
-            <div className="flex-1 w-full max-w-2xl lg:pr-8 z-10">
-              <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#6d6355] mb-4">Designing Spaces</p>
-              <h1 className="text-5xl lg:text-7xl font-light mb-6 leading-[1.1]" style={{fontFamily:'Playfair Display, serif'}}>
-                That Feel <br />
-                <span className="italic text-[#8c7b68]">Like Home</span>
-              </h1>
-              <p className="text-[#6d6355] text-lg max-w-md mb-10 leading-relaxed">
-                Thoughtful interiors. Timeless style. Spaces designed to inspire everyday living.
+        <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12 lg:pt-8 lg:pb-16">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-6">
+            <div className="flex-1 w-full max-w-2xl lg:pr-6 z-10">
+              <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-[#6d6355] mb-3">
+                Premium Turnkey Interior Solutions by JAS INTERIOR
               </p>
+              <h1 className="text-4xl md:text-5xl lg:text-[4rem] font-light mb-5 leading-[1.1]" style={{fontFamily:'Playfair Display, serif'}}>
+                Transform Your House <br />
+                <span className="italic text-[#8c7b68]">Into a Luxury Home</span>
+              </h1>
+              <p className="text-[#6d6355] text-base md:text-lg max-w-lg mb-6 leading-relaxed">
+                From <strong>Design to Execution</strong>, we create beautiful, functional and luxurious interiors with premium materials, elegant designs and professional execution.
+              </p>
+              <div className="space-y-2 mb-8">
+                <div className="inline-block bg-[#e8e4dc] text-[#2d2a26] text-xs font-bold px-4 py-2 rounded-full tracking-wider">
+                  2 BHK | 3 BHK | 4 BHK Interior Packages
+                </div>
+                <div className="inline-block bg-[#e8e4dc] text-[#2d2a26] text-xs font-bold px-4 py-2 rounded-full tracking-wider ml-0 sm:ml-3">
+                  Serving All Gujarat | Vadodara
+                </div>
+              </div>
               <Link href="/contact" className="inline-flex items-center gap-3 bg-[#1a1a1a] text-white px-8 py-4 text-xs font-bold uppercase tracking-wider hover:bg-[#c8941a] transition-colors">
                 Explore Our Work <ArrowRight size={16} />
               </Link>
             </div>
             <div className="flex-1 w-full relative">
               {/* Distinctive curved/arch mask shape from the design */}
-              <div className="relative w-full aspect-[4/3] lg:aspect-square overflow-hidden rounded-tl-[120px] rounded-br-[120px] lg:rounded-tl-[200px] lg:rounded-br-[200px] shadow-2xl">
+              <div className="relative w-full aspect-[4/3] lg:aspect-[5/4] overflow-hidden rounded-tl-[120px] rounded-br-[120px] lg:rounded-tl-[160px] lg:rounded-br-[160px] shadow-2xl">
                 <Image 
-                  src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80" 
-                  alt="Elegant Living Room" 
+                  src="/assets/turnkey_hero.jpg" 
+                  alt="Luxury Turnkey Interior Design by JAS INTERIOR" 
                   fill 
                   className="object-cover"
                   priority
