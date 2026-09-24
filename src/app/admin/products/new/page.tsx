@@ -260,14 +260,19 @@ export default function AddProductPage() {
                       <div className="pt-4 border-t border-[#eaeaea]">
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-4">
-                            <button type="button" onClick={() => setVariants([...variants, {size: '3 × 6.25 ft', price: ''}, {size: '4 × 6.25 ft', price: ''}, {size: '5 × 6.25 ft', price: ''}, {size: '6 × 6.25 ft', price: ''}, {size: '7 × 7 ft', price: ''}])} className="text-xs text-[#3b82f6] font-medium hover:underline">+ Quick Fill Wardrobe Sizes</button>
-                            <button type="button" onClick={() => setVariants([...variants, {size: '', price: ''}])} className="text-xs text-[#c8941a] font-medium hover:underline">+ Add Variant</button>
-                          </div>
+                    {categories.find(c => c.id === (typeof form !== 'undefined' ? form.category_id : formData.category_id))?.slug === 'regular-wardrobe' && (
+                      <button type="button" onClick={() => setVariants([...variants, {size: '3 × 6.25 ft', price: ''}, {size: '4 × 6.25 ft', price: ''}, {size: '5 × 6.25 ft', price: ''}, {size: '6 × 6.25 ft', price: ''}, {size: '7 × 7 ft', price: ''}])} className="text-xs text-[#3b82f6] font-medium hover:underline">+ Quick Fill Wardrobe Sizes</button>
+                    )}
+                    {categories.find(c => c.id === (typeof form !== 'undefined' ? form.category_id : formData.category_id))?.slug === 'regular-bed' && (
+                      <button type="button" onClick={() => setVariants([...variants, {size: '4 × 6 ft', price: ''}, {size: '5 × 6 ft', price: ''}, {size: '6 × 6 ft', price: ''}])} className="text-xs text-[#3b82f6] font-medium hover:underline">+ Quick Fill Bed Sizes</button>
+                    )}
+                    <button type="button" onClick={() => setVariants([...variants, {size: '', price: ''}])} className="text-xs text-[#c8941a] font-medium hover:underline">+ Add Variant</button>
+                  </div>
                         </div>
                         {variants.map((v, i) => (
                           <div key={i} className="flex items-center gap-2 mb-2">
-                            <input type="text" placeholder="Size (e.g. 4 x 6 ft)" value={v.size} onChange={(e) => { const newV = [...variants]; newV[i].size = e.target.value; setVariants(newV) }} className="input-gold flex-1 text-xs py-2" />
-                            <input type="number" placeholder="Price" value={v.price} onChange={(e) => { const newV = [...variants]; newV[i].price = e.target.value; setVariants(newV) }} className="input-gold w-24 text-xs py-2" />
+                            <input type="text" placeholder="Size (e.g. 4 x 6 ft)" value={v.size} onChange={(e) => { const newV = [...variants]; newV[i].size = e.target.value; setVariants(newV) }} className="flex-1 border border-[#eaeaea] rounded-lg px-3 py-2 text-sm text-[#111111] focus:outline-none focus:border-[#c8941a]" style={{ minWidth: "120px" }} />
+                            <input type="number" placeholder="Price" value={v.price} onChange={(e) => { const newV = [...variants]; newV[i].price = e.target.value; setVariants(newV) }} className="w-28 border border-[#eaeaea] rounded-lg px-3 py-2 text-sm text-[#111111] focus:outline-none focus:border-[#c8941a]" />
                             <button type="button" onClick={() => setVariants(variants.filter((_, idx) => idx !== i))} className="text-red-500 hover:bg-red-50 p-1.5 rounded-lg">X</button>
                           </div>
                         ))}
