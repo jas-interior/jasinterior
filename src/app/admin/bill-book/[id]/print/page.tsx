@@ -43,173 +43,178 @@ export default function PrintBillPage() {
   const whatsappMessage = `Hello ${invoice.customer_name},\n\nHere is your invoice ${invoice.invoice_number} from JAS INTERIOR.\n\nTotal Amount: ₹${invoice.total_amount.toLocaleString('en-IN')}\nAdvance Paid: ₹${invoice.paid_amount.toLocaleString('en-IN')}\nBalance Due: ₹${pendingAmount.toLocaleString('en-IN')}\n\nYou can view and download your detailed bill here: https://jasinterior.store/admin/bill-book/${invoice.id}/print\n\nThank you for choosing JAS INTERIOR!`;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 print:py-0 print:bg-white text-black font-sans">
+    <div className="min-h-screen bg-gray-100 py-6 print:py-0 print:bg-white text-black font-sans flex flex-col items-center">
       
+      <style dangerouslySetInnerHTML={{__html: `
+        @media print {
+          body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          @page { size: A4; margin: 0; }
+        }
+      `}} />
+
       {/* Non-printable action bar */}
-      <div className="max-w-4xl mx-auto mb-6 px-4 print:hidden flex items-center justify-between">
-        <button onClick={() => router.back()} className="flex items-center gap-2 text-gray-500 hover:text-black font-medium transition-colors">
-          <ArrowLeft size={18} /> Back
+      <div className="w-full max-w-[800px] mb-4 px-4 print:hidden flex flex-col sm:flex-row items-center justify-between gap-4">
+        <button onClick={() => router.back()} className="flex items-center gap-2 text-gray-500 hover:text-black font-medium transition-colors w-full sm:w-auto">
+          <ArrowLeft size={18} /> Back to Bills
         </button>
-        <div className="flex gap-3">
+        <div className="flex gap-3 w-full sm:w-auto">
           <a 
             href={`https://wa.me/91${invoice.customer_mobile}?text=${encodeURIComponent(whatsappMessage)}`} 
             target="_blank" rel="noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-xl transition-all shadow-md shadow-[#25D366]/20"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-xl transition-all shadow-sm"
           >
-            <Send size={18} /> Send via WhatsApp
+            <Send size={18} /> WhatsApp
           </a>
           <button 
             onClick={() => window.print()}
-            className="flex items-center gap-2 px-5 py-2.5 bg-black hover:bg-gray-800 text-white font-bold rounded-xl transition-all shadow-md"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-black hover:bg-gray-800 text-white font-bold rounded-xl transition-all shadow-sm"
           >
-            <Printer size={18} /> Print Bill
+            <Printer size={18} /> Print PDF
           </button>
         </div>
       </div>
 
       {/* A4 Printable Area */}
-      <div className="w-full max-w-[794px] min-h-[1123px] mx-auto bg-white shadow-2xl print:shadow-none print:max-w-full print:min-h-0 overflow-hidden relative mb-12">
+      <div className="w-full max-w-[800px] bg-white shadow-2xl print:shadow-none print:max-w-full overflow-hidden relative flex flex-col" style={{ minHeight: '1123px' }}>
         
-        {/* Header - Golden Accent */}
-        <div className="h-3 w-full bg-gradient-to-r from-[#c8941a] via-[#e9a825] to-[#c8941a]"></div>
-        
-        <div className="p-10 print:p-8">
+        {/* Top Header */}
+        <div className="flex h-40 bg-[#1e293b] text-white relative overflow-hidden shrink-0">
+          <div className="absolute top-0 bottom-0 left-[45%] w-16 bg-[#c8941a] -skew-x-[30deg] origin-bottom z-10"></div>
+          <div className="absolute top-0 bottom-0 left-[45%] ml-16 w-full bg-slate-900 -skew-x-[30deg] origin-bottom z-0"></div>
           
-          <div className="flex justify-between items-start mb-12">
-            <div>
-              <h1 className="font-serif text-4xl font-bold text-[#111111] mb-1">JAS INTERIOR</h1>
-              <p className="text-gray-500 font-medium text-sm tracking-widest uppercase">Premium Custom Furniture</p>
-              <div className="mt-4 text-sm text-gray-600 space-y-1">
-                <p>Shop No. 1, Maa Complex, Near Uma Char Rasta,</p>
-                <p>Waghodiya Road, Vadodara, Gujarat</p>
-                <p className="font-medium text-black mt-2">Ph: +91 88665 31993</p>
-              </div>
-            </div>
-            
-            <div className="text-right">
-              <h2 className="text-3xl font-light text-gray-400 mb-4 uppercase tracking-widest">Invoice</h2>
-              <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 inline-block text-left min-w-[200px]">
-                <div className="flex justify-between mb-2">
-                  <span className="text-xs font-bold text-gray-400 uppercase">Bill No:</span>
-                  <span className="text-sm font-bold text-black">{invoice.invoice_number}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-xs font-bold text-gray-400 uppercase">Date:</span>
-                  <span className="text-sm font-medium text-black">{new Date(invoice.issue_date || invoice.created_at).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'})}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-12 mb-10">
-            <div>
-              <h3 className="text-xs font-bold text-[#c8941a] uppercase tracking-widest border-b-2 border-[#c8941a]/20 pb-2 mb-3 inline-block">Billed To</h3>
-              <p className="text-xl font-bold text-gray-900 mb-1">{invoice.customer_name}</p>
-              <p className="text-gray-600 mb-1 font-medium">+91 {invoice.customer_mobile}</p>
-              {invoice.customer_address && (
-                <p className="text-gray-500 text-sm max-w-[250px] leading-relaxed mt-2">{invoice.customer_address}</p>
-              )}
-            </div>
-            {/* Status Stamp */}
-            <div className="flex justify-end items-center">
-              {pendingAmount === 0 ? (
-                <div className="border-4 border-green-600 text-green-600 px-6 py-2 rounded-xl text-3xl font-black uppercase tracking-widest transform rotate-[-10deg] opacity-80">PAID</div>
-              ) : invoice.paid_amount > 0 ? (
-                <div className="border-4 border-[#c8941a] text-[#c8941a] px-6 py-2 rounded-xl text-2xl font-black uppercase tracking-widest transform rotate-[-5deg] opacity-80">PARTIAL PAYMENT</div>
-              ) : (
-                <div className="border-4 border-red-500 text-red-500 px-6 py-2 rounded-xl text-3xl font-black uppercase tracking-widest transform rotate-[-10deg] opacity-80">UNPAID</div>
-              )}
-            </div>
-          </div>
-
-          {/* Items Table */}
-          <div className="mb-8">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b-2 border-black">
-                  <th className="py-3 text-xs font-bold text-gray-400 uppercase tracking-widest w-12 text-center">#</th>
-                  <th className="py-3 text-xs font-bold text-gray-400 uppercase tracking-widest">Description</th>
-                  <th className="py-3 text-xs font-bold text-gray-400 uppercase tracking-widest text-center w-24">Qty</th>
-                  <th className="py-3 text-xs font-bold text-gray-400 uppercase tracking-widest text-right w-32">Rate</th>
-                  <th className="py-3 text-xs font-bold text-gray-400 uppercase tracking-widest text-right w-32">Total</th>
-                </tr>
-              </thead>
-              <tbody className="text-sm">
-                {items.map((item, index) => (
-                  <tr key={item.id} className="border-b border-gray-100">
-                    <td className="py-4 text-center text-gray-400 align-top">{index + 1}</td>
-                    <td className="py-4 align-top">
-                      <div className="font-semibold text-gray-900">{item.description}</div>
-                      {item.warranty && (
-                        <div className="text-xs text-gray-500 mt-1 font-medium bg-gray-50 inline-block px-2 py-0.5 rounded">
-                          <span className="font-bold text-[#c8941a]">WARRANTY:</span> {item.warranty}
-                        </div>
-                      )}
-                    </td>
-                    <td className="py-4 text-center font-medium text-gray-700 align-top">{item.quantity}</td>
-                    <td className="py-4 text-right text-gray-600 align-top">₹{item.unit_price.toLocaleString('en-IN')}</td>
-                    <td className="py-4 text-right font-bold text-black align-top">₹{item.total.toLocaleString('en-IN')}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Totals Section */}
-          <div className="flex justify-end mb-12">
-            <div className="w-80">
-              <div className="flex justify-between py-2 text-sm">
-                <span className="text-gray-500 font-medium">Subtotal</span>
-                <span className="font-semibold text-gray-800">₹{invoice.subtotal.toLocaleString('en-IN')}</span>
-              </div>
-              {invoice.discount > 0 && (
-                <div className="flex justify-between py-2 text-sm border-t border-gray-100">
-                  <span className="text-gray-500 font-medium">Discount</span>
-                  <span className="font-semibold text-red-500">- ₹{invoice.discount.toLocaleString('en-IN')}</span>
-                </div>
-              )}
-              <div className="flex justify-between py-4 border-t-2 border-black mt-2">
-                <span className="text-lg font-bold text-black uppercase tracking-wider">Grand Total</span>
-                <span className="text-xl font-bold text-[#c8941a]">₹{invoice.total_amount.toLocaleString('en-IN')}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Payments & Terms Grid */}
-          <div className="grid grid-cols-2 gap-12 mt-12 pt-8 border-t border-gray-100">
-            <div>
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Terms & Conditions</h3>
-              <div className="text-xs text-gray-500 leading-relaxed whitespace-pre-wrap font-medium">
-                {invoice.terms}
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-              <h3 className="text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-4 border-b border-gray-200 pb-2">Payment Summary</h3>
-              <div className="space-y-3">
-                {payments.map(pay => (
-                  <div key={pay.id} className="flex justify-between text-sm">
-                    <span className="text-gray-600">{pay.payment_mode} <span className="text-xs text-gray-400 ml-1">({new Date(pay.payment_date || pay.created_at).toLocaleDateString('en-IN')})</span></span>
-                    <span className="font-semibold text-green-600">₹{pay.amount.toLocaleString('en-IN')}</span>
-                  </div>
-                ))}
-                
-                <div className="pt-3 mt-3 border-t-2 border-gray-200 flex justify-between">
-                  <span className="text-sm font-bold text-black uppercase tracking-wider">Balance Due</span>
-                  <span className={`text-lg font-bold ${pendingAmount > 0 ? 'text-red-500' : 'text-gray-400'}`}>
-                    ₹{pendingAmount.toLocaleString('en-IN')}
-                  </span>
-                </div>
-              </div>
-            </div>
+          <div className="w-1/2 p-8 z-20 flex flex-col justify-center">
+            <h1 className="text-4xl font-bold tracking-wider text-white">JAS INTERIOR</h1>
+            <p className="text-[#c8941a] text-xs font-semibold tracking-[0.2em] mt-1">PREMIUM CUSTOM FURNITURE</p>
           </div>
           
-          <div className="mt-16 text-center text-gray-400 text-xs font-medium">
-            This is a computer generated invoice and requires no signature.
+          <div className="w-1/2 p-8 z-20 flex flex-col justify-center items-end text-right">
+            <h2 className="text-4xl font-bold text-[#c8941a] tracking-widest mb-1">INVOICE</h2>
+            <p className="text-xs font-semibold tracking-wider text-gray-300 uppercase">NO : {invoice.invoice_number}</p>
+            <p className="text-xs font-semibold tracking-wider text-gray-300 uppercase">DATE : {new Date(invoice.issue_date || invoice.created_at).toLocaleDateString('en-IN')}</p>
           </div>
         </div>
-      </div>
 
+        {/* Billing Info */}
+        <div className="flex justify-between px-10 py-10 shrink-0">
+          <div className="w-[45%]">
+            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Invoice To :</h3>
+            <p className="font-bold text-lg text-gray-900 leading-tight mb-1">{invoice.customer_name}</p>
+            <p className="text-sm text-gray-600 font-medium mb-0.5">+91 {invoice.customer_mobile}</p>
+            {invoice.customer_address && (
+              <p className="text-sm text-gray-600 max-w-[250px] leading-snug">{invoice.customer_address}</p>
+            )}
+          </div>
+          <div className="w-[45%] text-left">
+            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Invoice From :</h3>
+            <p className="font-bold text-lg text-gray-900 leading-tight mb-1">JAS INTERIOR</p>
+            <p className="text-sm text-gray-600 font-medium">Shop No. 1, Maa Complex</p>
+            <p className="text-sm text-gray-600 font-medium">Near Uma Char Rasta, Waghodiya Road</p>
+            <p className="text-sm text-gray-600 font-medium">Vadodara, Gujarat</p>
+            <p className="text-sm font-bold text-gray-800 mt-1">Ph: +91 88665 31993</p>
+          </div>
+        </div>
+
+        {/* Table */}
+        <div className="px-10 shrink-0">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-[#c8941a] text-white">
+                <th className="py-2.5 px-4 text-xs font-bold tracking-wider uppercase w-12 text-center">#</th>
+                <th className="py-2.5 px-4 text-xs font-bold tracking-wider uppercase">Description</th>
+                <th className="py-2.5 px-4 text-xs font-bold tracking-wider uppercase text-center w-28">Price</th>
+                <th className="py-2.5 px-4 text-xs font-bold tracking-wider uppercase text-center w-20">Qty</th>
+                <th className="py-2.5 px-4 text-xs font-bold tracking-wider uppercase text-right w-32">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item, index) => (
+                <tr key={item.id} className="border-b-2 border-[#1e293b]">
+                  <td className="py-4 px-4 text-center text-sm font-bold text-gray-500 align-top">{index + 1}</td>
+                  <td className="py-4 px-4 align-top">
+                    <p className="font-bold text-sm text-gray-900">{item.description}</p>
+                    {item.warranty && <p className="text-xs text-gray-500 mt-1 font-medium bg-gray-50 inline-block px-2 py-0.5 rounded border border-gray-100">Warranty: {item.warranty}</p>}
+                  </td>
+                  <td className="py-4 px-4 text-center text-sm font-semibold text-gray-700 align-top">₹{item.unit_price.toLocaleString('en-IN')}</td>
+                  <td className="py-4 px-4 text-center text-sm font-bold text-gray-700 align-top">{item.quantity}</td>
+                  <td className="py-4 px-4 text-right text-sm font-bold text-gray-900 align-top">₹{item.total.toLocaleString('en-IN')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Totals & Footer Info */}
+        <div className="flex px-10 py-10 gap-8 flex-1">
+          <div className="w-2/3 flex flex-col justify-between">
+            
+            <div className="flex gap-10">
+              <div className="flex-1">
+                <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Payment Method :</h3>
+                <div className="text-sm font-medium text-gray-700">
+                  {payments.length > 0 ? payments.map(p => (
+                    <div key={p.id} className="flex gap-4 mb-1">
+                      <span className="font-bold text-gray-900 w-20">Received:</span>
+                      <span>₹{p.amount.toLocaleString('en-IN')} ({p.payment_mode})</span>
+                    </div>
+                  )) : (
+                    <div className="text-red-500 font-bold">No Payments Received</div>
+                  )}
+                  {pendingAmount > 0 && (
+                    <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200">
+                      <span className="font-bold text-gray-900 w-20">Balance:</span>
+                      <span className="font-bold text-red-600">₹{pendingAmount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+                  {pendingAmount === 0 && (
+                    <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200">
+                      <span className="font-bold text-green-600">FULLY PAID</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex-1">
+                <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Terms & Conditions :</h3>
+                <p className="text-xs text-gray-600 whitespace-pre-wrap leading-relaxed font-medium">{invoice.terms}</p>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <h2 className="text-xl font-bold text-[#1e293b] mb-2">Thanks for your business!</h2>
+              <p className="text-xs text-gray-400">If you have any questions about this invoice, please contact us.</p>
+            </div>
+          </div>
+          
+          <div className="w-1/3 flex flex-col justify-between">
+            <div>
+              <div className="flex justify-between py-2 text-sm font-bold text-gray-700">
+                <span>Subtotal :</span>
+                <span>₹{invoice.subtotal.toLocaleString('en-IN')}</span>
+              </div>
+              <div className="flex justify-between py-2 text-sm font-bold text-gray-700 border-b-2 border-gray-200 mb-4 pb-4">
+                <span>Discount :</span>
+                <span>₹{invoice.discount.toLocaleString('en-IN')}</span>
+              </div>
+              <div className="flex justify-between items-center bg-[#c8941a] text-white px-4 py-3 shadow-md">
+                <span className="font-bold tracking-widest">TOTAL</span>
+                <span className="font-bold text-xl">₹{invoice.total_amount.toLocaleString('en-IN')}</span>
+              </div>
+            </div>
+            
+            <div className="mt-16 text-center">
+              <div className="border-t-2 border-[#1e293b] pt-2 inline-block min-w-[200px]">
+                <p className="text-sm font-bold text-[#1e293b] uppercase tracking-wider">Authorized Signatory</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="h-12 bg-[#c8941a] relative overflow-hidden shrink-0 w-full mt-auto">
+          <div className="absolute top-0 bottom-0 left-0 w-[45%] bg-[#1e293b] skew-x-[30deg] origin-bottom -translate-x-12"></div>
+        </div>
+
+      </div>
     </div>
   )
 }
