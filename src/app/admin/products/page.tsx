@@ -106,7 +106,7 @@ useEffect(() => {
           <select 
             value={selectedCategory} 
             onChange={(e) => handleCategoryChange(e.target.value)}
-            className="input-gold h-10 text-sm px-3 w-full sm:w-auto min-w-[140px] bg-white"
+            className="input-gold h-10 text-sm px-3 !w-full sm:!w-auto min-w-[140px] bg-white"
           >
             <option value="all">All Categories</option>
             {categories.map(c => (
@@ -116,7 +116,7 @@ useEffect(() => {
           <select
             value={priceFilter}
             onChange={(e) => handlePriceFilterChange(e.target.value)}
-            className="input-gold h-10 text-sm px-3 w-full sm:w-auto min-w-[140px] bg-white"
+            className="input-gold h-10 text-sm px-3 !w-full sm:!w-auto min-w-[140px] bg-white"
           >
             <option value="all">All Prices</option>
             <option value="priced">With Price (Priced)</option>
@@ -124,9 +124,9 @@ useEffect(() => {
           </select>
           <div className="relative flex-grow sm:flex-grow-0">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#555]" />
-            <input type="text" placeholder="Search products..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold !pl-9 h-10 w-full sm:w-64" />
+            <input type="text" placeholder="Search products..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold !pl-9 h-10 !w-full sm:!w-64" />
           </div>
-          <Link onClick={() => sessionStorage.setItem('jas_admin_products_scroll', window.scrollY.toString())} href="/admin/products/new" className="flex items-center gap-2 px-4 py-2 rounded-xl btn-gold text-sm font-semibold whitespace-nowrap text-white w-full sm:w-auto justify-center">
+          <Link onClick={() => sessionStorage.setItem('jas_admin_products_scroll', window.scrollY.toString())} href="/admin/products/new" className="flex items-center gap-2 px-4 py-2 rounded-xl btn-gold text-sm font-semibold whitespace-nowrap text-white !w-full sm:!w-auto justify-center">
             <Plus size={16} /> Add Product
           </Link>
         </div>

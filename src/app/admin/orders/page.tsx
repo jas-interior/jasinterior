@@ -38,7 +38,7 @@ export default function AdminOrders() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <h1 className="text-2xl font-bold text-[#111111]">Orders</h1>
-        <div className="relative w-full sm:w-64">
+        <div className="relative !w-full sm:!w-64">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#555]" />
           <input type="text" placeholder="Search orders..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold !pl-9 h-10 w-full" />
         </div>
