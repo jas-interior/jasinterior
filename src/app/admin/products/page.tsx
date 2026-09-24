@@ -91,7 +91,7 @@ export default function AdminProducts() {
       )}
 
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
-        <h1 className="text-2xl font-bold text-[#111111]">Products</h1>
+        <h1 className="text-2xl font-bold text-[#111111]">Products ({filtered.length})</h1>
         <div className="flex flex-wrap items-center gap-3">
           <select 
             value={selectedCategory} 
@@ -127,7 +127,8 @@ export default function AdminProducts() {
           <table className="admin-table min-w-[800px] w-full">
             <thead>
               <tr>
-                <th>Product</th>
+                <th className="w-12">#</th>
+                  <th>Product</th>
                 <th>Category</th>
                 <th>Price</th>
                 <th>Status</th>
@@ -141,8 +142,9 @@ export default function AdminProducts() {
               ) : filtered.length === 0 ? (
                 <tr><td colSpan={6} className="text-center py-8">No products found.</td></tr>
               ) : (
-                filtered.map((prod) => (
+                filtered.map((prod, index) => (
                   <tr key={prod.id}>
+                    <td className="text-[#555] font-medium text-center">{index + 1}</td>
                     <td>
                       <div className="flex items-center gap-4">
                         <button 

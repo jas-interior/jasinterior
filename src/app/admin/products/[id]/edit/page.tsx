@@ -85,8 +85,8 @@ export default function EditProductPage() {
       if (error) throw error
       
       toast.success('Product updated successfully!', { id: toastId })
-      router.push('/admin/products')
       router.refresh()
+      setTimeout(() => router.back(), 100)
     } catch (err: any) {
       toast.error(err.message || 'Error updating product', { id: toastId })
     } finally {
