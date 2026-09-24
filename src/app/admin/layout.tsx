@@ -12,7 +12,7 @@ const navItems = [
   { href: '/admin/interior-ideas', label: 'Interior Ideas', icon: ShoppingBag }, // Will fix import
   { href: '/admin/inquiries', label: 'Inquiries', icon: MessageSquare },
   { href: '/admin/bill-book', label: 'Bill Book / POS', icon: FileText },
-  { href: '/admin/customers', label: 'Customers / CRM', icon: Users },
+  { href: '/admin/clients', label: 'Clients / Khata', icon: Users },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
