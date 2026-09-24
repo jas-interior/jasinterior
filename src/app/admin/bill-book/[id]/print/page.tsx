@@ -74,8 +74,9 @@ export default function PrintBillPage() {
         </div>
       </div>
 
-      {/* A4 Printable Area */}
-      <div className="w-full max-w-[800px] bg-white shadow-2xl print:shadow-none print:max-w-full overflow-hidden relative flex flex-col" style={{ minHeight: '1123px' }}>
+      {/* A4 Printable Area Container for Mobile Scroll */}
+      <div className="w-full overflow-x-auto print:overflow-visible flex justify-start sm:justify-center px-4 sm:px-0 pb-10 print:pb-0">
+        <div className="w-[800px] shrink-0 bg-white shadow-2xl print:shadow-none print:w-full overflow-hidden relative flex flex-col" style={{ minHeight: '1123px' }}>
         
         {/* Top Header */}
         <div className="flex h-40 bg-[#1e293b] text-white relative overflow-hidden shrink-0">
@@ -217,6 +218,7 @@ export default function PrintBillPage() {
           <div className="absolute top-0 bottom-0 left-0 w-[45%] bg-[#1e293b] skew-x-[30deg] origin-bottom -translate-x-12"></div>
         </div>
 
+      </div>
       </div>
     </div>
   )

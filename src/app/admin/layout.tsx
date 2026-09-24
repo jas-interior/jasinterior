@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, ShoppingBag, Grid, ShoppingCart, MessageSquare, FileText, Settings, LogOut, Menu, X } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Grid, ShoppingCart, MessageSquare, FileText, Settings, LogOut, Menu, X, Users } from 'lucide-react'
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
@@ -12,6 +12,7 @@ const navItems = [
   { href: '/admin/interior-ideas', label: 'Interior Ideas', icon: ShoppingBag }, // Will fix import
   { href: '/admin/inquiries', label: 'Inquiries', icon: MessageSquare },
   { href: '/admin/bill-book', label: 'Bill Book / POS', icon: FileText },
+  { href: '/admin/customers', label: 'Customers / CRM', icon: Users },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
