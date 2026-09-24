@@ -34,17 +34,18 @@ export default function NewBillBookPage() {
   const [paymentMode, setPaymentMode] = useState('Cash')
   const [documentType, setDocumentType] = useState('Invoice')
   const [createdBy, setCreatedBy] = useState('')
-  const [terms, setTerms] = useState('1. Goods once sold will not be taken back.\n2. 50% advance required for custom orders.\n3. Balance must be cleared before delivery.')
+  const [terms, setTerms] = useState('1. Custom-made goods are non-returnable/non-exchangeable, subject to applicable law.\n2. Delivery, unloading & installation charges extra unless mentioned.\n3. Warranty as per mentioned terms; misuse, water/termite & normal wear not covered.\n4. Customer must verify product & specifications at delivery.\n5. Balance payment as agreed.')
 
   useEffect(() => {
     if (documentType === 'Quotation') {
-      setTerms('1. This is an estimate, final price may vary based on exact measurements.\n2. Quotation is valid for 15 days.\n3. 50% advance required to confirm order.')
+      setTerms('1. Quotation valid for 15 days.\n2. GST/taxes, delivery & installation extra unless mentioned.\n3. Price may change with changes in size, design, material or quantity.\n4. Delivery time is approximate.\n5. Order confirmed against customer approval & advance payment.')
     } else if (documentType === 'Order Form') {
-      setTerms('1. Order confirmed.\n2. Goods once sold will not be taken back.\n3. Balance must be cleared before delivery.')
+      setTerms('1. Customer must confirm size, design, colour, fabric & material before production.\n2. Changes after confirmation may incur extra charges.\n3. Custom orders cannot be cancelled after production starts, subject to applicable law.\n4. Delivery/installation charges extra unless mentioned.\n5. Warranty as per agreed terms.')
     } else if (documentType === 'Receipt') {
-      setTerms('Payment receipt against order.')
+      setTerms('1. Amount received will be adjusted against the order value.\n2. Balance payment as per agreed terms.\n3. Advance for custom orders is subject to cancellation terms.\n4. Receipt confirms payment only, not delivery/completion.')
     } else {
-      setTerms('1. Goods once sold will not be taken back.\n2. 50% advance required for custom orders.\n3. Balance must be cleared before delivery.')
+      // Invoice
+      setTerms('1. Custom-made goods are non-returnable/non-exchangeable, subject to applicable law.\n2. Delivery, unloading & installation charges extra unless mentioned.\n3. Warranty as per mentioned terms; misuse, water/termite & normal wear not covered.\n4. Customer must verify product & specifications at delivery.\n5. Balance payment as agreed.')
     }
   }, [documentType])
 
