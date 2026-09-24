@@ -69,7 +69,7 @@ export default function PrintBillPage() {
             onClick={() => window.print()}
             className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-black hover:bg-gray-800 text-white font-bold rounded-xl transition-all shadow-sm"
           >
-            <Printer size={18} /> Print PDF
+            <Printer size={18} /> Download / Print PDF
           </button>
         </div>
       </div>
@@ -96,14 +96,6 @@ export default function PrintBillPage() {
 
         {/* Billing Info */}
         <div className="flex justify-between px-10 py-10 shrink-0">
-          <div className="w-[45%]">
-            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Invoice To :</h3>
-            <p className="font-bold text-lg text-gray-900 leading-tight mb-1">{invoice.customer_name}</p>
-            <p className="text-sm text-gray-600 font-medium mb-0.5">+91 {invoice.customer_mobile}</p>
-            {invoice.customer_address && (
-              <p className="text-sm text-gray-600 max-w-[250px] leading-snug">{invoice.customer_address}</p>
-            )}
-          </div>
           <div className="w-[45%] text-left">
             <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Invoice From :</h3>
             <p className="font-bold text-lg text-gray-900 leading-tight mb-1">JAS INTERIOR</p>
@@ -111,6 +103,14 @@ export default function PrintBillPage() {
             <p className="text-sm text-gray-600 font-medium">Near Uma Char Rasta, Waghodiya Road</p>
             <p className="text-sm text-gray-600 font-medium">Vadodara, Gujarat</p>
             <p className="text-sm font-bold text-gray-800 mt-1">Ph: +91 88665 31993</p>
+          </div>
+          <div className="w-[45%] text-right">
+            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Invoice To :</h3>
+            <p className="font-bold text-lg text-gray-900 leading-tight mb-1">{invoice.customer_name}</p>
+            <p className="text-sm text-gray-600 font-medium mb-0.5">+91 {invoice.customer_mobile}</p>
+            {invoice.customer_address && (
+              <p className="text-sm text-gray-600 max-w-[250px] leading-snug ml-auto">{invoice.customer_address}</p>
+            )}
           </div>
         </div>
 
