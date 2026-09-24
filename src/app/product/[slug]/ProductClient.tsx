@@ -14,7 +14,9 @@ import toast from 'react-hot-toast'
 export default function ProductClient({ product }: { product: Product }) {
   const [currentImage, setCurrentImage] = useState(0)
   const [qty, setQty] = useState(1)
-  const [selectedVariant, setSelectedVariant] = useState(product.variants?.[0] || null)
+  const [selectedVariant, setSelectedVariant] = useState<any>(
+    product.variants?.find(v => Number(v.price) === Number(product.price)) || product.variants?.[0] || null
+  )
   const { addItem } = useCartStore()
 
   // Removed useEffect and loading checks since product is now passed from Server Component
