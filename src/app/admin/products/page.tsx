@@ -29,6 +29,24 @@ export default function AdminProducts() {
     setLoading(false)
   }
 
+  
+  useEffect(() => {
+    if (!loading) {
+      const savedScroll = sessionStorage.getItem('jas_admin_products_scroll');
+      if (savedScroll) {
+        setTimeout(() => window.scrollTo({ top: parseInt(savedScroll, 10), behavior: 'instant' }), 50);
+      }
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      sessionStorage.setItem('jas_admin_products_scroll', window.scrollY.toString());
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   useEffect(() => { 
     loadData() 
     const savedCat = localStorage.getItem('jas_admin_category_filter')
