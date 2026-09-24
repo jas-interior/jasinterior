@@ -89,6 +89,25 @@ export default function NewBillBookPage() {
     const supabase = createClient()
 
     try {
+      // 0. Auto-save client to clients table (upsert by mobile)
+      let savedClientId: string | null = null
+      if (customerMobile && customerName) {
+        const { data: existingClient } = await supabase
+          .from('clients')
+          .select('id')
+          .eq('mobile', customerMobile)
+          .single()
+        if (existingClient) {
+          savedClientId = existingClient.id
+        } else {
+          const { data: newClient } = await supabase
+            .from('clients')
+            .insert({ full_name: customerName, mobile: customerMobile, address: customerAddress || null, city: 'Vadodara' })
+            .select().single()
+          if (newClient) savedClientId = newClient.id
+        }
+      }
+
       // 1. Generate Invoice Number
       let prefix = 'JAS-INV-'
       if (documentType === 'Quotation') prefix = 'JAS-QT-'
@@ -104,6 +123,7 @@ export default function NewBillBookPage() {
       // 2. Insert Invoice
       const { data: invoice, error: invError } = await supabase.from('invoices').insert({
         invoice_number: invNum,
+        client_id: savedClientId || null,
         customer_name: customerName,
         customer_mobile: customerMobile,
         customer_address: customerAddress,
@@ -120,6 +140,17 @@ export default function NewBillBookPage() {
       }).select().single()
 
       if (invError) throw invError
+
+      // 3a. If advance was paid, save it as a payment record too
+      if (advanceReceived > 0 && customerMobile) {
+        await supabase.from('payments').insert({
+          invoice_id: invoice.id,
+          client_mobile: customerMobile,
+          amount: advanceReceived,
+          payment_mode: paymentMode,
+          note: documentType === 'Order Form' ? 'Advance / Token' : 'Payment'
+        })
+      }
 
       // 3. Insert Items
       const itemsToInsert = items.map(item => ({
