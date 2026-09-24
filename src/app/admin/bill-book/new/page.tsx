@@ -184,10 +184,12 @@ export default function NewBillBookPage() {
             <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Issued By (Staff Name)</label>
             <input type="text" placeholder="e.g. Rahul" value={createdBy} onChange={e => setCreatedBy(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold" />
           </div>
-          <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
-            <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Delivery Date</label>
-            <input type="date" value={deliveryDate} onChange={e => setDeliveryDate(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold" />
-          </div>
+          {documentType === 'Order Form' && (
+            <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
+              <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Delivery Date</label>
+              <input type="date" value={deliveryDate} onChange={e => setDeliveryDate(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold" />
+            </div>
+          )}
         </div>
         
         {/* Customer Section */}
