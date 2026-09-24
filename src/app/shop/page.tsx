@@ -12,6 +12,19 @@ export default function ShopPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('sofa')
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      const cat = params.get('category')
+      if (cat) setSelectedCategory(cat)
+    }
+  }, [])
+
+  const handleCategoryChange = (val: string) => {
+    setSelectedCategory(val)
+    window.history.pushState(null, '', val ? `/shop?category=${val}` : '/shop')
+  }
   const [sortBy, setSortBy] = useState('default')
 
   const loadData = useCallback(async () => {
@@ -47,7 +60,7 @@ export default function ShopPage() {
             <input type="text" placeholder="Search furniture..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold pl-10 h-11" />
             {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#555] hover:text-[#111111]"><X size={14} /></button>}
           </div>
-          <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="input-gold h-11 max-w-xs">
+          <select value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)} className="input-gold h-11 max-w-xs">
             <option value="">All Categories</option>
             {categories.map((cat) => <option key={cat.id} value={cat.slug}>{cat.name}</option>)}
           </select>
@@ -56,8 +69,8 @@ export default function ShopPage() {
           </select>
         </div>
         <div className="flex gap-2 overflow-x-auto pb-2 mb-8">
-          <button onClick={() => setSelectedCategory('')} className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === '' ? 'bg-[#c8941a] text-black' : 'bg-white border border-[#eaeaea] text-[#555555] hover:border-[#c8941a]/40'}`}>All</button>
-          {categories.map((cat) => <button key={cat.id} onClick={() => setSelectedCategory(cat.slug)} className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === cat.slug ? 'bg-[#c8941a] text-black' : 'bg-white border border-[#eaeaea] text-[#555555] hover:border-[#c8941a]/40'}`}>{cat.name}</button>)}
+          <button onClick={() => handleCategoryChange('')} className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === '' ? 'bg-[#c8941a] text-black' : 'bg-white border border-[#eaeaea] text-[#555555] hover:border-[#c8941a]/40'}`}>All</button>
+          {categories.map((cat) => <button key={cat.id} onClick={() => handleCategoryChange(cat.slug)} className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === cat.slug ? 'bg-[#c8941a] text-black' : 'bg-white border border-[#eaeaea] text-[#555555] hover:border-[#c8941a]/40'}`}>{cat.name}</button>)}
         </div>
         {!loading && <p className="text-xs text-[#555] mb-6">{products.length} product{products.length !== 1 ? 's' : ''} found</p>}
         {loading ? (

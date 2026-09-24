@@ -38,7 +38,7 @@ export default function CategoriesSection() {
           {categories.map(cat => (
             <Link 
               key={cat.id} 
-              href={`/shop/${cat.slug}`}
+              href={`/shop?category=${cat.slug}`}
               className="flex flex-col items-center group w-24 md:w-32"
             >
               <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white shadow-sm border border-[#eaeaea] group-hover:border-[#c8941a] group-hover:shadow-md transition-all overflow-hidden mb-3 md:mb-4 relative flex items-center justify-center">
