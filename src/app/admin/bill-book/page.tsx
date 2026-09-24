@@ -1,0 +1,162 @@
+'use client'
+import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import Link from 'next/link'
+import { Plus, Search, FileText, Download, CheckCircle, Clock, AlertCircle } from 'lucide-react'
+
+export default function BillBookPage() {
+  const [invoices, setInvoices] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
+  const [dbError, setDbError] = useState(false)
+
+  const loadData = async () => {
+    setLoading(true)
+    const supabase = createClient()
+    const { data, error } = await supabase.from('invoices').select('*').order('created_at', { ascending: false })
+    
+    if (error) {
+      if (error.code === '42P01') {
+        // Table doesn't exist
+        setDbError(true)
+      }
+      console.error(error)
+    } else if (data) {
+      setInvoices(data)
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => { loadData() }, [])
+
+  const filtered = invoices.filter(i => 
+    i.invoice_number?.toLowerCase().includes(search.toLowerCase()) || 
+    i.customer_name?.toLowerCase().includes(search.toLowerCase()) ||
+    i.customer_mobile?.includes(search)
+  )
+
+  const totalOutstanding = invoices.reduce((acc, curr) => acc + (curr.total_amount - curr.paid_amount), 0)
+
+  if (dbError) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[70vh] text-center max-w-lg mx-auto">
+        <AlertCircle size={48} className="text-[#c8941a] mb-4" />
+        <h1 className="text-2xl font-bold text-[#111111] mb-2">Database Setup Required</h1>
+        <p className="text-[#555] mb-6">
+          To use the JAS Bill Book & POS feature, you need to run the setup script in your Supabase SQL Editor.
+        </p>
+        <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 text-sm font-mono text-left w-full overflow-x-auto text-gray-800">
+          Please run the <strong className="text-black">supabase/billbook-schema.sql</strong> file in your Supabase project to create the necessary tables.
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-[#111111]">Bill Book & POS</h1>
+          <p className="text-sm text-gray-500 mt-1">Manage offline invoices, customers, and pending payments (Udhaari).</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="relative flex-grow sm:flex-grow-0">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#555]" />
+            <input type="text" placeholder="Search bills or customers..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold !pl-9 h-10 w-full sm:w-64" />
+          </div>
+          <Link href="/admin/bill-book/new" className="flex items-center gap-2 px-4 py-2 rounded-xl btn-gold text-sm font-semibold whitespace-nowrap text-black w-full sm:w-auto justify-center">
+            <Plus size={16} /> New Bill
+          </Link>
+        </div>
+      </div>
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-2xl border border-[#eaeaea] shadow-sm flex items-center justify-between">
+          <div>
+            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Pending Recovery</p>
+            <h3 className="text-2xl font-bold text-[#111111]">₹{totalOutstanding.toLocaleString('en-IN')}</h3>
+          </div>
+          <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-500">
+            <Clock size={24} />
+          </div>
+        </div>
+        
+        <div className="bg-white p-6 rounded-2xl border border-[#eaeaea] shadow-sm flex items-center justify-between">
+          <div>
+            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Bills</p>
+            <h3 className="text-2xl font-bold text-[#111111]">{invoices.length}</h3>
+          </div>
+          <div className="w-12 h-12 rounded-full bg-[#c8941a]/10 flex items-center justify-center text-[#c8941a]">
+            <FileText size={24} />
+          </div>
+        </div>
+      </div>
+
+      {/* Bills Table */}
+      <div className="bg-white border border-[#eaeaea] rounded-2xl overflow-hidden shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="admin-table min-w-[1000px]">
+            <thead>
+              <tr>
+                <th>Bill No & Date</th>
+                <th>Customer Details</th>
+                <th>Total Amount</th>
+                <th>Paid Amount</th>
+                <th>Pending Balance</th>
+                <th>Status</th>
+                <th className="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan={7} className="text-center py-8">Loading bills...</td></tr>
+              ) : filtered.length === 0 ? (
+                <tr><td colSpan={7} className="text-center py-12 text-gray-500">No bills found. Create a new bill to get started.</td></tr>
+              ) : (
+                filtered.map((item) => {
+                  const pending = item.total_amount - item.paid_amount;
+                  return (
+                    <tr key={item.id} className="group hover:bg-gray-50">
+                      <td>
+                        <div className="font-bold text-[#111111]">{item.invoice_number}</div>
+                        <div className="text-xs text-gray-500">{new Date(item.issue_date || item.created_at).toLocaleDateString()}</div>
+                      </td>
+                      <td>
+                        <p className="font-medium text-[#111111]">{item.customer_name}</p>
+                        <p className="text-xs text-[#c8941a]">{item.customer_mobile}</p>
+                      </td>
+                      <td className="font-semibold text-gray-900">
+                        ₹{item.total_amount.toLocaleString('en-IN')}
+                      </td>
+                      <td className="font-medium text-green-600">
+                        ₹{item.paid_amount.toLocaleString('en-IN')}
+                      </td>
+                      <td className={`font-bold ${pending > 0 ? 'text-red-500' : 'text-gray-400'}`}>
+                        ₹{pending.toLocaleString('en-IN')}
+                      </td>
+                      <td>
+                        <span className={`text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider font-bold ${
+                          item.status === 'paid' ? 'bg-green-100 text-green-700' :
+                          item.status === 'partial' ? 'bg-yellow-100 text-yellow-700' :
+                          'bg-red-100 text-red-700'
+                        }`}>
+                          {item.status}
+                        </span>
+                      </td>
+                      <td className="text-right">
+                        <Link href={`/admin/bill-book/${item.id}/print`} target="_blank" className="inline-flex items-center justify-center p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                          <FileText size={18} />
+                        </Link>
+                      </td>
+                    </tr>
+                  )
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  )
+}

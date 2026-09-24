@@ -11,6 +11,7 @@ const navItems = [
   { href: '/admin/categories', label: 'Categories', icon: Grid },
   { href: '/admin/interior-ideas', label: 'Interior Ideas', icon: ShoppingBag }, // Will fix import
   { href: '/admin/inquiries', label: 'Inquiries', icon: MessageSquare },
+  { href: '/admin/bill-book', label: 'Bill Book / POS', icon: FileText },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
