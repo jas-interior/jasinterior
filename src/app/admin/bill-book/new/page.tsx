@@ -33,7 +33,20 @@ export default function NewBillBookPage() {
   const [advanceReceived, setAdvanceReceived] = useState(0)
   const [paymentMode, setPaymentMode] = useState('Cash')
   const [documentType, setDocumentType] = useState('Invoice')
+  const [createdBy, setCreatedBy] = useState('')
   const [terms, setTerms] = useState('1. Goods once sold will not be taken back.\n2. 50% advance required for custom orders.\n3. Balance must be cleared before delivery.')
+
+  useEffect(() => {
+    if (documentType === 'Quotation') {
+      setTerms('1. This is an estimate, final price may vary based on exact measurements.\n2. Quotation is valid for 15 days.\n3. 50% advance required to confirm order.')
+    } else if (documentType === 'Order Form') {
+      setTerms('1. Order confirmed.\n2. Goods once sold will not be taken back.\n3. Balance must be cleared before delivery.')
+    } else if (documentType === 'Receipt') {
+      setTerms('Payment receipt against order.')
+    } else {
+      setTerms('1. Goods once sold will not be taken back.\n2. 50% advance required for custom orders.\n3. Balance must be cleared before delivery.')
+    }
+  }, [documentType])
 
   const subtotal = items.reduce((acc, item) => acc + (item.quantity * item.unit_price), 0)
   const totalAmount = subtotal - discount
@@ -93,6 +106,7 @@ export default function NewBillBookPage() {
         customer_mobile: customerMobile,
         customer_address: customerAddress,
         document_type: documentType,
+        created_by: createdBy,
         subtotal,
         discount,
         total_amount: totalAmount,
@@ -163,6 +177,10 @@ export default function NewBillBookPage() {
               <option value="Receipt">Payment Receipt</option>
             </select>
           </div>
+          <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
+            <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Issued By (Staff Name)</label>
+            <input type="text" placeholder="e.g. Rahul" value={createdBy} onChange={e => setCreatedBy(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold" />
+          </div>
         </div>
         
         {/* Customer Section */}
@@ -185,7 +203,7 @@ export default function NewBillBookPage() {
         </div>
 
         {/* Items Section */}
-        <div className="bg-white p-6 rounded-2xl border border-[#eaeaea] shadow-sm">
+        <div className="bg-white p-4 sm:p-6 rounded-2xl border border-[#eaeaea] shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Bill Items</h2>
             <button type="button" onClick={handleAddItem} className="text-xs font-bold text-[#c8941a] flex items-center gap-1 hover:underline">
@@ -203,37 +221,46 @@ export default function NewBillBookPage() {
 
           <div className="space-y-4">
             {items.map((item, index) => (
-              <div key={item.id} className="bg-gray-50 md:bg-transparent p-4 md:p-0 rounded-xl md:rounded-none border-b border-gray-100 pb-4 last:border-0 last:pb-0">
-                <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-2">
+              <div key={item.id} className="bg-gray-50 md:bg-white p-3 md:p-0 rounded-xl md:rounded-none md:border-b border-gray-100 md:pb-4 md:last:border-0 md:last:pb-0">
+                
+                {/* Mobile Header per item */}
+                <div className="flex justify-between items-center md:hidden mb-2 pb-2 border-b border-gray-200">
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Item {index + 1}</span>
+                  <button type="button" onClick={() => handleRemoveItem(item.id)} disabled={items.length === 1} className="text-red-400 hover:text-red-600 disabled:opacity-30">
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+                
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-2">
                   <div className="w-full md:flex-1">
-                    <span className="md:hidden text-xs text-gray-500 mb-1 block">Description</span>
+                    <span className="md:hidden text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1 block">Description</span>
                     <input type="text" required placeholder="e.g. 6x6 Custom Teak Bed" value={item.description} onChange={e => handleItemChange(item.id, 'description', e.target.value)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-[#c8941a]" />
                   </div>
-                  <div className="w-full md:w-24 flex gap-4 md:block">
-                    <div className="flex-1">
-                      <span className="md:hidden text-xs text-gray-500 mb-1 block">Qty</span>
+                  <div className="w-full md:w-24 flex gap-3 md:block">
+                    <div className="w-20 md:w-full">
+                      <span className="md:hidden text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1 block">Qty</span>
                       <input type="number" min="1" required value={item.quantity} onChange={e => handleItemChange(item.id, 'quantity', parseInt(e.target.value) || 1)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-center focus:outline-none focus:border-[#c8941a]" />
                     </div>
                     <div className="flex-1 md:hidden">
-                      <span className="text-xs text-gray-500 mb-1 block">Unit Price</span>
+                      <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1 block">Unit Price (₹)</span>
                       <input type="number" min="0" required value={item.unit_price} onChange={e => handleItemChange(item.id, 'unit_price', parseFloat(e.target.value) || 0)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-right focus:outline-none focus:border-[#c8941a]" />
                     </div>
                   </div>
                   <div className="w-32 hidden md:block">
                     <input type="number" min="0" required value={item.unit_price} onChange={e => handleItemChange(item.id, 'unit_price', parseFloat(e.target.value) || 0)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-right focus:outline-none focus:border-[#c8941a]" />
                   </div>
-                  <div className="w-full md:w-32 text-right font-bold text-gray-900 mt-2 md:mt-0">
-                    <span className="md:hidden text-gray-400 font-normal mr-2">Total:</span>
-                    ₹{(item.quantity * item.unit_price).toLocaleString('en-IN')}
+                  <div className="w-full md:w-32 text-right font-bold text-gray-900 mt-1 md:mt-0 bg-gray-100 md:bg-transparent p-2 md:p-0 rounded-lg md:rounded-none flex justify-between md:block items-center">
+                    <span className="md:hidden text-[10px] font-bold text-gray-500 uppercase tracking-wider">Total</span>
+                    <span className="text-sm">₹{(item.quantity * item.unit_price).toLocaleString('en-IN')}</span>
                   </div>
-                  <div className="w-10 flex justify-end">
+                  <div className="w-10 hidden md:flex justify-end">
                     <button type="button" onClick={() => handleRemoveItem(item.id)} disabled={items.length === 1} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg disabled:opacity-30">
                       <Trash2 size={18} />
                     </button>
                   </div>
                 </div>
                 <div className="w-full md:w-3/4 pl-0 md:pl-2">
-                  <input type="text" placeholder="Warranty Details (e.g. 5 Years Warranty on Foam & Wood)" value={item.warranty || ''} onChange={e => handleItemChange(item.id, 'warranty', e.target.value)} className="w-full bg-white md:bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg text-xs text-gray-600 focus:outline-none focus:border-[#c8941a]" />
+                  <input type="text" placeholder="Warranty / Extra Details (e.g. 5 Years Warranty on Foam & Wood)" value={item.warranty || ''} onChange={e => handleItemChange(item.id, 'warranty', e.target.value)} className="w-full bg-white md:bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg text-xs text-gray-600 focus:outline-none focus:border-[#c8941a]" />
                 </div>
               </div>
             ))}
