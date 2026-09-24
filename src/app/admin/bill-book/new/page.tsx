@@ -1,6 +1,6 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { ArrowLeft, Plus, Trash2, Save, Printer } from 'lucide-react'
 import Link from 'next/link'
@@ -14,14 +14,16 @@ interface InvoiceItem {
   warranty?: string
 }
 
-export default function NewBillBookPage() {
+function NewBillBookForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
   
-  // Customer Details
-  const [customerName, setCustomerName] = useState('')
-  const [customerMobile, setCustomerMobile] = useState('')
-  const [customerAddress, setCustomerAddress] = useState('')
+  // Customer Details — pre-fill from URL params if coming from client profile
+  const [customerName, setCustomerName] = useState(searchParams.get('name') || '')
+  const [customerMobile, setCustomerMobile] = useState(searchParams.get('mobile') || '')
+  const [customerAddress, setCustomerAddress] = useState(searchParams.get('address') || '')
+  const prefillClientId = searchParams.get('client_id') || null
   
   // Items
   const [items, setItems] = useState<InvoiceItem[]>([
@@ -90,8 +92,8 @@ export default function NewBillBookPage() {
 
     try {
       // 0. Auto-save client to clients table (upsert by mobile)
-      let savedClientId: string | null = null
-      if (customerMobile && customerName) {
+      let savedClientId: string | null = prefillClientId
+      if (!savedClientId && customerMobile && customerName) {
         const { data: existingClient } = await supabase
           .from('clients')
           .select('id')
@@ -387,5 +389,13 @@ export default function NewBillBookPage() {
 
       </form>
     </div>
+  )
+}
+
+export default function NewBillBookPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-64 text-gray-400">Loading...</div>}>
+      <NewBillBookForm />
+    </Suspense>
   )
 }

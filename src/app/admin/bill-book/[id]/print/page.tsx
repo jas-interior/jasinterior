@@ -118,7 +118,7 @@ export default function PrintBillPage() {
           </div>
           <div className="w-[45%] text-right">
             <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">
-              {invoice.document_type === 'Receipt' ? 'Receipt To :' :
+              {invoice.document_type === 'Receipt' ? 'Received From :' :
                invoice.document_type === 'Order Form' ? 'Order To :' :
                invoice.document_type === 'Quotation' ? 'Quotation To :' :
                'Invoice To :'}
@@ -126,7 +126,7 @@ export default function PrintBillPage() {
             <p className="font-bold text-lg text-gray-900 leading-tight mb-1">{invoice.customer_name}</p>
             <p className="text-sm text-gray-600 font-medium mb-0.5">+91 {invoice.customer_mobile}</p>
             {invoice.customer_address && (
-              <p className="text-sm text-gray-600 max-w-[250px] leading-snug ml-auto break-words break-all">{invoice.customer_address}</p>
+              <p className="text-sm text-gray-600 max-w-[260px] leading-snug ml-auto" style={{wordBreak:'normal', overflowWrap:'anywhere', whiteSpace:'normal'}}>{invoice.customer_address}</p>
             )}
           </div>
         </div>
@@ -163,26 +163,56 @@ export default function PrintBillPage() {
         {/* Totals & Footer Info */}
         <div className="flex px-10 pt-10 pb-4 gap-8 flex-1">
           <div className="w-2/3 flex flex-col justify-start">
-            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Payment Method :</h3>
-            <div className="text-sm font-medium text-gray-700">
-              {payments.length > 0 ? payments.map(p => (
-                <div key={p.id} className="flex gap-4 mb-1">
-                  <span className="font-bold text-gray-900 w-20">Received:</span>
-                  <span>₹{p.amount.toLocaleString('en-IN')} ({p.payment_mode})</span>
-                </div>
-              )) : (
-                <div className="text-red-500 font-bold">No Payments Received</div>
-              )}
-              {pendingAmount > 0 && (
-                <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200">
-                  <span className="font-bold text-gray-900 w-20">Balance:</span>
-                  <span className="font-bold text-red-600">₹{pendingAmount.toLocaleString('en-IN')}</span>
-                </div>
-              )}
-              {pendingAmount === 0 && (
-                <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200">
-                  <span className="font-bold text-green-600">FULLY PAID</span>
-                </div>
+            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Payment Details :</h3>
+            <div className="text-sm font-medium text-gray-700 space-y-1.5">
+              {invoice.document_type === 'Receipt' ? (
+                <>
+                  <div className="flex gap-3">
+                    <span className="text-gray-500 w-36">Order Value:</span>
+                    <span className="font-bold text-gray-900">₹{invoice.total_amount.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-gray-500 w-36">Received:</span>
+                    <span className="font-bold text-green-600">₹{invoice.paid_amount.toLocaleString('en-IN')} ({invoice.payment_mode || 'Cash'})</span>
+                  </div>
+                  {pendingAmount > 0 && (
+                    <div className="flex gap-3">
+                      <span className="text-gray-500 w-36">Balance Due:</span>
+                      <span className="font-bold text-red-600">₹{pendingAmount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+                  {pendingAmount === 0 && (
+                    <div className="flex gap-3">
+                      <span className="font-bold text-green-600">✓ FULLY PAID</span>
+                    </div>
+                  )}
+                  <div className="flex gap-3 pt-3 mt-2 border-t border-gray-200 items-center">
+                    <span className="text-gray-500 w-36 shrink-0">Payment Ref. No.:</span>
+                    <span className="border-b border-gray-400 flex-1">&nbsp;</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {payments.length > 0 ? payments.map(p => (
+                    <div key={p.id} className="flex gap-3">
+                      <span className="text-gray-500 w-24">Received:</span>
+                      <span className="font-bold">₹{p.amount.toLocaleString('en-IN')} ({p.payment_mode})</span>
+                    </div>
+                  )) : (
+                    <div className="text-red-500 font-bold">No Payments Received</div>
+                  )}
+                  {pendingAmount > 0 && (
+                    <div className="flex gap-3 pt-2 mt-1 border-t border-gray-200">
+                      <span className="text-gray-500 w-24">Balance:</span>
+                      <span className="font-bold text-red-600">₹{pendingAmount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+                  {pendingAmount === 0 && (
+                    <div className="flex gap-3 pt-2 mt-1 border-t border-gray-200">
+                      <span className="font-bold text-green-600">✓ FULLY PAID</span>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
@@ -198,14 +228,35 @@ export default function PrintBillPage() {
                 <span>Subtotal :</span>
                 <span>₹{invoice.subtotal.toLocaleString('en-IN')}</span>
               </div>
-              <div className="flex justify-between py-2 text-sm font-bold text-gray-700 border-b-2 border-gray-200 mb-4 pb-4">
-                <span>Discount :</span>
-                <span>₹{invoice.discount.toLocaleString('en-IN')}</span>
-              </div>
-              <div className="flex justify-between items-center bg-[#c8941a] text-white px-4 py-3 shadow-md">
-                <span className="font-bold tracking-widest">TOTAL</span>
-                <span className="font-bold text-xl">₹{invoice.total_amount.toLocaleString('en-IN')}</span>
-              </div>
+              {invoice.discount > 0 && (
+                <div className="flex justify-between py-2 text-sm font-bold text-gray-700 border-b-2 border-gray-200 mb-3 pb-3">
+                  <span>Discount :</span>
+                  <span>₹{invoice.discount.toLocaleString('en-IN')}</span>
+                </div>
+              )}
+              {invoice.document_type === 'Receipt' ? (
+                <>
+                  <div className="flex justify-between py-2 text-xs font-semibold text-gray-500 border-t border-gray-200">
+                    <span>Order Value :</span>
+                    <span>₹{invoice.total_amount.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="flex justify-between items-center bg-green-600 text-white px-4 py-3 shadow-md">
+                    <span className="font-bold tracking-wider text-sm">RECEIVED</span>
+                    <span className="font-bold text-xl">₹{invoice.paid_amount.toLocaleString('en-IN')}</span>
+                  </div>
+                  {pendingAmount > 0 && (
+                    <div className="flex justify-between items-center bg-red-100 text-red-700 px-4 py-2 mt-1 text-sm">
+                      <span className="font-bold">BALANCE DUE</span>
+                      <span className="font-bold">₹{pendingAmount.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="flex justify-between items-center bg-[#c8941a] text-white px-4 py-3 shadow-md">
+                  <span className="font-bold tracking-widest">TOTAL</span>
+                  <span className="font-bold text-xl">₹{invoice.total_amount.toLocaleString('en-IN')}</span>
+                </div>
+              )}
             </div>
             
             <div className="mt-16 text-center">
