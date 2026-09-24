@@ -34,20 +34,12 @@ export default function AdminProducts() {
     if (!loading) {
       const savedScroll = sessionStorage.getItem('jas_admin_products_scroll');
       if (savedScroll) {
-        setTimeout(() => window.scrollTo({ top: parseInt(savedScroll, 10), behavior: 'instant' }), 50);
+        setTimeout(() => { window.scrollTo({ top: parseInt(savedScroll, 10), behavior: 'instant' }); sessionStorage.removeItem('jas_admin_products_scroll'); }, 200);
       }
     }
   }, [loading]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      sessionStorage.setItem('jas_admin_products_scroll', window.scrollY.toString());
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => { 
+useEffect(() => { 
     loadData() 
     const savedCat = localStorage.getItem('jas_admin_category_filter')
     if (savedCat) setSelectedCategory(savedCat)
@@ -134,7 +126,7 @@ export default function AdminProducts() {
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#555]" />
             <input type="text" placeholder="Search products..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold pl-9 h-10 w-full sm:w-64" />
           </div>
-          <Link href="/admin/products/new" className="flex items-center gap-2 px-4 py-2 rounded-xl btn-gold text-sm font-semibold whitespace-nowrap text-white w-full sm:w-auto justify-center">
+          <Link onClick={() => sessionStorage.setItem('jas_admin_products_scroll', window.scrollY.toString())} href="/admin/products/new" className="flex items-center gap-2 px-4 py-2 rounded-xl btn-gold text-sm font-semibold whitespace-nowrap text-white w-full sm:w-auto justify-center">
             <Plus size={16} /> Add Product
           </Link>
         </div>
@@ -191,7 +183,7 @@ export default function AdminProducts() {
                     <td className="text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link href={`/product/${prod.slug}`} target="_blank" className="p-2 text-[#555555] hover:text-[#111111] transition-colors" title="View"><ExternalLink size={16} /></Link>
-                        <Link href={`/admin/products/${prod.id}/edit`} className="p-2 text-[#555555] hover:text-[#c8941a] transition-colors" title="Edit"><Edit size={16} /></Link>
+                        <Link onClick={() => sessionStorage.setItem('jas_admin_products_scroll', window.scrollY.toString())} href={`/admin/products/${prod.id}/edit`} className="p-2 text-[#555555] hover:text-[#c8941a] transition-colors" title="Edit"><Edit size={16} /></Link>
                         <button onClick={() => handleDelete(prod.id, prod.title)} className="p-2 text-[#555555] hover:text-red-500 transition-colors" title="Delete"><Trash2 size={16} /></button>
                       </div>
                     </td>
