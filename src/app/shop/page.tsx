@@ -11,7 +11,7 @@ export default function ShopPage() {
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('sofa')
   const [sortBy, setSortBy] = useState('default')
 
   const loadData = useCallback(async () => {
