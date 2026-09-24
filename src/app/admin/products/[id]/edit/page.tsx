@@ -161,6 +161,24 @@ export default function EditProductPage() {
                 ))}
               </div>
             </div>
-          )} className="input-gold" placeholder="e.g. 15000" />
-            </div>
-          
+          )}
+
+          <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#eaeaea]">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" checked={formData.active} onChange={e => setFormData({...formData, active: e.target.checked})} className="w-5 h-5 accent-[#c8941a]" />
+              <span className="text-sm font-medium text-[#111111]">Active (Visible)</span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" checked={formData.featured} onChange={e => setFormData({...formData, featured: e.target.checked})} className="w-5 h-5 accent-[#c8941a]" />
+              <span className="text-sm font-medium text-[#111111]">Featured Product</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" disabled={saving} className="w-full flex items-center justify-center gap-2 py-4 rounded-xl btn-gold font-semibold text-lg">
+          <Save size={20} /> {saving ? 'Saving...' : 'Save Changes'}
+        </button>
+      </form>
+    </div>
+  )
+}
