@@ -112,7 +112,7 @@ export default function PrintBillPage() {
             <p className="font-bold text-lg text-gray-900 leading-tight mb-1">{invoice.customer_name}</p>
             <p className="text-sm text-gray-600 font-medium mb-0.5">+91 {invoice.customer_mobile}</p>
             {invoice.customer_address && (
-              <p className="text-sm text-gray-600 max-w-[250px] leading-snug ml-auto">{invoice.customer_address}</p>
+              <p className="text-sm text-gray-600 max-w-[250px] leading-snug ml-auto break-words break-all">{invoice.customer_address}</p>
             )}
           </div>
         </div>
