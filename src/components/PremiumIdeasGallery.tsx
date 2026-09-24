@@ -21,11 +21,11 @@ export default function PremiumIdeasGallery() {
   }, []);
 
   return (
-    <section className="py-20 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="premium-ideas" className="py-20 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
       <h2 className="text-sm font-bold tracking-[0.2em] text-center uppercase mb-12 text-[#6d6355]">Premium Interior Design Ideas</h2>
       
       {loading ? (
-        <div className="flex justify-center py-10"><Loader2 className="animate-spin text-[#c8941a]" size={32} /></div>
+        <div className="flex justify-center py-10 min-h-[600px]"><Loader2 className="animate-spin text-[#c8941a]" size={32} /></div>
       ) : (
         <div className="flex flex-wrap justify-center gap-6 md:gap-10">
           {categories.map(cat => (

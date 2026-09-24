@@ -78,7 +78,7 @@ export default function CategoryGalleryPage() {
       <MainLayout>
         <div className="min-h-[60vh] flex flex-col items-center justify-center">
           <h1 className="text-2xl font-serif mb-4" style={{fontFamily:'Playfair Display, serif'}}>Category Not Found</h1>
-          <Link href="/turnkey-interior" className="text-[#c8941a] hover:underline underline-offset-4 flex items-center gap-2 text-sm font-bold tracking-widest uppercase">
+          <Link href="/turnkey-interior#premium-ideas" className="text-[#c8941a] hover:underline underline-offset-4 flex items-center gap-2 text-sm font-bold tracking-widest uppercase">
             <ArrowLeft size={16} /> Back to Interior Ideas
           </Link>
         </div>
@@ -91,8 +91,8 @@ export default function CategoryGalleryPage() {
       <div className="pt-24 pb-12 md:pt-32 md:pb-20 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="mb-10 md:mb-16">
-          <Link href="/turnkey-interior" className="inline-flex items-center gap-2 text-[#6d6355] hover:text-[#1a1a1a] transition-colors text-xs font-bold uppercase tracking-widest mb-6 md:mb-10">
-            <ArrowLeft size={14} /> Back to Packages
+          <Link href="/turnkey-interior#premium-ideas" className="inline-flex items-center gap-2 text-[#6d6355] hover:text-[#1a1a1a] transition-colors text-xs font-bold uppercase tracking-widest mb-6 md:mb-10">
+            <ArrowLeft size={14} /> Back to Interior Ideas
           </Link>
           <h1 className="text-3xl md:text-5xl font-light text-[#1a1a1a] mb-4" style={{fontFamily:'Playfair Display, serif'}}>
             {category.name}

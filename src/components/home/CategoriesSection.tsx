@@ -32,7 +32,7 @@ export default function CategoriesSection() {
       </div>
       
       {loading ? (
-        <div className="flex justify-center py-10"><Loader2 className="animate-spin text-[#c8941a]" size={32} /></div>
+        <div className="flex justify-center py-10 min-h-[400px]"><Loader2 className="animate-spin text-[#c8941a]" size={32} /></div>
       ) : (
         <div className="flex flex-wrap justify-center gap-6 md:gap-10">
           {categories.map(cat => (
