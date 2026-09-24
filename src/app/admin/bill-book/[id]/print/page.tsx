@@ -92,6 +92,9 @@ export default function PrintBillPage() {
             <h2 className="text-4xl font-bold text-[#c8941a] tracking-widest mb-1 uppercase">{invoice.document_type || 'INVOICE'}</h2>
             <p className="text-xs font-semibold tracking-wider text-gray-300 uppercase">NO : {invoice.invoice_number}</p>
             <p className="text-xs font-semibold tracking-wider text-gray-300 uppercase">DATE : {new Date(invoice.issue_date || invoice.created_at).toLocaleDateString('en-IN')}</p>
+            {invoice.delivery_date && (
+              <p className="text-xs font-semibold tracking-wider text-green-400 uppercase mt-1">DELIVERY : {new Date(invoice.delivery_date).toLocaleDateString('en-IN')}</p>
+            )}
             {invoice.created_by && (
               <p className="text-xs font-semibold tracking-wider text-[#c8941a] uppercase mt-1">ISSUED BY : {invoice.created_by}</p>
             )}
@@ -148,44 +151,34 @@ export default function PrintBillPage() {
         </div>
 
         {/* Totals & Footer Info */}
-        <div className="flex px-10 py-10 gap-8 flex-1">
-          <div className="w-2/3 flex flex-col justify-between">
-            
-            <div className="flex gap-10">
-              <div className="flex-1">
-                <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Payment Method :</h3>
-                <div className="text-sm font-medium text-gray-700">
-                  {payments.length > 0 ? payments.map(p => (
-                    <div key={p.id} className="flex gap-4 mb-1">
-                      <span className="font-bold text-gray-900 w-20">Received:</span>
-                      <span>₹{p.amount.toLocaleString('en-IN')} ({p.payment_mode})</span>
-                    </div>
-                  )) : (
-                    <div className="text-red-500 font-bold">No Payments Received</div>
-                  )}
-                  {pendingAmount > 0 && (
-                    <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200">
-                      <span className="font-bold text-gray-900 w-20">Balance:</span>
-                      <span className="font-bold text-red-600">₹{pendingAmount.toLocaleString('en-IN')}</span>
-                    </div>
-                  )}
-                  {pendingAmount === 0 && (
-                    <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200">
-                      <span className="font-bold text-green-600">FULLY PAID</span>
-                    </div>
-                  )}
+        <div className="flex px-10 pt-10 pb-4 gap-8 flex-1">
+          <div className="w-2/3 flex flex-col justify-start">
+            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Payment Method :</h3>
+            <div className="text-sm font-medium text-gray-700">
+              {payments.length > 0 ? payments.map(p => (
+                <div key={p.id} className="flex gap-4 mb-1">
+                  <span className="font-bold text-gray-900 w-20">Received:</span>
+                  <span>₹{p.amount.toLocaleString('en-IN')} ({p.payment_mode})</span>
                 </div>
-              </div>
-
-              <div className="flex-1">
-                <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Terms & Conditions :</h3>
-                <p className="text-xs text-gray-600 whitespace-pre-wrap leading-relaxed font-medium">{invoice.terms}</p>
-              </div>
+              )) : (
+                <div className="text-red-500 font-bold">No Payments Received</div>
+              )}
+              {pendingAmount > 0 && (
+                <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200">
+                  <span className="font-bold text-gray-900 w-20">Balance:</span>
+                  <span className="font-bold text-red-600">₹{pendingAmount.toLocaleString('en-IN')}</span>
+                </div>
+              )}
+              {pendingAmount === 0 && (
+                <div className="flex gap-4 mt-2 pt-2 border-t border-gray-200">
+                  <span className="font-bold text-green-600">FULLY PAID</span>
+                </div>
+              )}
             </div>
 
             <div className="mt-8">
               <h2 className="text-xl font-bold text-[#1e293b] mb-2">Thanks for your business!</h2>
-              <p className="text-xs text-gray-400">If you have any questions about this invoice, please contact us.</p>
+              <p className="text-xs text-gray-400">If you have any questions about this document, please contact us.</p>
             </div>
           </div>
           
@@ -213,8 +206,16 @@ export default function PrintBillPage() {
           </div>
         </div>
 
+        {/* Terms at the bottom */}
+        <div className="px-10 pb-4 mt-auto">
+          <div className="border-t border-gray-200 pt-3">
+            <h4 className="text-[10px] font-bold text-gray-800 uppercase tracking-wider mb-1">Terms & Conditions:</h4>
+            <p className="text-[9px] text-gray-500 whitespace-pre-wrap leading-snug font-medium">{invoice.terms}</p>
+          </div>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="h-12 bg-[#c8941a] relative overflow-hidden shrink-0 w-full mt-auto">
+        <div className="h-12 bg-[#c8941a] relative overflow-hidden shrink-0 w-full">
           <div className="absolute top-0 bottom-0 left-0 w-[45%] bg-[#1e293b] skew-x-[30deg] origin-bottom -translate-x-12"></div>
         </div>
 

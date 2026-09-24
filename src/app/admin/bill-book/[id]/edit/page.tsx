@@ -37,6 +37,7 @@ export default function EditBillBookPage() {
   const [paymentMode, setPaymentMode] = useState('Cash')
   const [documentType, setDocumentType] = useState('Invoice')
   const [createdBy, setCreatedBy] = useState('')
+  const [deliveryDate, setDeliveryDate] = useState('')
   const [terms, setTerms] = useState('1. Custom-made goods are non-returnable/non-exchangeable, subject to applicable law.\n2. Delivery, unloading & installation charges extra unless mentioned.\n3. Warranty as per mentioned terms; misuse, water/termite & normal wear not covered.\n4. Customer must verify product & specifications at delivery.\n5. Balance payment as agreed.')
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export default function EditBillBookPage() {
         setCustomerAddress(inv.customer_address || '')
         setDocumentType(inv.document_type || 'Invoice')
         setCreatedBy(inv.created_by || '')
+        setDeliveryDate(inv.delivery_date || '')
         setDiscount(inv.discount || 0)
         setAdvanceReceived(inv.paid_amount || 0)
         setTerms(inv.terms || '')
@@ -145,6 +147,7 @@ export default function EditBillBookPage() {
         paid_amount: advanceReceived,
         status,
         terms,
+        delivery_date: deliveryDate || null
       }).eq('id', params.id).select().single()
 
       if (invError) throw invError
@@ -193,7 +196,7 @@ export default function EditBillBookPage() {
 
       <form onSubmit={handleSaveBill} className="space-y-6">
         
-        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
             <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Document Type</label>
             <select value={documentType} onChange={e => setDocumentType(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold">
@@ -206,6 +209,10 @@ export default function EditBillBookPage() {
           <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
             <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Issued By (Staff Name)</label>
             <input type="text" placeholder="e.g. Rahul" value={createdBy} onChange={e => setCreatedBy(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold" />
+          </div>
+          <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
+            <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Delivery Date</label>
+            <input type="date" value={deliveryDate} onChange={e => setDeliveryDate(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold" />
           </div>
         </div>
         
@@ -268,7 +275,7 @@ export default function EditBillBookPage() {
                       <input type="number" min="1" required value={item.quantity} onChange={e => handleItemChange(item.id, 'quantity', parseInt(e.target.value) || 1)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-center focus:outline-none focus:border-[#c8941a]" />
                     </div>
                     <div className="flex-1 md:hidden">
-                      <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1 block">Unit Price (â‚¹)</span>
+                      <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1 block">Unit Price (₹)</span>
                       <input type="number" min="0" required value={item.unit_price || ''} onChange={e => handleItemChange(item.id, 'unit_price', parseFloat(e.target.value) || 0)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-right focus:outline-none focus:border-[#c8941a]" />
                     </div>
                   </div>
@@ -277,7 +284,7 @@ export default function EditBillBookPage() {
                   </div>
                   <div className="w-full md:w-32 text-right font-bold text-gray-900 mt-1 md:mt-0 bg-gray-100 md:bg-transparent p-2 md:p-0 rounded-lg md:rounded-none flex justify-between md:block items-center">
                     <span className="md:hidden text-[10px] font-bold text-gray-500 uppercase tracking-wider">Total</span>
-                    <span className="text-sm">â‚¹{(item.quantity * item.unit_price).toLocaleString('en-IN')}</span>
+                    <span className="text-sm">₹{(item.quantity * item.unit_price).toLocaleString('en-IN')}</span>
                   </div>
                   <div className="w-10 hidden md:flex justify-end">
                     <button type="button" onClick={() => handleRemoveItem(item.id)} disabled={items.length === 1} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg disabled:opacity-30">
@@ -302,7 +309,7 @@ export default function EditBillBookPage() {
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1.5">Amount Received</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-medium">â‚¹</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-medium">₹</span>
                     <input type="number" min="0" max={totalAmount} value={advanceReceived || ''} onChange={e => setAdvanceReceived(parseFloat(e.target.value) || 0)} className="w-full bg-white border border-gray-200 pl-8 pr-4 py-2.5 rounded-xl text-sm font-bold text-green-600 focus:outline-none focus:border-[#c8941a] transition-colors" />
                   </div>
                 </div>
@@ -319,7 +326,7 @@ export default function EditBillBookPage() {
               </div>
               {pendingAmount > 0 && advanceReceived > 0 && (
                 <div className="text-xs text-red-500 font-medium flex items-center gap-1.5 bg-red-50 p-2.5 rounded-lg border border-red-100">
-                  <span>âš ï¸ Balance remaining: <strong>â‚¹{pendingAmount.toLocaleString('en-IN')}</strong></span>
+                  <span>⚠️ Balance remaining: <strong>₹{pendingAmount.toLocaleString('en-IN')}</strong></span>
                 </div>
               )}
               {pendingAmount === 0 && advanceReceived > 0 && (
@@ -345,21 +352,21 @@ export default function EditBillBookPage() {
             <div className="space-y-4 text-sm">
               <div className="flex justify-between items-center text-gray-300">
                 <span>Subtotal ({items.length} items)</span>
-                <span className="font-medium text-white">â‚¹{subtotal.toLocaleString('en-IN')}</span>
+                <span className="font-medium text-white">₹{subtotal.toLocaleString('en-IN')}</span>
               </div>
               <div className="flex justify-between items-center text-gray-300">
                 <span className="flex items-center gap-2">
                   Discount
                   <input type="number" min="0" max={subtotal} value={discount || ''} onChange={e => setDiscount(parseFloat(e.target.value) || 0)} className="w-20 bg-gray-800 border border-gray-700 px-2 py-1 rounded text-right focus:outline-none focus:border-[#c8941a]" />
                 </span>
-                <span className="font-medium text-red-400">- â‚¹{discount.toLocaleString('en-IN')}</span>
+                <span className="font-medium text-red-400">- ₹{discount.toLocaleString('en-IN')}</span>
               </div>
               
               <div className="h-px bg-gray-800 my-4"></div>
               
               <div className="flex justify-between items-center text-xl">
                 <span className="font-bold text-gray-200">Total Amount</span>
-                <span className="font-bold text-[#c8941a]">â‚¹{totalAmount.toLocaleString('en-IN')}</span>
+                <span className="font-bold text-[#c8941a]">₹{totalAmount.toLocaleString('en-IN')}</span>
               </div>
             </div>
             

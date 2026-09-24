@@ -34,6 +34,7 @@ export default function NewBillBookPage() {
   const [paymentMode, setPaymentMode] = useState('Cash')
   const [documentType, setDocumentType] = useState('Invoice')
   const [createdBy, setCreatedBy] = useState('')
+  const [deliveryDate, setDeliveryDate] = useState('')
   const [terms, setTerms] = useState('1. Custom-made goods are non-returnable/non-exchangeable, subject to applicable law.\n2. Delivery, unloading & installation charges extra unless mentioned.\n3. Warranty as per mentioned terms; misuse, water/termite & normal wear not covered.\n4. Customer must verify product & specifications at delivery.\n5. Balance payment as agreed.')
 
   useEffect(() => {
@@ -114,7 +115,8 @@ export default function NewBillBookPage() {
         paid_amount: advanceReceived,
         status,
         terms,
-        issue_date: new Date().toISOString().split('T')[0]
+        issue_date: new Date().toISOString().split('T')[0],
+        delivery_date: deliveryDate || null
       }).select().single()
 
       if (invError) throw invError
@@ -168,7 +170,7 @@ export default function NewBillBookPage() {
 
       <form onSubmit={handleSaveBill} className="space-y-6">
         
-        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
             <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Document Type</label>
             <select value={documentType} onChange={e => setDocumentType(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold">
@@ -181,6 +183,10 @@ export default function NewBillBookPage() {
           <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
             <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Issued By (Staff Name)</label>
             <input type="text" placeholder="e.g. Rahul" value={createdBy} onChange={e => setCreatedBy(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold" />
+          </div>
+          <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
+            <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Delivery Date</label>
+            <input type="date" value={deliveryDate} onChange={e => setDeliveryDate(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold" />
           </div>
         </div>
         
