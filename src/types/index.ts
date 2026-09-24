@@ -22,6 +22,7 @@ export interface Product {
   category?: Category
   price?: number | null
   price_enabled: boolean
+  variants?: { size: string, price: number }[]
   images: string[]
   featured: boolean
   active: boolean
@@ -152,6 +153,7 @@ export interface CartItem {
   product: Product
   quantity: number
   custom_requirements?: string
+  variant_size?: string
 }
 
 export interface RazorpayResponse {

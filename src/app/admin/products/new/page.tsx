@@ -17,6 +17,7 @@ export default function AddProductPage() {
     category_id: '', price: '', price_enabled: true,
     featured: false, active: true
   })
+  const [variants, setVariants] = useState<{size: string, price: string}[]>([])
 
   // Image Upload States
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -146,7 +147,8 @@ export default function AddProductPage() {
     const payload = {
       ...form,
       price: form.price ? Number(form.price) : null,
-      images: imageUrls
+      images: imageUrls,
+      variants: variants.filter(v => v.size && v.price).map(v => ({ size: v.size, price: Number(v.price) }))
     }
 
     let { error } = await supabase.from('products').insert([payload])
@@ -252,7 +254,23 @@ export default function AddProductPage() {
                     <input type="checkbox" checked={form.price_enabled} onChange={(e) => setForm({...form, price_enabled: e.target.checked})} className="accent-[#c8941a] w-4 h-4" />
                   </label>
                   {form.price_enabled && (
-                    <div><label className="block text-xs text-[#555555] mb-1.5">Price (₹)</label><input type="number" name="price" value={form.price} onChange={handleChange} className="input-gold" placeholder="e.g. 45000" /></div>
+                    <div className="space-y-4">
+                      <div><label className="block text-xs text-[#555555] mb-1.5">Base Price (₹)</label><input type="number" name="price" value={form.price} onChange={handleChange} className="input-gold" placeholder="e.g. 45000" /></div>
+                      
+                      <div className="pt-4 border-t border-[#eaeaea]">
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="block text-xs font-semibold text-[#111111]">Size Variants (Optional)</label>
+                          <button type="button" onClick={() => setVariants([...variants, {size: '', price: ''}])} className="text-xs text-[#c8941a] font-medium hover:underline">+ Add Variant</button>
+                        </div>
+                        {variants.map((v, i) => (
+                          <div key={i} className="flex items-center gap-2 mb-2">
+                            <input type="text" placeholder="Size (e.g. 4 x 6 ft)" value={v.size} onChange={(e) => { const newV = [...variants]; newV[i].size = e.target.value; setVariants(newV) }} className="input-gold flex-1 text-xs py-2" />
+                            <input type="number" placeholder="Price" value={v.price} onChange={(e) => { const newV = [...variants]; newV[i].price = e.target.value; setVariants(newV) }} className="input-gold w-24 text-xs py-2" />
+                            <button type="button" onClick={() => setVariants(variants.filter((_, idx) => idx !== i))} className="text-red-500 hover:bg-red-50 p-1.5 rounded-lg">X</button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   )}
                   {!form.price_enabled && <p className="text-xs text-[#666666] italic">Product will show "Price on Request" instead of a specific amount.</p>}
                 </div>

@@ -14,6 +14,7 @@ import toast from 'react-hot-toast'
 export default function ProductClient({ product }: { product: Product }) {
   const [currentImage, setCurrentImage] = useState(0)
   const [qty, setQty] = useState(1)
+  const [selectedVariant, setSelectedVariant] = useState(product.variants?.[0] || null)
   const { addItem } = useCartStore()
 
   // Removed useEffect and loading checks since product is now passed from Server Component
@@ -30,11 +31,12 @@ export default function ProductClient({ product }: { product: Product }) {
     )
   }
 
-  const hasPricing = product.price != null && product.price > 0 && product.price_enabled
+  const currentPrice = selectedVariant ? selectedVariant.price : product.price
+  const hasPricing = currentPrice != null && currentPrice > 0 && product.price_enabled
   const images = product.images?.length ? product.images : []
 
   const handleAddToCart = () => {
-    addItem(product, qty)
+    addItem(product, qty, undefined, selectedVariant?.size, selectedVariant?.price)
     toast.success(`${product.title} added to cart!`)
   }
 
@@ -115,12 +117,29 @@ export default function ProductClient({ product }: { product: Product }) {
                 <Share2 size={18} />
               </button>
             </div>
-            {product.description && <p className="text-[#555555] leading-relaxed mb-6">{product.description}</p>}
+            {product.description && <p className="text-[#555555] leading-relaxed mb-6 whitespace-pre-wrap">{product.description}</p>}
+
+            {product.variants && product.variants.length > 0 && (
+              <div className="mb-6">
+                <h3 className="text-sm font-semibold text-[#111111] mb-3">Select Size:</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.variants.map((variant, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedVariant(variant)}
+                      className={`px-4 py-2 text-sm font-medium rounded-xl border transition-colors ${selectedVariant?.size === variant.size ? 'border-[#c8941a] bg-[#c8941a]/5 text-[#c8941a]' : 'border-[#eaeaea] text-[#555] hover:border-[#c8941a]/50'}`}
+                    >
+                      {variant.size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="mb-6 p-4 rounded-xl bg-white border border-[#eaeaea]">
               {hasPricing ? (
                 <div>
-                  <div className="text-3xl font-bold text-[#c8941a] mb-1">{formatPrice(product.price!)}</div>
+                  <div className="text-3xl font-bold text-[#c8941a] mb-1">{formatPrice(currentPrice!)}</div>
                   <p className="text-xs text-[#555]">* Delivery charges extra. Confirmed at time of order.</p>
                 </div>
               ) : (
@@ -149,7 +168,7 @@ export default function ProductClient({ product }: { product: Product }) {
             <div className="space-y-3 mb-6">
               {hasPricing ? (
                 <>
-                  <Link href={`/order?product=${product.id}`} className="w-full flex items-center justify-center gap-2 py-4 rounded-xl btn-gold font-semibold text-base"><Zap size={18} /> Buy Now</Link>
+                  <Link href={`/order?product=${product.id}${selectedVariant ? `&variant_size=${encodeURIComponent(selectedVariant.size)}` : ''}`} className="w-full flex items-center justify-center gap-2 py-4 rounded-xl btn-gold font-semibold text-base"><Zap size={18} /> Buy Now</Link>
                   <button onClick={handleAddToCart} className="w-full flex items-center justify-center gap-2 py-4 rounded-xl btn-outline-gold font-semibold"><ShoppingCart size={18} /> Add to Cart</button>
                 </>
               ) : (

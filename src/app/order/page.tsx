@@ -14,6 +14,7 @@ function OrderContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const singleProductId = searchParams.get('product')
+  const variantSize = searchParams.get('variant_size')
 
   const { items: cartItems, getTotal } = useCartStore()
   const [items, setItems] = useState<any[]>([])
@@ -30,9 +31,15 @@ function OrderContent() {
     async function load() {
       if (singleProductId) {
         const prod = await getProductById(singleProductId)
-        if (prod && prod.price_enabled && prod.price) {
-          setItems([{ product: prod, quantity: 1 }])
-          setSubtotal(prod.price)
+        let price = prod?.price
+        if (prod?.variants && variantSize) {
+          const v = prod.variants.find(v => v.size === variantSize)
+          if (v) price = v.price
+        }
+
+        if (prod && prod.price_enabled && price) {
+          setItems([{ product: { ...prod, price }, quantity: 1, variant_size: variantSize }])
+          setSubtotal(price)
         } else {
           toast.error('Product not found or price not available')
           router.push('/shop')
@@ -48,7 +55,7 @@ function OrderContent() {
       setLoading(false)
     }
     load()
-  }, [singleProductId, cartItems, getTotal, router])
+  }, [singleProductId, variantSize, cartItems, getTotal, router])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -68,10 +75,11 @@ function OrderContent() {
       // 1. Create order on server
       const orderItems = items.map(i => ({
         product_id: i.product.id,
-        product_title: i.product.title,
+        product_title: i.variant_size ? `${i.product.title} - ${i.variant_size}` : i.product.title,
         product_image: i.product.images?.[0] || null,
         quantity: i.quantity,
-        unit_price: i.product.price
+        unit_price: i.product.price,
+        custom_requirements: i.variant_size ? `Size: ${i.variant_size}` : null
       }))
 
       const res = await fetch('/api/payment/create-order', {
@@ -183,6 +191,7 @@ function OrderContent() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-[#111111] truncate">{item.product.title}</p>
+                    {item.variant_size && <p className="text-xs text-[#c8941a] font-medium mb-1">Size: {item.variant_size}</p>}
                     <p className="text-xs text-[#555555] mb-1">Qty: {item.quantity}</p>
                     <p className="text-sm font-semibold text-[#c8941a]">{formatPrice(item.product.price * item.quantity)}</p>
                   </div>

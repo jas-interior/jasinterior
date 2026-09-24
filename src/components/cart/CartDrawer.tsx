@@ -36,7 +36,7 @@ export default function CartDrawer() {
             </div>
           ) : (
             items.map((item) => (
-              <div key={item.product.id} className="flex gap-4 bg-white rounded-xl p-3 border border-[#eaeaea]">
+              <div key={item.product.id + (item.variant_size || '')} className="flex gap-4 bg-white rounded-xl p-3 border border-[#eaeaea]">
                 <div className="w-20 h-20 rounded-lg overflow-hidden bg-[#f0f0f0] flex-shrink-0">
                   {item.product.images?.[0] ? (
                     <Image src={item.product.images[0]} alt={item.product.title} width={80} height={80} className="w-full h-full object-cover" />
@@ -46,12 +46,13 @@ export default function CartDrawer() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-[#111111] truncate">{item.product.title}</p>
+                  {item.variant_size && <p className="text-xs text-[#c8941a] font-medium mb-1">Size: {item.variant_size}</p>}
                   <p className="text-xs text-[#555555] mb-2">{item.product.price ? formatPrice(item.product.price) : 'Price on Request'}</p>
                   <div className="flex items-center gap-2">
-                    <button onClick={() => updateQuantity(item.product.id, item.quantity - 1)} className="w-7 h-7 rounded-md bg-[#f0f0f0] hover:bg-[#c8941a] hover:text-black flex items-center justify-center transition-colors"><Minus size={12} /></button>
+                    <button onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.variant_size)} className="w-7 h-7 rounded-md bg-[#f0f0f0] hover:bg-[#c8941a] hover:text-black flex items-center justify-center transition-colors"><Minus size={12} /></button>
                     <span className="text-sm font-semibold w-6 text-center">{item.quantity}</span>
-                    <button onClick={() => updateQuantity(item.product.id, item.quantity + 1)} className="w-7 h-7 rounded-md bg-[#f0f0f0] hover:bg-[#c8941a] hover:text-black flex items-center justify-center transition-colors"><Plus size={12} /></button>
-                    <button onClick={() => removeItem(item.product.id)} className="ml-auto text-[#ef4444]/60 hover:text-[#ef4444] transition-colors p-1"><Trash2 size={14} /></button>
+                    <button onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.variant_size)} className="w-7 h-7 rounded-md bg-[#f0f0f0] hover:bg-[#c8941a] hover:text-black flex items-center justify-center transition-colors"><Plus size={12} /></button>
+                    <button onClick={() => removeItem(item.product.id, item.variant_size)} className="ml-auto text-[#ef4444]/60 hover:text-[#ef4444] transition-colors p-1"><Trash2 size={14} /></button>
                   </div>
                 </div>
               </div>
