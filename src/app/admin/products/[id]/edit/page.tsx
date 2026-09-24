@@ -14,6 +14,7 @@ export default function EditProductPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [categories, setCategories] = useState<any[]>([])
+  const [variants, setVariants] = useState<{size: string, price: string}[]>([])
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -37,6 +38,7 @@ export default function EditProductPage() {
       if (catsRes.data) setCategories(catsRes.data)
       if (prodRes.data) {
         const p = prodRes.data
+        if (p.variants) setVariants(p.variants.map((v:any) => ({ size: v.size, price: v.price.toString() })));
         setFormData({
           title: p.title || '',
           slug: p.slug || '',
@@ -74,7 +76,8 @@ export default function EditProductPage() {
         price: formData.price ? parseFloat(formData.price) : null,
         price_enabled: formData.price_enabled,
         featured: formData.featured,
-        active: formData.active
+        active: formData.active,
+        variants: variants.filter(v => v.size && v.price).map(v => ({ size: v.size, price: Number(v.price) }))
       }
 
       const { error } = await supabase.from('products').update(payload).eq('id', id)
@@ -138,28 +141,26 @@ export default function EditProductPage() {
           </div>
 
           {formData.price_enabled && (
-            <div>
-              <label className="block text-xs text-[#555] mb-1">Price (₹)</label>
-              <input type="number" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="input-gold" placeholder="e.g. 15000" />
+            <div className="space-y-4">
+              <div><label className="block text-xs text-[#555] mb-1.5">Base Price (₹)</label><input type="number" name="price" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="input-gold" placeholder="e.g. 15000" /></div>
+              
+              <div className="pt-4 border-t border-[#eaeaea]">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-xs font-semibold text-[#111111]">Size Variants (Optional)</label>
+                  <div className="flex items-center gap-4">
+                    <button type="button" onClick={() => setVariants([...variants, {size: '3 × 6.25 ft', price: ''}, {size: '4 × 6.25 ft', price: ''}, {size: '5 × 6.25 ft', price: ''}, {size: '6 × 6.25 ft', price: ''}, {size: '7 × 7 ft', price: ''}])} className="text-xs text-[#3b82f6] font-medium hover:underline">+ Quick Fill Wardrobe Sizes</button>
+                    <button type="button" onClick={() => setVariants([...variants, {size: '', price: ''}])} className="text-xs text-[#c8941a] font-medium hover:underline">+ Add Variant</button>
+                  </div>
+                </div>
+                {variants.map((v, i) => (
+                  <div key={i} className="flex items-center gap-2 mb-2">
+                    <input type="text" placeholder="Size (e.g. 4 x 6 ft)" value={v.size} onChange={(e) => { const newV = [...variants]; newV[i].size = e.target.value; setVariants(newV) }} className="input-gold flex-1 text-xs py-2" />
+                    <input type="number" placeholder="Price" value={v.price} onChange={(e) => { const newV = [...variants]; newV[i].price = e.target.value; setVariants(newV) }} className="input-gold w-24 text-xs py-2" />
+                    <button type="button" onClick={() => setVariants(variants.filter((_, idx) => idx !== i))} className="text-red-500 hover:bg-red-50 p-1.5 rounded-lg">X</button>
+                  </div>
+                ))}
+              </div>
             </div>
-          )}
-
-          <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#eaeaea]">
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" checked={formData.active} onChange={e => setFormData({...formData, active: e.target.checked})} className="w-5 h-5 accent-[#c8941a]" />
-              <span className="text-sm font-medium text-[#111111]">Active (Visible)</span>
-            </label>
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" checked={formData.featured} onChange={e => setFormData({...formData, featured: e.target.checked})} className="w-5 h-5 accent-[#c8941a]" />
-              <span className="text-sm font-medium text-[#111111]">Featured Product</span>
-            </label>
-          </div>
-        </div>
-
-        <button type="submit" disabled={saving} className="w-full flex items-center justify-center gap-2 py-4 rounded-xl btn-gold font-semibold text-lg">
-          <Save size={20} /> {saving ? 'Saving...' : 'Save Changes'}
-        </button>
-      </form>
-    </div>
-  )
-}
+          )} className="input-gold" placeholder="e.g. 15000" />
+            </div>
+          
