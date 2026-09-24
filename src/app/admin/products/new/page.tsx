@@ -260,10 +260,10 @@ export default function AddProductPage() {
                       <div className="pt-4 border-t border-[#eaeaea]">
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-4">
-                    {categories.find(c => c.id === (typeof form !== 'undefined' ? form.category_id : formData.category_id))?.slug === 'regular-wardrobe' && (
+                    {categories.find(c => c.id === form.category_id)?.slug === 'regular-wardrobe' && (
                       <button type="button" onClick={() => setVariants([...variants, {size: '3 × 6.25 ft', price: ''}, {size: '4 × 6.25 ft', price: ''}, {size: '5 × 6.25 ft', price: ''}, {size: '6 × 6.25 ft', price: ''}, {size: '7 × 7 ft', price: ''}])} className="text-xs text-[#3b82f6] font-medium hover:underline">+ Quick Fill Wardrobe Sizes</button>
                     )}
-                    {categories.find(c => c.id === (typeof form !== 'undefined' ? form.category_id : formData.category_id))?.slug === 'regular-bed' && (
+                    {categories.find(c => c.id === form.category_id)?.slug === 'regular-bed' && (
                       <button type="button" onClick={() => setVariants([...variants, {size: '4 × 6 ft', price: ''}, {size: '5 × 6 ft', price: ''}, {size: '6 × 6 ft', price: ''}])} className="text-xs text-[#3b82f6] font-medium hover:underline">+ Quick Fill Bed Sizes</button>
                     )}
                     <button type="button" onClick={() => setVariants([...variants, {size: '', price: ''}])} className="text-xs text-[#c8941a] font-medium hover:underline">+ Add Variant</button>
