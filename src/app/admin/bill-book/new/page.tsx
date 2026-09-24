@@ -11,6 +11,7 @@ interface InvoiceItem {
   description: string
   quantity: number
   unit_price: number
+  warranty?: string
 }
 
 export default function NewBillBookPage() {
@@ -24,20 +25,21 @@ export default function NewBillBookPage() {
   
   // Items
   const [items, setItems] = useState<InvoiceItem[]>([
-    { id: '1', description: '', quantity: 1, unit_price: 0 }
+    { id: '1', description: '', quantity: 1, unit_price: 0, warranty: '' }
   ])
   
-  // Totals & Payment
+  // Totals, Payment & Terms
   const [discount, setDiscount] = useState(0)
   const [advanceReceived, setAdvanceReceived] = useState(0)
   const [paymentMode, setPaymentMode] = useState('Cash')
+  const [terms, setTerms] = useState('1. Goods once sold will not be taken back.\n2. 50% advance required for custom orders.\n3. Balance must be cleared before delivery.')
 
   const subtotal = items.reduce((acc, item) => acc + (item.quantity * item.unit_price), 0)
   const totalAmount = subtotal - discount
   const pendingAmount = totalAmount - advanceReceived
 
   const handleAddItem = () => {
-    setItems([...items, { id: Math.random().toString(), description: '', quantity: 1, unit_price: 0 }])
+    setItems([...items, { id: Math.random().toString(), description: '', quantity: 1, unit_price: 0, warranty: '' }])
   }
 
   const handleRemoveItem = (id: string) => {
@@ -89,6 +91,7 @@ export default function NewBillBookPage() {
         total_amount: totalAmount,
         paid_amount: advanceReceived,
         status,
+        terms,
         issue_date: new Date().toISOString().split('T')[0]
       }).select().single()
 
@@ -100,7 +103,8 @@ export default function NewBillBookPage() {
         description: item.description,
         quantity: item.quantity,
         unit_price: item.unit_price,
-        total: item.quantity * item.unit_price
+        total: item.quantity * item.unit_price,
+        warranty: item.warranty || null
       }))
       
       const { error: itemsError } = await supabase.from('invoice_items').insert(itemsToInsert)
@@ -178,34 +182,39 @@ export default function NewBillBookPage() {
             <div className="w-10"></div>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             {items.map((item, index) => (
-              <div key={item.id} className="flex flex-col md:flex-row items-start md:items-center gap-4 bg-gray-50 md:bg-transparent p-4 md:p-0 rounded-xl md:rounded-none">
-                <div className="w-full md:flex-1">
-                  <span className="md:hidden text-xs text-gray-500 mb-1 block">Description</span>
-                  <input type="text" required placeholder="e.g. 6x6 Custom Teak Bed" value={item.description} onChange={e => handleItemChange(item.id, 'description', e.target.value)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-[#c8941a]" />
-                </div>
-                <div className="w-full md:w-24 flex gap-4 md:block">
-                  <div className="flex-1">
-                    <span className="md:hidden text-xs text-gray-500 mb-1 block">Qty</span>
-                    <input type="number" min="1" required value={item.quantity} onChange={e => handleItemChange(item.id, 'quantity', parseInt(e.target.value) || 1)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-center focus:outline-none focus:border-[#c8941a]" />
+              <div key={item.id} className="bg-gray-50 md:bg-transparent p-4 md:p-0 rounded-xl md:rounded-none border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-2">
+                  <div className="w-full md:flex-1">
+                    <span className="md:hidden text-xs text-gray-500 mb-1 block">Description</span>
+                    <input type="text" required placeholder="e.g. 6x6 Custom Teak Bed" value={item.description} onChange={e => handleItemChange(item.id, 'description', e.target.value)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-[#c8941a]" />
                   </div>
-                  <div className="flex-1 md:hidden">
-                    <span className="text-xs text-gray-500 mb-1 block">Unit Price</span>
+                  <div className="w-full md:w-24 flex gap-4 md:block">
+                    <div className="flex-1">
+                      <span className="md:hidden text-xs text-gray-500 mb-1 block">Qty</span>
+                      <input type="number" min="1" required value={item.quantity} onChange={e => handleItemChange(item.id, 'quantity', parseInt(e.target.value) || 1)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-center focus:outline-none focus:border-[#c8941a]" />
+                    </div>
+                    <div className="flex-1 md:hidden">
+                      <span className="text-xs text-gray-500 mb-1 block">Unit Price</span>
+                      <input type="number" min="0" required value={item.unit_price} onChange={e => handleItemChange(item.id, 'unit_price', parseFloat(e.target.value) || 0)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-right focus:outline-none focus:border-[#c8941a]" />
+                    </div>
+                  </div>
+                  <div className="w-32 hidden md:block">
                     <input type="number" min="0" required value={item.unit_price} onChange={e => handleItemChange(item.id, 'unit_price', parseFloat(e.target.value) || 0)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-right focus:outline-none focus:border-[#c8941a]" />
                   </div>
+                  <div className="w-full md:w-32 text-right font-bold text-gray-900 mt-2 md:mt-0">
+                    <span className="md:hidden text-gray-400 font-normal mr-2">Total:</span>
+                    ₹{(item.quantity * item.unit_price).toLocaleString('en-IN')}
+                  </div>
+                  <div className="w-10 flex justify-end">
+                    <button type="button" onClick={() => handleRemoveItem(item.id)} disabled={items.length === 1} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg disabled:opacity-30">
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
                 </div>
-                <div className="w-32 hidden md:block">
-                  <input type="number" min="0" required value={item.unit_price} onChange={e => handleItemChange(item.id, 'unit_price', parseFloat(e.target.value) || 0)} className="w-full bg-white border border-gray-200 px-3 py-2 rounded-lg text-sm text-right focus:outline-none focus:border-[#c8941a]" />
-                </div>
-                <div className="w-full md:w-32 text-right font-bold text-gray-900 mt-2 md:mt-0">
-                  <span className="md:hidden text-gray-400 font-normal mr-2">Total:</span>
-                  ₹{(item.quantity * item.unit_price).toLocaleString('en-IN')}
-                </div>
-                <div className="w-10 flex justify-end">
-                  <button type="button" onClick={() => handleRemoveItem(item.id)} disabled={items.length === 1} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg disabled:opacity-30">
-                    <Trash2 size={18} />
-                  </button>
+                <div className="w-full md:w-3/4 pl-0 md:pl-2">
+                  <input type="text" placeholder="Warranty Details (e.g. 5 Years Warranty on Foam & Wood)" value={item.warranty || ''} onChange={e => handleItemChange(item.id, 'warranty', e.target.value)} className="w-full bg-white md:bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg text-xs text-gray-600 focus:outline-none focus:border-[#c8941a]" />
                 </div>
               </div>
             ))}
@@ -246,6 +255,16 @@ export default function NewBillBookPage() {
                   <span>✅ Fully Paid</span>
                 </div>
               )}
+            </div>
+            
+            <div className="mt-8 pt-6 border-t border-[#f0ebe1]">
+              <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Terms & Conditions</h2>
+              <textarea 
+                value={terms} 
+                onChange={e => setTerms(e.target.value)}
+                rows={4}
+                className="w-full bg-white border border-gray-200 p-3 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] text-gray-700"
+              />
             </div>
           </div>
 

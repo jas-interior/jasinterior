@@ -68,7 +68,7 @@ export default function PrintBillPage() {
       </div>
 
       {/* A4 Printable Area */}
-      <div className="max-w-4xl mx-auto bg-white shadow-2xl print:shadow-none print:max-w-full overflow-hidden">
+      <div className="w-full max-w-[794px] min-h-[1123px] mx-auto bg-white shadow-2xl print:shadow-none print:max-w-full print:min-h-0 overflow-hidden relative mb-12">
         
         {/* Header - Golden Accent */}
         <div className="h-3 w-full bg-gradient-to-r from-[#c8941a] via-[#e9a825] to-[#c8941a]"></div>
@@ -137,11 +137,18 @@ export default function PrintBillPage() {
               <tbody className="text-sm">
                 {items.map((item, index) => (
                   <tr key={item.id} className="border-b border-gray-100">
-                    <td className="py-4 text-center text-gray-400">{index + 1}</td>
-                    <td className="py-4 font-semibold text-gray-900">{item.description}</td>
-                    <td className="py-4 text-center font-medium text-gray-700">{item.quantity}</td>
-                    <td className="py-4 text-right text-gray-600">₹{item.unit_price.toLocaleString('en-IN')}</td>
-                    <td className="py-4 text-right font-bold text-black">₹{item.total.toLocaleString('en-IN')}</td>
+                    <td className="py-4 text-center text-gray-400 align-top">{index + 1}</td>
+                    <td className="py-4 align-top">
+                      <div className="font-semibold text-gray-900">{item.description}</div>
+                      {item.warranty && (
+                        <div className="text-xs text-gray-500 mt-1 font-medium bg-gray-50 inline-block px-2 py-0.5 rounded">
+                          <span className="font-bold text-[#c8941a]">WARRANTY:</span> {item.warranty}
+                        </div>
+                      )}
+                    </td>
+                    <td className="py-4 text-center font-medium text-gray-700 align-top">{item.quantity}</td>
+                    <td className="py-4 text-right text-gray-600 align-top">₹{item.unit_price.toLocaleString('en-IN')}</td>
+                    <td className="py-4 text-right font-bold text-black align-top">₹{item.total.toLocaleString('en-IN')}</td>
                   </tr>
                 ))}
               </tbody>
