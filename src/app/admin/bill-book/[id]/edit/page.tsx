@@ -160,7 +160,7 @@ export default function EditBillBookPage() {
         description: item.description,
         quantity: item.quantity,
         unit_price: item.unit_price,
-        total_price: item.quantity * item.unit_price,
+        total: item.quantity * item.unit_price,
         warranty: item.warranty || null
       }))
       
