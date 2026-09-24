@@ -130,6 +130,8 @@ body {
 .input-gold::placeholder { color: #888; }
 
 select.input-gold {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   padding-right: 2.5rem !important;
   text-overflow: ellipsis;
 }
