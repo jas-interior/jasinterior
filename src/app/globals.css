@@ -129,6 +129,11 @@ body {
 }
 .input-gold::placeholder { color: #888; }
 
+select.input-gold {
+  padding-right: 2.5rem !important;
+  text-overflow: ellipsis;
+}
+
 /* MOBILE BOTTOM BAR */
 .mobile-bottom-bar {
   position: fixed;

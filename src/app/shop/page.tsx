@@ -57,7 +57,7 @@ export default function ShopPage() {
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="relative flex-1">
             <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#555]" />
-            <input type="text" placeholder="Search furniture..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold pl-10 h-11" />
+            <input type="text" placeholder="Search furniture..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold !pl-10 !pr-10 h-11" />
             {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#555] hover:text-[#111111]"><X size={14} /></button>}
           </div>
           <select value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)} className="input-gold h-11 max-w-xs">

@@ -39,7 +39,7 @@ export default function AdminInquiries() {
         <h1 className="text-2xl font-bold text-[#111111]">Inquiries & Quotes</h1>
         <div className="relative w-full sm:w-64">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#555]" />
-          <input type="text" placeholder="Search inquiries..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold pl-9 h-10 w-full" />
+          <input type="text" placeholder="Search inquiries..." value={search} onChange={(e) => setSearch(e.target.value)} className="input-gold !pl-9 h-10 w-full" />
         </div>
       </div>
 
