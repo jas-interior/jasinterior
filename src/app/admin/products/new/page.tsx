@@ -259,8 +259,10 @@ export default function AddProductPage() {
                       
                       <div className="pt-4 border-t border-[#eaeaea]">
                         <div className="flex items-center justify-between mb-2">
-                          <label className="block text-xs font-semibold text-[#111111]">Size Variants (Optional)</label>
-                          <button type="button" onClick={() => setVariants([...variants, {size: '', price: ''}])} className="text-xs text-[#c8941a] font-medium hover:underline">+ Add Variant</button>
+                          <div className="flex items-center gap-4">
+                            <button type="button" onClick={() => setVariants([...variants, {size: '3 × 6.25 ft', price: ''}, {size: '4 × 6.25 ft', price: ''}, {size: '5 × 6.25 ft', price: ''}, {size: '6 × 6.25 ft', price: ''}, {size: '7 × 7 ft', price: ''}])} className="text-xs text-[#3b82f6] font-medium hover:underline">+ Quick Fill Wardrobe Sizes</button>
+                            <button type="button" onClick={() => setVariants([...variants, {size: '', price: ''}])} className="text-xs text-[#c8941a] font-medium hover:underline">+ Add Variant</button>
+                          </div>
                         </div>
                         {variants.map((v, i) => (
                           <div key={i} className="flex items-center gap-2 mb-2">
