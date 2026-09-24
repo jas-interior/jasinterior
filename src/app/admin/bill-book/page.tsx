@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
-import { Plus, Search, FileText, Download, CheckCircle, Clock, AlertCircle } from 'lucide-react'
+import { Plus, Search, FileText, Download, CheckCircle, Clock, AlertCircle, Trash2 } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 export default function BillBookPage() {
   const [invoices, setInvoices] = useState<any[]>([])
@@ -17,7 +18,6 @@ export default function BillBookPage() {
     
     if (error) {
       if (error.code === '42P01') {
-        // Table doesn't exist
         setDbError(true)
       }
       console.error(error)
@@ -28,6 +28,21 @@ export default function BillBookPage() {
   }
 
   useEffect(() => { loadData() }, [])
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this bill? This cannot be undone.')) return
+    
+    const toastId = toast.loading('Deleting...')
+    const supabase = createClient()
+    const { error } = await supabase.from('invoices').delete().eq('id', id)
+    
+    if (error) {
+      toast.error(error.message, { id: toastId })
+    } else {
+      toast.success('Bill deleted successfully', { id: toastId })
+      setInvoices(invoices.filter(i => i.id !== id))
+    }
+  }
 
   const filtered = invoices.filter(i => 
     i.invoice_number?.toLowerCase().includes(search.toLowerCase()) || 
@@ -99,7 +114,7 @@ export default function BillBookPage() {
           <table className="admin-table min-w-[1000px]">
             <thead>
               <tr>
-                <th>Bill No & Date</th>
+                <th>Type & No.</th>
                 <th>Customer Details</th>
                 <th>Total Amount</th>
                 <th>Paid Amount</th>
@@ -119,7 +134,12 @@ export default function BillBookPage() {
                   return (
                     <tr key={item.id} className="group hover:bg-gray-50">
                       <td>
-                        <div className="font-bold text-[#111111]">{item.invoice_number}</div>
+                        <div className="font-bold text-[#111111] flex items-center gap-2">
+                          {item.invoice_number}
+                          {item.document_type && item.document_type !== 'Invoice' && (
+                            <span className="text-[9px] bg-gray-200 text-gray-700 px-1.5 py-0.5 rounded uppercase tracking-wider">{item.document_type}</span>
+                          )}
+                        </div>
                         <div className="text-xs text-gray-500">{new Date(item.issue_date || item.created_at).toLocaleDateString()}</div>
                       </td>
                       <td>
@@ -145,9 +165,14 @@ export default function BillBookPage() {
                         </span>
                       </td>
                       <td className="text-right">
-                        <Link href={`/admin/bill-book/${item.id}/print`} target="_blank" className="inline-flex items-center justify-center p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
-                          <FileText size={18} />
-                        </Link>
+                        <div className="flex justify-end gap-1">
+                          <Link href={`/admin/bill-book/${item.id}/print`} target="_blank" className="inline-flex items-center justify-center p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <FileText size={18} />
+                          </Link>
+                          <button onClick={() => handleDelete(item.id)} className="inline-flex items-center justify-center p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                            <Trash2 size={18} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   )

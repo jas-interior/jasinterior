@@ -32,6 +32,7 @@ export default function NewBillBookPage() {
   const [discount, setDiscount] = useState(0)
   const [advanceReceived, setAdvanceReceived] = useState(0)
   const [paymentMode, setPaymentMode] = useState('Cash')
+  const [documentType, setDocumentType] = useState('Invoice')
   const [terms, setTerms] = useState('1. Goods once sold will not be taken back.\n2. 50% advance required for custom orders.\n3. Balance must be cleared before delivery.')
 
   const subtotal = items.reduce((acc, item) => acc + (item.quantity * item.unit_price), 0)
@@ -69,12 +70,17 @@ export default function NewBillBookPage() {
     }
     
     setLoading(true)
-    const toastId = toast.loading('Generating Bill...')
+    const toastId = toast.loading('Generating Document...')
     const supabase = createClient()
 
     try {
-      // 1. Generate Invoice Number (JAS-INV-XXXX)
-      const invNum = `JAS-INV-${Math.floor(1000 + Math.random() * 9000)}`
+      // 1. Generate Invoice Number
+      let prefix = 'JAS-INV-'
+      if (documentType === 'Quotation') prefix = 'JAS-QT-'
+      else if (documentType === 'Receipt') prefix = 'JAS-REC-'
+      else if (documentType === 'Order Form') prefix = 'JAS-ORD-'
+      
+      const invNum = `${prefix}${Math.floor(1000 + Math.random() * 9000)}`
       
       let status = 'unpaid'
       if (advanceReceived >= totalAmount) status = 'paid'
@@ -86,6 +92,7 @@ export default function NewBillBookPage() {
         customer_name: customerName,
         customer_mobile: customerMobile,
         customer_address: customerAddress,
+        document_type: documentType,
         subtotal,
         discount,
         total_amount: totalAmount,
@@ -145,6 +152,18 @@ export default function NewBillBookPage() {
       </div>
 
       <form onSubmit={handleSaveBill} className="space-y-6">
+        
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
+            <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Document Type</label>
+            <select value={documentType} onChange={e => setDocumentType(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold">
+              <option value="Invoice">Tax Invoice</option>
+              <option value="Quotation">Quotation / Estimate</option>
+              <option value="Order Form">Order Form / Confirmation</option>
+              <option value="Receipt">Payment Receipt</option>
+            </select>
+          </div>
+        </div>
         
         {/* Customer Section */}
         <div className="bg-white p-6 rounded-2xl border border-[#eaeaea] shadow-sm">

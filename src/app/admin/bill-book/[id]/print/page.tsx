@@ -88,7 +88,7 @@ export default function PrintBillPage() {
           </div>
           
           <div className="w-1/2 p-8 z-20 flex flex-col justify-center items-end text-right">
-            <h2 className="text-4xl font-bold text-[#c8941a] tracking-widest mb-1">INVOICE</h2>
+            <h2 className="text-4xl font-bold text-[#c8941a] tracking-widest mb-1 uppercase">{invoice.document_type || 'INVOICE'}</h2>
             <p className="text-xs font-semibold tracking-wider text-gray-300 uppercase">NO : {invoice.invoice_number}</p>
             <p className="text-xs font-semibold tracking-wider text-gray-300 uppercase">DATE : {new Date(invoice.issue_date || invoice.created_at).toLocaleDateString('en-IN')}</p>
           </div>
