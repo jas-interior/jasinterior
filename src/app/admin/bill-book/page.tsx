@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
-import { Plus, Search, FileText, Download, CheckCircle, Clock, AlertCircle, Trash2 } from 'lucide-react'
+import { Plus, Search, FileText, Download, CheckCircle, Clock, AlertCircle, Trash2, Edit } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 export default function BillBookPage() {
@@ -166,6 +166,9 @@ export default function BillBookPage() {
                       </td>
                       <td className="text-right">
                         <div className="flex justify-end gap-1">
+                          <Link href={`/admin/bill-book/${item.id}/edit`} className="inline-flex items-center justify-center p-2 text-gray-400 hover:text-[#c8941a] hover:bg-[#c8941a]/10 rounded-lg transition-colors">
+                            <Edit size={18} />
+                          </Link>
                           <Link href={`/admin/bill-book/${item.id}/print`} target="_blank" className="inline-flex items-center justify-center p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
                             <FileText size={18} />
                           </Link>
