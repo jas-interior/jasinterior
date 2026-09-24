@@ -104,7 +104,12 @@ export default function PrintBillPage() {
         {/* Billing Info */}
         <div className="flex justify-between px-10 py-10 shrink-0">
           <div className="w-[45%] text-left">
-            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Invoice From :</h3>
+            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">
+              {invoice.document_type === 'Receipt' ? 'Received From :' :
+               invoice.document_type === 'Order Form' ? 'Order From :' :
+               invoice.document_type === 'Quotation' ? 'Quotation From :' :
+               'Invoice From :'}
+            </h3>
             <p className="font-bold text-lg text-gray-900 leading-tight mb-1">JAS INTERIOR</p>
             <p className="text-sm text-gray-600 font-medium">Shop No. 1, Maa Complex</p>
             <p className="text-sm text-gray-600 font-medium">Near Uma Char Rasta, Waghodiya Road</p>
@@ -112,7 +117,12 @@ export default function PrintBillPage() {
             <p className="text-sm font-bold text-gray-800 mt-1">Ph: +91 88665 31993</p>
           </div>
           <div className="w-[45%] text-right">
-            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">Invoice To :</h3>
+            <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">
+              {invoice.document_type === 'Receipt' ? 'Receipt To :' :
+               invoice.document_type === 'Order Form' ? 'Order To :' :
+               invoice.document_type === 'Quotation' ? 'Quotation To :' :
+               'Invoice To :'}
+            </h3>
             <p className="font-bold text-lg text-gray-900 leading-tight mb-1">{invoice.customer_name}</p>
             <p className="text-sm text-gray-600 font-medium mb-0.5">+91 {invoice.customer_mobile}</p>
             {invoice.customer_address && (
