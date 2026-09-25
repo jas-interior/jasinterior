@@ -190,8 +190,9 @@ export default function ClientProfilePage() {
               <thead><tr className="bg-gray-50 text-gray-400">
                 <th className="px-5 py-3 text-xs font-bold uppercase">Date</th>
                 <th className="px-5 py-3 text-xs font-bold uppercase">Mode</th>
-                <th className="px-5 py-3 text-xs font-bold uppercase">Note</th>
+                <th className="px-5 py-3 text-xs font-bold uppercase">Note / Ref</th>
                 <th className="px-5 py-3 text-xs font-bold uppercase text-right">Amount</th>
+                <th className="px-5 py-3 text-xs font-bold uppercase text-center">Receipt</th>
               </tr></thead>
               <tbody className="divide-y divide-gray-50">
                 {payments.map(p => (
@@ -200,6 +201,15 @@ export default function ClientProfilePage() {
                     <td className="px-5 py-3"><span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">{p.payment_mode}</span></td>
                     <td className="px-5 py-3 text-sm text-gray-500">{p.note || '-'}</td>
                     <td className="px-5 py-3 text-right font-bold text-green-600">₹{Number(p.amount).toLocaleString('en-IN')}</td>
+                    <td className="px-5 py-3 text-center">
+                      <Link
+                        href={`/admin/payments/${p.id}/receipt?invoice_id=${p.invoice_id || invoices[0]?.id || ''}&amount=${p.amount}&mode=${encodeURIComponent(p.payment_mode || 'Cash')}&ref=${encodeURIComponent(p.note || '')}&order_num=${encodeURIComponent(invoices[0]?.invoice_number || '')}&client_name=${encodeURIComponent(client.full_name)}&order_amount=${totalBusiness}&paid_total=${totalPaid}`}
+                        target="_blank"
+                        className="inline-flex items-center gap-1 px-3 py-1 bg-[#111111] hover:bg-black text-white text-xs font-bold rounded-lg"
+                      >
+                        <FileText size={12} /> Receipt / Print
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -207,6 +217,7 @@ export default function ClientProfilePage() {
                 <tr className="bg-green-50">
                   <td colSpan={3} className="px-5 py-3 font-bold text-gray-700">Total Paid</td>
                   <td className="px-5 py-3 text-right font-bold text-green-700 text-lg">₹{totalPaid.toLocaleString('en-IN')}</td>
+                  <td></td>
                 </tr>
               </tfoot>
             </table>
