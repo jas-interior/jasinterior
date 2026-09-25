@@ -26,21 +26,33 @@ export default function ClientsPage() {
   const fetchClients = async () => {
     const supabase = createClient()
     const { data: clientsData } = await supabase.from('clients').select('*').order('full_name')
-    const { data: invoicesData } = await supabase.from('invoices').select('client_id, total_amount')
-    const { data: paymentsData } = await supabase.from('payments').select('client_mobile, amount')
+    const { data: invoicesData } = await supabase.from('invoices').select('id, client_id, customer_mobile, total_amount, paid_amount')
+    const { data: paymentsData } = await supabase.from('payments').select('invoice_id, client_mobile, amount')
 
     if (!clientsData) { setLoading(false); return }
 
     const ledger: ClientLedger[] = clientsData.map(c => {
-      const orders = (invoicesData || []).filter(inv => inv.client_id === c.id)
+      const orders = (invoicesData || []).filter(inv => inv.client_id === c.id || inv.customer_mobile === c.mobile)
       const totalBusiness = orders.reduce((sum, inv) => sum + Number(inv.total_amount || 0), 0)
-      const totalPaid = (paymentsData || []).filter(p => p.client_mobile === c.mobile).reduce((sum, p) => sum + Number(p.amount || 0), 0)
+      
+      const invPaidSum = orders.reduce((sum, inv) => {
+        const pForInv = (paymentsData || []).filter(p => p.invoice_id === inv.id)
+        const pSum = pForInv.reduce((acc, p) => acc + Number(p.amount || 0), 0)
+        return sum + Math.max(Number(inv.paid_amount || 0), pSum)
+      }, 0)
+
+      const standalonePays = (paymentsData || []).filter(p => p.client_mobile === c.mobile && (!p.invoice_id || !orders.some(o => o.id === p.invoice_id)))
+      const standaloneSum = standalonePays.reduce((acc, p) => acc + Number(p.amount || 0), 0)
+
+      const totalPaid = Math.min(totalBusiness, invPaidSum + standaloneSum)
+      const pending = Math.max(0, totalBusiness - totalPaid)
+
       return {
         ...c,
         total_orders: orders.length,
         total_business: totalBusiness,
         total_paid: totalPaid,
-        pending: totalBusiness - totalPaid
+        pending: pending
       }
     })
     setClients(ledger)

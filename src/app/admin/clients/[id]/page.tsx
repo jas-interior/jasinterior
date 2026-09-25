@@ -63,9 +63,23 @@ export default function ClientProfilePage() {
     setLoading(false)
   }
 
+  const getInvPaid = (inv: Invoice) => {
+    const pForInv = payments.filter(p => p.invoice_id === inv.id)
+    const pSum = pForInv.reduce((pAcc, p) => pAcc + Number(p.amount || 0), 0)
+    return Math.max(Number(inv.total_amount && inv.total_amount <= (inv as any).paid_amount ? inv.total_amount : (inv as any).paid_amount || 0), pSum)
+  }
+
   const totalBusiness = invoices.reduce((sum, inv) => sum + Number(inv.total_amount || 0), 0)
-  const totalPaid = payments.reduce((sum, p) => sum + Number(p.amount || 0), 0)
-  const bakaya = totalBusiness - totalPaid
+  
+  const totalInvoicePaid = invoices.reduce((sum, inv) => {
+    return sum + getInvPaid(inv)
+  }, 0)
+
+  const standalonePayments = payments.filter(p => !p.invoice_id || !invoices.some(inv => inv.id === p.invoice_id))
+  const standalonePaid = standalonePayments.reduce((sum, p) => sum + Number(p.amount || 0), 0)
+  
+  const totalPaid = Math.min(totalBusiness, totalInvoicePaid + standalonePaid)
+  const bakaya = Math.max(0, totalBusiness - totalPaid)
 
   if (loading) return <div className="flex items-center justify-center h-64 text-gray-400">Loading...</div>
   if (!client) return <div className="text-center py-20 text-gray-500">Client nahi mila.</div>

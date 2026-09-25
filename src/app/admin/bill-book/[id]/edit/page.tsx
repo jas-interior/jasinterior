@@ -166,6 +166,20 @@ export default function EditBillBookPage() {
       const { error: itemsError } = await supabase.from('invoice_items').insert(itemsToInsert)
       if (itemsError) throw itemsError
 
+      // 3. Sync Payments table if paid_amount on form > existing payments sum
+      const { data: existingPays } = await supabase.from('payments').select('amount').eq('invoice_id', invoice.id)
+      const existingSum = (existingPays || []).reduce((acc, p) => acc + Number(p.amount || 0), 0)
+      if (advanceReceived > existingSum && customerMobile) {
+        const diff = advanceReceived - existingSum
+        await supabase.from('payments').insert({
+          invoice_id: invoice.id,
+          client_mobile: customerMobile,
+          amount: diff,
+          payment_mode: paymentMode,
+          note: status === 'paid' ? 'Final Payment / Bill Cleared' : 'Payment at Billing'
+        })
+      }
+
       toast.success('Document updated successfully!', { id: toastId })
       router.push(`/admin/bill-book/${invoice.id}/print`)
 

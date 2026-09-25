@@ -11,19 +11,25 @@ export default function BillBookPage() {
   const [search, setSearch] = useState('')
   const [dbError, setDbError] = useState(false)
 
+  const [allPayments, setAllPayments] = useState<any[]>([])
+
   const loadData = async () => {
     setLoading(true)
     const supabase = createClient()
-    const { data, error } = await supabase.from('invoices').select('*').order('created_at', { ascending: false })
+    const [{ data: invData, error }, { data: payData }] = await Promise.all([
+      supabase.from('invoices').select('*').order('created_at', { ascending: false }),
+      supabase.from('payments').select('*')
+    ])
     
     if (error) {
       if (error.code === '42P01') {
         setDbError(true)
       }
       console.error(error)
-    } else if (data) {
-      setInvoices(data)
+    } else if (invData) {
+      setInvoices(invData)
     }
+    if (payData) setAllPayments(payData)
     setLoading(false)
   }
 
@@ -44,13 +50,22 @@ export default function BillBookPage() {
     }
   }
 
+  const getInvoicePaid = (item: any) => {
+    const payForInv = allPayments.filter(p => p.invoice_id === item.id || (p.client_mobile === item.customer_mobile && p.invoice_id === item.id))
+    const sumPay = payForInv.reduce((sum, p) => sum + Number(p.amount || 0), 0)
+    return Math.max(Number(item.paid_amount || 0), sumPay)
+  }
+
   const filtered = invoices.filter(i => 
     i.invoice_number?.toLowerCase().includes(search.toLowerCase()) || 
     i.customer_name?.toLowerCase().includes(search.toLowerCase()) ||
     i.customer_mobile?.includes(search)
   )
 
-  const totalOutstanding = invoices.reduce((acc, curr) => acc + (curr.total_amount - curr.paid_amount), 0)
+  const totalOutstanding = invoices.reduce((acc, curr) => {
+    const paid = getInvoicePaid(curr)
+    return acc + Math.max(0, curr.total_amount - paid)
+  }, 0)
 
   if (dbError) {
     return (
@@ -130,7 +145,9 @@ export default function BillBookPage() {
                 <tr><td colSpan={7} className="text-center py-12 text-gray-500">No bills found. Create a new bill to get started.</td></tr>
               ) : (
                 filtered.map((item) => {
-                  const pending = item.total_amount - item.paid_amount;
+                  const paid = getInvoicePaid(item)
+                  const pending = Math.max(0, item.total_amount - paid)
+                  const status = pending === 0 ? 'paid' : paid > 0 ? 'partial' : 'unpaid'
                   return (
                     <tr key={item.id} className="group hover:bg-gray-50">
                       <td>
@@ -150,18 +167,18 @@ export default function BillBookPage() {
                         ₹{item.total_amount.toLocaleString('en-IN')}
                       </td>
                       <td className="font-medium text-green-600">
-                        ₹{item.paid_amount.toLocaleString('en-IN')}
+                        ₹{paid.toLocaleString('en-IN')}
                       </td>
                       <td className={`font-bold ${pending > 0 ? 'text-red-500' : 'text-gray-400'}`}>
                         ₹{pending.toLocaleString('en-IN')}
                       </td>
                       <td>
                         <span className={`text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider font-bold ${
-                          item.status === 'paid' ? 'bg-green-100 text-green-700' :
-                          item.status === 'partial' ? 'bg-yellow-100 text-yellow-700' :
+                          status === 'paid' ? 'bg-green-100 text-green-700' :
+                          status === 'partial' ? 'bg-yellow-100 text-yellow-700' :
                           'bg-red-100 text-red-700'
                         }`}>
-                          {item.status}
+                          {status}
                         </span>
                       </td>
                       <td className="text-right">
