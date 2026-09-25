@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
-import { Search, Plus, User, ArrowRight, Phone } from 'lucide-react'
+import { Search, Plus, User, ArrowRight, Phone, Edit } from 'lucide-react'
 
 interface ClientLedger {
   id: string
@@ -112,10 +112,13 @@ export default function ClientsPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-center gap-2">
-                        <Link href={`/admin/clients/${c.id}`} className="flex items-center gap-1 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-lg">
+                        <Link href={`/admin/clients/${c.id}`} className="flex items-center gap-1 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-lg" title="Profile">
                           Profile <ArrowRight size={12} />
                         </Link>
-                        <Link href={`/admin/bill-book/new?client_id=${c.id}&mobile=${c.mobile}&name=${encodeURIComponent(c.full_name)}`} className="flex items-center gap-1 px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold rounded-lg">
+                        <Link href={`/admin/clients/${c.id}/edit`} className="p-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-lg" title="Edit Client">
+                          <Edit size={14} />
+                        </Link>
+                        <Link href={`/admin/bill-book/new?client_id=${c.id}&mobile=${c.mobile}&name=${encodeURIComponent(c.full_name)}`} className="flex items-center gap-1 px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold rounded-lg" title="New Order">
                           <Plus size={12} /> New Order
                         </Link>
                       </div>

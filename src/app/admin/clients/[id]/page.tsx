@@ -82,6 +82,9 @@ export default function ClientProfilePage() {
           <p className="text-sm text-gray-500">Client Profile & Ledger</p>
         </div>
         <div className="flex gap-2">
+          <Link href={`/admin/clients/${client.id}/edit`} className="flex items-center gap-1.5 px-3 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-bold">
+            <Edit size={16} /> Edit Client
+          </Link>
           <Link href={`/admin/bill-book/new?client_id=${client.id}&mobile=${client.mobile}&name=${encodeURIComponent(client.full_name)}&address=${encodeURIComponent(client.address || '')}`} className="flex items-center gap-2 px-4 py-2.5 bg-[#111111] text-white rounded-xl text-sm font-bold">
             <Plus size={16} /> Naya Order/Bill
           </Link>

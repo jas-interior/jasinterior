@@ -210,7 +210,6 @@ function NewBillBookForm() {
               <option value="Invoice">Tax Invoice</option>
               <option value="Quotation">Quotation / Estimate</option>
               <option value="Order Form">Order Form / Confirmation</option>
-              <option value="Receipt">Payment Receipt</option>
             </select>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
