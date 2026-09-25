@@ -27,13 +27,31 @@ function PaymentReceiptPrint() {
       `}</style>
 
       {/* Action Bar */}
-      <div className="no-print fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-6 py-3 flex items-center gap-4 z-50 shadow-sm">
+      <div className="no-print fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-6 py-3 flex items-center gap-3 z-50 shadow-sm flex-wrap">
         <button onClick={() => window.history.back()} className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">
           ← Back
         </button>
-        <button onClick={() => window.print()} className="px-6 py-2 bg-[#111111] hover:bg-black text-white rounded-lg text-sm font-bold flex items-center gap-2">
+        <button onClick={() => window.print()} className="px-5 py-2 bg-[#111111] hover:bg-black text-white rounded-lg text-sm font-bold flex items-center gap-2">
           🖨️ Print / Download PDF
         </button>
+        <a
+          href={`https://wa.me/?text=${encodeURIComponent(
+            `*JAS INTERIOR - PAYMENT RECEIPT*\n\n` +
+            `Receipt No: ${receiptNum}\n` +
+            `Client: ${client_name}\n` +
+            `Order: ${order_num}\n` +
+            `Amount Received: ₹${amount.toLocaleString('en-IN')} (${mode})\n` +
+            (ref ? `Ref No: ${ref}\n` : '') +
+            `Balance Due: ${balance > 0 ? `₹${balance.toLocaleString('en-IN')}` : 'FULLY PAID ✅'}\n` +
+            `Date: ${today}\n\n` +
+            `Thank you for your payment!`
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold flex items-center gap-2"
+        >
+          📲 WhatsApp Par Share Karo
+        </a>
       </div>
 
       <div className="flex justify-center pt-20 pb-10 no-print-padding">
