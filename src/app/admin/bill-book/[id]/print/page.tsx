@@ -222,8 +222,13 @@ export default function PrintBillPage() {
             </div>
 
             <div className="mt-8">
-              <h2 className="text-xl font-bold text-[#1e293b] mb-2">Thanks for your business!</h2>
-              <p className="text-xs text-gray-400">If you have any questions about this document, please contact us.</p>
+              <h2 className="text-xl font-bold text-[#1e293b] mb-1">
+                {invoice.document_type === 'Order Form' ? 'Thank you for your order!' :
+                 invoice.document_type === 'Quotation' ? 'Thank you for considering JAS INTERIOR!' :
+                 invoice.document_type === 'Receipt' ? 'Thank you for your payment!' :
+                 'Thank you for your business!'}
+              </h2>
+              <p className="text-xs text-gray-400">If you have any questions regarding this document, please contact us.</p>
             </div>
           </div>
           
