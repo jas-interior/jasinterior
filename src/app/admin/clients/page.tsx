@@ -26,13 +26,13 @@ export default function ClientsPage() {
   const fetchClients = async () => {
     const supabase = createClient()
     const { data: clientsData } = await supabase.from('clients').select('*').order('full_name')
-    const { data: invoicesData } = await supabase.from('invoices').select('id, client_id, customer_mobile, total_amount, paid_amount')
-    const { data: paymentsData } = await supabase.from('payments').select('invoice_id, client_mobile, amount')
+    const { data: invoicesData } = await supabase.from('invoices').select('id, client_id, customer_mobile, total_amount, paid_amount, created_at')
+    const { data: paymentsData } = await supabase.from('payments').select('invoice_id, client_mobile, amount, created_at')
 
     if (!clientsData) { setLoading(false); return }
 
     const ledger: ClientLedger[] = clientsData.map(c => {
-      const orders = (invoicesData || []).filter(inv => inv.client_id === c.id || inv.customer_mobile === c.mobile)
+      const orders = (invoicesData || []).filter(inv => inv.client_id === c.id || (inv.customer_mobile === c.mobile && new Date(inv.created_at) >= new Date(c.created_at)))
       const totalBusiness = orders.reduce((sum, inv) => sum + Number(inv.total_amount || 0), 0)
       
       const invPaidSum = orders.reduce((sum, inv) => {
@@ -41,7 +41,7 @@ export default function ClientsPage() {
         return sum + Math.max(Number(inv.paid_amount || 0), pSum)
       }, 0)
 
-      const standalonePays = (paymentsData || []).filter(p => p.client_mobile === c.mobile && (!p.invoice_id || !orders.some(o => o.id === p.invoice_id)))
+      const standalonePays = (paymentsData || []).filter(p => p.client_mobile === c.mobile && new Date(p.created_at) >= new Date(c.created_at) && (!p.invoice_id || !orders.some(o => o.id === p.invoice_id)))
       const standaloneSum = standalonePays.reduce((acc, p) => acc + Number(p.amount || 0), 0)
 
       const totalPaid = Math.min(totalBusiness, invPaidSum + standaloneSum)

@@ -76,6 +76,10 @@ export default function EditClientPage() {
     if (!confirm('Kya aap sure hain ki is client ko delete karna chahte hain?')) return
     setLoading(true)
     const supabase = createClient()
+    
+    // Unlink client_id from invoices so they don't attach to future profiles
+    await supabase.from('invoices').update({ client_id: null }).eq('client_id', id)
+
     const { error } = await supabase.from('clients').delete().eq('id', id)
     if (error) {
       toast.error('Delete error: ' + error.message)

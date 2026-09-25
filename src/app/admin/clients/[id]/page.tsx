@@ -55,8 +55,13 @@ export default function ClientProfilePage() {
 
     if (clientData) {
       setClient(clientData)
-      // Now fetch payments by mobile
-      const { data: pData } = await supabase.from('payments').select('*').eq('client_mobile', clientData.mobile).order('created_at', { ascending: false })
+      // Fetch payments for this client's invoices or payments created on/after client creation
+      const { data: pData } = await supabase
+        .from('payments')
+        .select('*')
+        .eq('client_mobile', clientData.mobile)
+        .gte('created_at', clientData.created_at)
+        .order('created_at', { ascending: false })
       setPayments(pData || [])
     }
     setInvoices(invoiceData || [])
