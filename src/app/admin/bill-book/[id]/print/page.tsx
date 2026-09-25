@@ -110,7 +110,7 @@ export default function PrintBillPage() {
         <div className="flex justify-between px-10 py-10 shrink-0">
           <div className="w-[45%] text-left">
             <h3 className="bg-[#1e293b] text-white inline-block px-3 py-1 text-xs font-bold mb-3 tracking-wider uppercase">
-              {invoice.document_type === 'Receipt' ? 'Received From :' :
+              {invoice.document_type === 'Receipt' ? 'Received By :' :
                invoice.document_type === 'Order Form' ? 'Order From :' :
                invoice.document_type === 'Quotation' ? 'Quotation From :' :
                'Invoice From :'}
