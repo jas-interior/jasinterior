@@ -149,8 +149,8 @@ function PaymentReceiptPrint() {
           <div className="px-10 pb-4 mt-auto">
             <div className="flex justify-between items-end">
               <div>
-                <p className="text-sm font-bold text-gray-700">Thank you for your payment!</p>
-                <p className="text-xs text-gray-400 mt-1">This is a computer generated receipt.</p>
+                <p className="text-sm font-bold text-gray-700">Thank you for connecting with JAS INTERIOR!</p>
+                <p className="text-xs text-gray-400 mt-1">If you have any questions regarding this document, please contact us at +91 88665 31993.</p>
               </div>
               <div className="text-center flex flex-col items-center justify-end">
                 <img src="/signature.png" alt="Signature" className="h-12 object-contain mb-[-6px] mix-blend-multiply" />

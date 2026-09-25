@@ -226,9 +226,9 @@ export default function PrintBillPage() {
                 {invoice.document_type === 'Order Form' ? 'Thank you for your order!' :
                  invoice.document_type === 'Quotation' ? 'Thank you for considering JAS INTERIOR!' :
                  invoice.document_type === 'Receipt' ? 'Thank you for your payment!' :
-                 'Thank you for your business!'}
+                 'Thank you for connecting with JAS INTERIOR!'}
               </h2>
-              <p className="text-xs text-gray-400">If you have any questions regarding this document, please contact us.</p>
+              <p className="text-xs text-gray-400">If you have any questions regarding this document, please contact us at +91 88665 31993.</p>
             </div>
           </div>
           
