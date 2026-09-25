@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { getProducts, getCategories, getBlogPosts } from '@/lib/queries'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://jasinterior.store'
+  const baseUrl = 'https://www.jasinterior.store'
 
   const routes = [
     '',

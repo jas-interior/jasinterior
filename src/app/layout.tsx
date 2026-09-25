@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
-const SITE_URL = 'https://jasinterior.store';
+const SITE_URL = 'https://www.jasinterior.store';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
