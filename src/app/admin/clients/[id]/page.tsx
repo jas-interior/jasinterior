@@ -81,9 +81,12 @@ export default function ClientProfilePage() {
           <h1 className="text-2xl font-bold text-[#111111]">{client.full_name}</h1>
           <p className="text-sm text-gray-500">Client Profile & Ledger</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Link href={`/admin/clients/${client.id}/edit`} className="flex items-center gap-1.5 px-3 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-bold">
             <Edit size={16} /> Edit Client
+          </Link>
+          <Link href={`/admin/payments/new?client_id=${client.id}&mobile=${client.mobile}&name=${encodeURIComponent(client.full_name)}&order_amount=${invoices[0]?.total_amount || 0}&order_num=${invoices[0]?.invoice_number || ''}`} className="flex items-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-bold">
+            <Receipt size={16} /> Payment Lena / Receipt
           </Link>
           <Link href={`/admin/bill-book/new?client_id=${client.id}&mobile=${client.mobile}&name=${encodeURIComponent(client.full_name)}&address=${encodeURIComponent(client.address || '')}`} className="flex items-center gap-2 px-4 py-2.5 bg-[#111111] text-white rounded-xl text-sm font-bold">
             <Plus size={16} /> Naya Order/Bill
@@ -155,8 +158,8 @@ export default function ClientProfilePage() {
                         <Link href={`/admin/bill-book/${inv.id}/edit`} className="p-1.5 text-gray-400 hover:text-amber-500 hover:bg-amber-50 rounded-lg" title="Edit">
                           <Edit size={14} />
                         </Link>
-                        <Link href={`/admin/payments/new?invoice_id=${inv.id}&client_id=${client.id}&mobile=${client.mobile}&name=${encodeURIComponent(client.full_name)}&order_amount=${inv.total_amount}&order_num=${inv.invoice_number}`} className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg" title="Payment Lena">
-                          <Receipt size={14} />
+                        <Link href={`/admin/payments/new?invoice_id=${inv.id}&client_id=${client.id}&mobile=${client.mobile}&name=${encodeURIComponent(client.full_name)}&order_amount=${inv.total_amount}&order_num=${inv.invoice_number}`} className="flex items-center gap-1 px-2.5 py-1 bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold rounded-lg border border-green-200" title="Payment Lena">
+                          <Receipt size={13} /> Payment
                         </Link>
                       </div>
                     </td>
@@ -170,8 +173,14 @@ export default function ClientProfilePage() {
 
       {/* Payments Ledger */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="p-5 border-b border-gray-100">
+        <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <h3 className="font-bold text-gray-900">Payment History (Paisa Kab Kab Aaya)</h3>
+          <Link
+            href={`/admin/payments/new?client_id=${client.id}&mobile=${client.mobile}&name=${encodeURIComponent(client.full_name)}&order_amount=${invoices[0]?.total_amount || 0}&order_num=${invoices[0]?.invoice_number || ''}`}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-xs font-bold transition-colors"
+          >
+            <Receipt size={14} /> + Payment Lena
+          </Link>
         </div>
         {payments.length === 0 ? (
           <div className="py-10 text-center text-gray-400 text-sm">Abhi tak koi payment nahi.</div>
