@@ -59,9 +59,18 @@ export default function PrintBillPage() {
 
       {/* Non-printable action bar */}
       <div className="w-full max-w-[800px] mb-4 px-4 print:hidden flex flex-col sm:flex-row items-center justify-between gap-4">
-        <Link href="/admin/bill-book" className="flex items-center gap-2 text-gray-500 hover:text-black font-medium transition-colors w-full sm:w-auto">
-          <ArrowLeft size={18} /> Back to Bills
-        </Link>
+        <button
+          onClick={() => {
+            if (window.history.length > 1) {
+              window.history.back()
+            } else {
+              window.location.href = '/admin/bill-book'
+            }
+          }}
+          className="flex items-center gap-2 text-gray-600 hover:text-black font-semibold transition-colors w-full sm:w-auto bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm"
+        >
+          <ArrowLeft size={18} /> Back
+        </button>
         <div className="flex gap-3 w-full sm:w-auto">
           <a 
             href={`https://wa.me/91${invoice.customer_mobile}?text=${encodeURIComponent(whatsappMessage)}`} 

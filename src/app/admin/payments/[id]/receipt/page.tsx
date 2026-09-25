@@ -27,8 +27,17 @@ function PaymentReceiptPrint() {
 
       {/* Non-printable action bar */}
       <div className="w-full max-w-[800px] mb-4 px-4 print:hidden flex flex-col sm:flex-row items-center justify-between gap-4">
-        <button onClick={() => window.history.back()} className="flex items-center gap-2 text-gray-500 hover:text-black font-medium transition-colors w-full sm:w-auto">
-          ← Back
+        <button
+          onClick={() => {
+            if (window.history.length > 1) {
+              window.history.back()
+            } else {
+              window.location.href = '/admin/clients'
+            }
+          }}
+          className="flex items-center gap-2 text-gray-600 hover:text-black font-semibold transition-colors w-full sm:w-auto bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm"
+        >
+          ← Back to Clients / Khata
         </button>
         <div className="flex gap-3 w-full sm:w-auto">
           <a
