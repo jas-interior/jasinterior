@@ -259,8 +259,9 @@ export default function PrintBillPage() {
               )}
             </div>
             
-            <div className="mt-16 text-center">
-              <div className="border-t-2 border-[#1e293b] pt-2 inline-block min-w-[200px]">
+            <div className="mt-8 text-center flex flex-col items-center justify-end">
+              <img src="/signature.png" alt="Signature" className="h-14 object-contain mb-[-8px] mix-blend-multiply" />
+              <div className="border-t-2 border-[#1e293b] pt-1 inline-block min-w-[200px]">
                 <p className="text-sm font-bold text-[#1e293b] uppercase tracking-wider">Authorized Signatory</p>
               </div>
             </div>

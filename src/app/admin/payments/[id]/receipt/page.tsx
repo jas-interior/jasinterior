@@ -129,8 +129,9 @@ function PaymentReceiptPrint() {
                 <p className="text-sm font-bold text-gray-700">Thank you for your payment!</p>
                 <p className="text-xs text-gray-400 mt-1">This is a computer generated receipt.</p>
               </div>
-              <div className="text-center">
-                <div className="border-t-2 border-[#1e293b] pt-2 min-w-[180px]">
+              <div className="text-center flex flex-col items-center justify-end">
+                <img src="/signature.png" alt="Signature" className="h-12 object-contain mb-[-6px] mix-blend-multiply" />
+                <div className="border-t-2 border-[#1e293b] pt-1 min-w-[180px]">
                   <p className="text-xs font-bold text-[#1e293b] uppercase tracking-wider">Authorized Signatory</p>
                 </div>
               </div>
