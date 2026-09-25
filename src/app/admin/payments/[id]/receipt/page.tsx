@@ -16,48 +16,53 @@ function PaymentReceiptPrint() {
   const receiptNum = `JAS-RCP-${Date.now().toString(36).toUpperCase().slice(-6)}`
 
   return (
-    <>
-      <style>{`
+    <div className="min-h-screen bg-gray-100 py-6 print:py-0 print:bg-white text-black font-sans flex flex-col items-center">
+      <style dangerouslySetInnerHTML={{__html: `
         @media print {
-          body { margin: 0; }
-          .no-print { display: none !important; }
-          .print-area { box-shadow: none !important; }
+          body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          @page { size: A4; margin: 0; }
+          .print-hidden { display: none !important; }
         }
-        body { background: #f3f4f6; font-family: 'Arial', sans-serif; }
-      `}</style>
+      `}} />
 
-      {/* Action Bar */}
-      <div className="no-print fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-6 py-3 flex items-center gap-3 z-50 shadow-sm flex-wrap">
-        <button onClick={() => window.history.back()} className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">
+      {/* Non-printable action bar */}
+      <div className="w-full max-w-[800px] mb-4 px-4 print:hidden flex flex-col sm:flex-row items-center justify-between gap-4">
+        <button onClick={() => window.history.back()} className="flex items-center gap-2 text-gray-500 hover:text-black font-medium transition-colors w-full sm:w-auto">
           ← Back
         </button>
-        <button onClick={() => window.print()} className="px-5 py-2 bg-[#111111] hover:bg-black text-white rounded-lg text-sm font-bold flex items-center gap-2">
-          🖨️ Print / Download PDF
-        </button>
-        <a
-          href={`https://wa.me/?text=${encodeURIComponent(
-            `*JAS INTERIOR - PAYMENT RECEIPT*\n\n` +
-            `Receipt No: ${receiptNum}\n` +
-            `Client: ${client_name}\n` +
-            `Order: ${order_num}\n` +
-            `Amount Received: ₹${amount.toLocaleString('en-IN')} (${mode})\n` +
-            (ref ? `Ref No: ${ref}\n` : '') +
-            `Balance Due: ${balance > 0 ? `₹${balance.toLocaleString('en-IN')}` : 'FULLY PAID ✅'}\n` +
-            `Date: ${today}\n\n` +
-            `Thank you for your payment!`
-          )}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold flex items-center gap-2"
-        >
-          📲 WhatsApp Par Share Karo
-        </a>
+        <div className="flex gap-3 w-full sm:w-auto">
+          <a
+            href={`https://wa.me/?text=${encodeURIComponent(
+              `*JAS INTERIOR - PAYMENT RECEIPT*\n\n` +
+              `Receipt No: ${receiptNum}\n` +
+              `Client: ${client_name}\n` +
+              `Order: ${order_num}\n` +
+              `Amount Received: ₹${amount.toLocaleString('en-IN')} (${mode})\n` +
+              (ref ? `Ref No: ${ref}\n` : '') +
+              `Balance Due: ${balance > 0 ? `₹${balance.toLocaleString('en-IN')}` : 'FULLY PAID ✅'}\n` +
+              `Date: ${today}\n\n` +
+              `Thank you for your payment!`
+            )}`}
+            target="_blank"
+            rel="noreferrer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-xl transition-all shadow-sm"
+          >
+            📲 WhatsApp
+          </a>
+          <button
+            onClick={() => window.print()}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-black hover:bg-gray-800 text-white font-bold rounded-xl transition-all shadow-sm"
+          >
+            🖨️ Download / Print PDF
+          </button>
+        </div>
       </div>
 
-      <div className="flex justify-center pt-20 pb-10 no-print-padding">
+      {/* Printable Area */}
+      <div className="w-full overflow-x-auto print:overflow-visible flex justify-start sm:justify-center px-4 sm:px-0 pb-10 print:pb-0">
         <div
-          className="print-area bg-white"
-          style={{ width: '800px', minHeight: '600px', boxShadow: '0 4px 30px rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column' }}
+          className="w-[800px] shrink-0 bg-white shadow-2xl print:shadow-none print:w-full overflow-hidden relative flex flex-col"
+          style={{ minHeight: '800px' }}
         >
           {/* Header */}
           <div className="relative h-32 bg-[#1e293b] flex items-center justify-between px-10 shrink-0 overflow-hidden">
@@ -167,7 +172,7 @@ function PaymentReceiptPrint() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
