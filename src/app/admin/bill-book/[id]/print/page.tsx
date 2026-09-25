@@ -28,8 +28,13 @@ export default function PrintBillPage() {
       const { data: itm } = await supabase.from('invoice_items').select('*').eq('invoice_id', params.id).order('created_at', { ascending: true })
       if (itm) setItems(itm)
 
-      const { data: pay } = await supabase.from('invoice_payments').select('*').eq('invoice_id', params.id).order('created_at', { ascending: true })
-      if (pay) setPayments(pay)
+      const { data: pay } = await supabase.from('payments').select('*').eq('invoice_id', params.id).order('created_at', { ascending: true })
+      if (pay && pay.length > 0) {
+        setPayments(pay)
+      } else {
+        const { data: oldPay } = await supabase.from('invoice_payments').select('*').eq('invoice_id', params.id).order('created_at', { ascending: true })
+        if (oldPay) setPayments(oldPay)
+      }
 
       setLoading(false)
     }

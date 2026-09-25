@@ -39,18 +39,17 @@ function NewBillBookForm() {
   const [deliveryDate, setDeliveryDate] = useState('')
   const [terms, setTerms] = useState('1. Custom-made goods are non-returnable/non-exchangeable, subject to applicable law.\n2. Delivery, unloading & installation charges extra unless mentioned.\n3. Warranty as per mentioned terms; misuse, water/termite & normal wear not covered.\n4. Customer must verify product & specifications at delivery.\n5. Balance payment as agreed.')
 
-  useEffect(() => {
-    if (documentType === 'Quotation') {
+  const handleDocumentTypeChange = (type: string) => {
+    setDocumentType(type)
+    if (type === 'Quotation') {
       setTerms('1. Quotation valid for 15 days.\n2. GST/taxes, delivery & installation extra unless mentioned.\n3. Price may change with changes in size, design, material or quantity.\n4. Delivery time is approximate.\n5. Order confirmed against customer approval & advance payment.')
-    } else if (documentType === 'Order Form') {
+    } else if (type === 'Order Form') {
       setTerms('1. Customer must confirm size, design, colour, fabric & material before production.\n2. Changes after confirmation may incur extra charges.\n3. Custom orders cannot be cancelled after production starts, subject to applicable law.\n4. Delivery/installation charges extra unless mentioned.\n5. Warranty as per agreed terms.')
-    } else if (documentType === 'Receipt') {
-      setTerms('1. Amount received will be adjusted against the order value.\n2. Balance payment as per agreed terms.\n3. Advance for custom orders is subject to cancellation terms.\n4. Receipt confirms payment only, not delivery/completion.')
     } else {
       // Invoice
       setTerms('1. Custom-made goods are non-returnable/non-exchangeable, subject to applicable law.\n2. Delivery, unloading & installation charges extra unless mentioned.\n3. Warranty as per mentioned terms; misuse, water/termite & normal wear not covered.\n4. Customer must verify product & specifications at delivery.\n5. Balance payment as agreed.')
     }
-  }, [documentType])
+  }
 
   const subtotal = items.reduce((acc, item) => acc + (item.quantity * item.unit_price), 0)
   const totalAmount = subtotal - discount
@@ -167,17 +166,6 @@ function NewBillBookForm() {
       const { error: itemsError } = await supabase.from('invoice_items').insert(itemsToInsert)
       if (itemsError) throw itemsError
 
-      // 4. Record Payment if advance > 0
-      if (advanceReceived > 0) {
-        const { error: payError } = await supabase.from('invoice_payments').insert({
-          invoice_id: invoice.id,
-          amount: advanceReceived,
-          payment_mode: paymentMode,
-          notes: 'Advance Payment at Billing'
-        })
-        if (payError) throw payError
-      }
-
       toast.success('Bill generated successfully!', { id: toastId })
       router.push(`/admin/bill-book/${invoice.id}/print`)
 
@@ -206,7 +194,7 @@ function NewBillBookForm() {
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="bg-white p-4 rounded-2xl border border-[#eaeaea] shadow-sm flex-1">
             <label className="block text-xs font-bold text-[#c8941a] uppercase tracking-widest mb-2">Document Type</label>
-            <select value={documentType} onChange={e => setDocumentType(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold">
+            <select value={documentType} onChange={e => handleDocumentTypeChange(e.target.value)} className="w-full bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#c8941a] transition-colors font-semibold">
               <option value="Invoice">Tax Invoice</option>
               <option value="Quotation">Quotation / Estimate</option>
               <option value="Order Form">Order Form / Confirmation</option>
